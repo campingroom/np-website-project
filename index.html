@@ -9,6 +9,9 @@
 <x-dc>
 <helmet>
 <link rel="stylesheet" href="_ds/modernist-e418e37c-5b91-498b-bea5-a9b107ada9e7/styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
 <script src="_ds/modernist-e418e37c-5b91-498b-bea5-a9b107ada9e7/_ds_bundle.js"></script>
 <script src="image-slot.js"></script>
 <style>
@@ -16,23 +19,33 @@ html { scroll-behavior: auto; }
 body { margin: 0; text-wrap: pretty; }
 a { color: var(--color-accent); }
 a:hover { color: var(--color-accent-600); }
+:root { --radius-md: 14px; }
+#dc-root .card, #dc-root .btn, #dc-root .input, #dc-root .tag, #dc-root .table, #dc-root .dialog { border-radius: 14px; }
+#dc-root .btn { border-radius: 999px; }
+#dc-root .tag { border-radius: 999px; }
+#dc-root section img, #dc-root section iframe, #dc-root figure, #dc-root image-slot { border-radius: 14px; }
+#dc-root #home > div:first-child figure, #dc-root #home > div:first-child image-slot { border-radius: 0; }
+#dc-root [style*="border:2px solid var(--color-divider)"] { border-radius: 14px; }
+#dc-root [style*="border:2px solid var(--color-accent)"] { border-radius: 14px; }
+#dc-root .table { overflow: hidden; }
+#dc-root image-slot#director-cutout::part(image) { mix-blend-mode: multiply; }
 </style>
-<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#ec3013"/><text x="30" y="115" font-family="Arial" font-size="72" font-weight="800" fill="#f3f2f2">รร</text></svg></template>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#ec3013"></rect><text x="30" y="115" font-family="Arial" font-size="72" font-weight="800" fill="#f3f2f2">รร</text></svg></template>
 </helmet>
 
 <div style="background:var(--color-bg); color:var(--color-text); font-family:var(--font-body); min-height:100vh; overflow-x:hidden;">
 
 <nav ref="{{ setNavBarRef }}" style="{{ navShellStyle }}">
   <a href="#home" onClick="{{ navClick }}" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--color-text); margin-right:auto; flex:none; min-width:0;">
-    <image-slot id="logo-nav" shape="rect" fit="contain" src="assets/logo-transparent.png" style="width:{{ logoSize }}px;height:{{ logoSize }}px;flex:none;background:{{ logoBg }};transition:width .3s ease,height .3s ease,background .3s ease;"></image-slot>
+    <image-slot id="logo-nav" data-logo="" shape="rect" fit="contain" src="assets/logo-transparent.png" style="width:68px;height:68px;flex:none;background:transparent;border-radius:0;transition:width .3s ease,height .3s ease,background .3s ease;"></image-slot>
     <sc-if value="{{ showWordmark }}" hint-placeholder-val="{{ true }}">
-      <span style="font-family:var(--font-heading); font-weight:800; font-size:14px; line-height:1.2; letter-spacing:-0.01em; white-space:nowrap; color:{{ wordmarkColor }}; text-shadow:{{ navTextShadow }};">โรงเรียนบ้านหนองสระพังโนนสะอาด<br /><span style="font-weight:400; font-size:10.5px; color:{{ wordmarkSubColor }}; letter-spacing:0;">สพป.มหาสารคาม เขต 3</span></span>
+      <span data-wordmark="" style="display:inline-block; font-family:var(--font-heading); font-weight:800; font-size:14px; line-height:1.2; letter-spacing:-0.01em; white-space:nowrap; color:#ffffff; text-shadow:0 1px 3px rgba(0,0,0,.55);">โรงเรียนบ้านหนองสระพังโนนสะอาด<br><span data-wordmark-sub="" style="display: block; width: 100%; white-space: normal; text-align: justify; text-align-last: justify; font-weight: 400; font-size: 10px; color: rgba(255,255,255,.75); letter-spacing: 0">BANNONGSAPUNGNONSA-ARD SCHOOL</span></span>
     </sc-if>
   </a>
-  <div ref="{{ setNavInnerRef }}" style="position:relative; display:flex; align-items:center; gap:2px; overflow-x:auto; scrollbar-width:thin; border-radius:{{ navRadius }}px; border:{{ navInnerBorder }}; padding:{{ navInnerPad }}px; transition:padding .3s ease; -webkit-mask-image:linear-gradient(90deg, transparent 0, black 14px, black calc(100% - 14px), transparent 100%); mask-image:linear-gradient(90deg, transparent 0, black 14px, black calc(100% - 14px), transparent 100%);">
-    <div ref="{{ setIndicatorRef }}" style="position:absolute; top:{{ navInnerPad }}px; bottom:{{ navInnerPad }}px; border-radius:{{ navRadius }}px; background:{{ indicatorBg }}; left:0; width:0; transition:left .28s cubic-bezier(.4,0,.2,1), width .28s cubic-bezier(.4,0,.2,1), top .3s ease, bottom .3s ease, background .3s ease; z-index:0;"></div>
+  <div ref="{{ setNavInnerRef }}" data-nav-inner="" style="position:relative; display:flex; align-items:center; gap:2px; overflow-x:auto; scrollbar-width:thin; border-radius:{{ navRadius }}px; border:{{ navInnerBorder }}; padding:4px; transition:padding .3s ease; -webkit-mask-image:linear-gradient(90deg, transparent 0, black 14px, black calc(100% - 14px), transparent 100%); mask-image:linear-gradient(90deg, transparent 0, black 14px, black calc(100% - 14px), transparent 100%);">
+    <div ref="{{ setIndicatorRef }}" style="position:absolute; top:4px; bottom:4px; border-radius:{{ navRadius }}px; background:#ffffff; left:0; width:0; transition:left .28s cubic-bezier(.4,0,.2,1), width .28s cubic-bezier(.4,0,.2,1), top .3s ease, bottom .3s ease, background .3s ease; z-index:0;"></div>
     <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="6">
-      <a href="{{ item.href }}" ref="{{ setNavRef }}" data-nav-id="{{ item.id }}" onClick="{{ navClick }}" style="position:relative; z-index:1; white-space:nowrap; padding:{{ tabPaddingV }}; font-size:{{ tabFontSize }}; font-weight:700; text-decoration:none; color:var(--color-text); text-shadow:{{ navTextShadow }}; transition:color .12s ease .12s, padding .3s ease, font-size .3s ease; display:flex; flex-direction:column; align-items:center; gap:1px; line-height:1.2;"><span>{{ item.label }}</span><sc-if value="{{ item.showEn }}" hint-placeholder-val="{{ true }}"><span style="font-size:9px; font-weight:600; letter-spacing:.03em; opacity:.6;">{{ item.en }}</span></sc-if></a>
+      <a href="{{ item.href }}" ref="{{ setNavRef }}" data-nav-id="{{ item.id }}" onClick="{{ navClick }}" style="position:relative; z-index:1; white-space:nowrap; padding:8px 14px; font-size:13px; font-weight:700; text-decoration:none; color:#ffffff; text-shadow:0 1px 3px rgba(0,0,0,.55); transition:color .12s ease .12s, padding .3s ease, font-size .3s ease; display:flex; flex-direction:column; align-items:center; gap:1px; line-height:1.2;"><span>{{ item.label }}</span><span data-en="" style="font-size:9px; font-weight:600; letter-spacing:.03em; opacity:.6;">{{ item.en }}</span></a>
     </sc-for>
   </div>
 </nav>
@@ -47,7 +60,7 @@ a:hover { color: var(--color-accent-600); }
       <div style="max-width:1200px; margin:0 auto; padding:0 clamp(20px,5vw,72px);">
         <span style="display:block; font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:#fff; font-weight:700; margin-bottom:16px;">สำนักงานเขตพื้นที่การศึกษาประถมศึกษามหาสารคาม เขต 3</span>
         <h1 style="font-family:var(--font-heading); font-weight:800; font-size:clamp(32px,5vw,52px); line-height:1.1; letter-spacing:-0.02em; margin:0 0 20px; color:#fff;">โรงเรียนบ้านหนองสระพังโนนสะอาด</h1>
-        <p style="font-size:17px; line-height:1.65; max-width:56ch; color:#fff; opacity:.92; margin:0 0 28px;">&ldquo;เรียนดี มีวินัย ใฝ่คุณธรรม&rdquo; สถานศึกษาขนาดเล็กที่มุ่งพัฒนาเด็กทุกคนให้เติบโตอย่างมีคุณภาพ เปิดสอนตั้งแต่ระดับปฐมวัย (อนุบาล 2–3) ถึงระดับประถมศึกษา (ป.1–6)</p>
+        <p style="font-size:17px; line-height:1.65; max-width:56ch; color:#fff; opacity:.92; margin:0 0 28px;">“เรียนดี มีวินัย ใฝ่คุณธรรม” สถานศึกษาขนาดเล็กที่มุ่งพัฒนาเด็กทุกคนให้เติบโตอย่างมีคุณภาพ เปิดสอนตั้งแต่ระดับปฐมวัย (อนุบาล 2–3) ถึงระดับประถมศึกษา (ป.1–6)</p>
         <div style="display:flex; gap:12px; flex-wrap:wrap;">
           <a href="#news" onClick="{{ navClick }}" class="btn btn-primary">ข่าวประชาสัมพันธ์</a>
           <a href="#contact" onClick="{{ navClick }}" class="btn btn-secondary">ติดต่อเรา</a>
@@ -79,8 +92,8 @@ a:hover { color: var(--color-accent-600); }
             <p style="margin:4px 0 0; font-size:13px; color:#fff; opacity:.85;">{{ b.sub }}</p>
           </div>
         </sc-for>
-        <button type="button" onClick="{{ prevBanner }}" style="position:absolute; left:12px; top:50%; transform:translateY(-50%); width:36px; height:36px; border:none; background:color-mix(in srgb, var(--color-text) 55%, transparent); color:#fff; cursor:pointer; font-size:16px;">&#8592;</button>
-        <button type="button" onClick="{{ nextBanner }}" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); width:36px; height:36px; border:none; background:color-mix(in srgb, var(--color-text) 55%, transparent); color:#fff; cursor:pointer; font-size:16px;">&#8594;</button>
+        <button type="button" onClick="{{ prevBanner }}" style="position:absolute; left:12px; top:50%; transform:translateY(-50%); width:36px; height:36px; border:none; background:color-mix(in srgb, var(--color-text) 55%, transparent); color:#fff; cursor:pointer; font-size:16px;">←</button>
+        <button type="button" onClick="{{ nextBanner }}" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); width:36px; height:36px; border:none; background:color-mix(in srgb, var(--color-text) 55%, transparent); color:#fff; cursor:pointer; font-size:16px;">→</button>
       </div>
       <div style="display:flex; align-items:center; justify-content:center; gap:16px; margin-top:12px;">
         <sc-for list="{{ bannerDots }}" as="d" hint-placeholder-count="4">
@@ -94,24 +107,31 @@ a:hover { color: var(--color-accent-600); }
     </div>
 
     <!-- director message + VTR + quick links -->
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; border-top:2px solid var(--color-divider); padding:40px 0 48px;">
-      <div class="card elev-sm" style="position:relative; padding:0; overflow:hidden; display:block; min-height:300px;">
+    <div style="display:grid; grid-template-columns:{{ homeGridCols }}; gap:24px; align-items:stretch; border-top:2px solid var(--color-divider); padding:40px 0 48px;">
+      <div class="card elev-sm" style="position:relative; padding:0; overflow:hidden; display:block; height:100%; min-height:0;">
         <figure style="margin:0; position:absolute; inset:0;">
           <image-slot id="director-photo" shape="rect" style="width:100%;height:100%;" placeholder="ภาพผู้บริหาร"></image-slot>
         </figure>
         <div style="position:absolute; left:0; right:0; bottom:0; padding:24px; background:linear-gradient(to top, color-mix(in srgb, var(--color-text) 78%, transparent) 0%, color-mix(in srgb, var(--color-text) 40%, transparent) 55%, transparent 100%);">
           <span style="display:block; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--color-accent-200); margin-bottom:6px;">สารจากผู้อำนวยการ</span>
           <p style="margin:0 0 10px; font-family:var(--font-heading); font-size:26px; font-weight:800; line-height:1.15; color:#fff;">นายกิจภูมิ บุญอบ</p>
-          <p style="margin:0; font-size:14px; line-height:1.55; color:#fff; opacity:.92; max-width:38ch;">&ldquo;โรงเรียนมุ่งพัฒนาผู้เรียนทุกคนให้เป็นคนดี มีความรู้ และอยู่ร่วมกับผู้อื่นได้อย่างมีความสุข&rdquo;</p>
+          <p style="margin:0; font-size:14px; line-height:1.55; color:#fff; opacity:.92; max-width:38ch;">“โรงเรียนมุ่งพัฒนาผู้เรียนทุกคนให้เป็นคนดี มีความรู้ และอยู่ร่วมกับผู้อื่นได้อย่างมีความสุข”</p>
         </div>
       </div>
-      <div class="card elev-sm">
-        <span class="card-kicker">วิดีโอแนะนำโรงเรียน (VTR)</span>
-        <span class="card-title" style="font-size:16px;">รับชมผ่านช่อง YouTube ของโรงเรียน</span>
-        <p class="card-body">&ldquo;โรงเรียนบ้านหนองสระพังโนนสะอาด&rdquo;</p>
-        <a href="https://www.youtube.com/watch?v=ImgFAc5CpHQ" target="_blank" rel="noopener" class="btn btn-ghost" style="align-self:flex-start;">เปิดดูวิดีโอ</a>
-      </div>
-      <div class="card elev-sm">
+      <a href="https://www.youtube.com/watch?v=ImgFAc5CpHQ" target="_blank" rel="noopener" class="card elev-sm" style="position:relative; padding:0; overflow:hidden; display:block; aspect-ratio:16/9; min-height:0; text-decoration:none;">
+        <img src="https://img.youtube.com/vi/ImgFAc5CpHQ/maxresdefault.jpg" alt="ภาพปกวิดีโอแนะนำโรงเรียน" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;">
+        <div style="position:absolute; inset:0; z-index:1; display:flex; align-items:center; justify-content:center;">
+          <span style="display:flex; align-items:center; justify-content:center; width:60px; height:60px; background:var(--color-accent); color:var(--color-bg);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+          </span>
+        </div>
+        <div style="position:absolute; left:0; right:0; bottom:0; z-index:2; padding:20px; background:linear-gradient(to top, color-mix(in srgb, var(--color-text) 86%, transparent) 0%, color-mix(in srgb, var(--color-text) 45%, transparent) 70%, transparent 100%);">
+          <span style="display:block; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--color-accent-200); margin-bottom:6px;">วิดีโอแนะนำโรงเรียน (VTR)</span>
+          <p style="margin:0 0 4px; font-family:var(--font-heading); font-size:18px; font-weight:800; line-height:1.2; color:#fff;">รับชมผ่านช่อง YouTube ของโรงเรียน</p>
+          <p style="margin:0; font-size:13px; color:#fff; opacity:.85;">“โรงเรียนบ้านหนองสระพังโนนสะอาด”</p>
+        </div>
+      </a>
+      <div class="card elev-sm" style="height:100%; justify-content:flex-start; gap:8px; padding:16px;">
         <span class="card-kicker">เมนูลัด</span>
         <a href="#academics" onClick="{{ navClick }}" class="btn btn-block" style="border:1px solid var(--color-divider);">ระบบ e-Learning / ตารางเรียน</a>
         <a href="#about" onClick="{{ navClick }}" class="btn btn-block" style="border:1px solid var(--color-divider);">สรุปข้อมูลจำนวนนักเรียน</a>
@@ -126,59 +146,114 @@ a:hover { color: var(--color-accent-600); }
   <div style="max-width:1200px; margin:0 auto; padding:56px clamp(20px,5vw,72px); opacity:{{ reveal.about.opacity }}; transform:{{ reveal.about.transform }}; transition:opacity .8s ease, transform .8s ease;">
     <span class="tag tag-accent">เกี่ยวกับโรงเรียน</span>
     <h2 style="font-size:clamp(26px,3.2vw,38px); margin:14px 0 24px;">ประวัติและข้อมูลทั่วไป</h2>
-    <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">ประวัติโรงเรียน</h3>
-    <p style="font-size:15.5px; line-height:1.7; max-width:70ch; color:color-mix(in srgb, var(--color-text) 82%, transparent); margin:0 0 8px;">โรงเรียนบ้านหนองสระพังโนนสะอาด ตั้งอยู่หมู่ที่ 15 บ้านหนองสระพัง ตำบลเขวาไร่ อำเภอโกสุมพิสัย จังหวัดมหาสารคาม สังกัดสำนักงานเขตพื้นที่การศึกษาประถมศึกษามหาสารคาม เขต 3 (กลุ่มโรงเรียนวังยาวเขวาไร่ดอนกลาง) <span style="opacity:.55;">(ประวัติโดยละเอียดเป็นข้อความตัวอย่าง โปรดแก้ไข)</span></p>
-
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin:28px 0 40px;">
-      <div class="card">
-        <span class="card-kicker">ข้อมูลสถานศึกษา</span>
-        <p class="card-title" style="font-size:14px; margin:0;">ขนาดเล็ก (ประเภทขนาดที่ 1)</p>
-        <p class="card-body">รหัส SMIS 44010089 &middot; PERCODE 410132 &middot; รหัสกระทรวง 1044410132</p>
+    <div style="display:grid; grid-template-columns:{{ historyCols }}; gap:clamp(16px,3vw,40px); align-items:end;">
+      <div>
+        <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">ประวัติโรงเรียน</h3>
+        <p data-reveal-text="" style="font-size:clamp(17px,2vw,22px); font-weight:700; line-height:1.65; max-width:52ch; color:var(--color-text); margin:0 0 8px;">โรงเรียนบ้านหนองสระพังโนนสะอาด ก่อตั้งขึ้นเมื่อวันที่ 19 ตุลาคม พ.ศ. 2474 โดยใช้ศาลาการเปรียญวัดหนองสระพังจัดการเรียนการสอน ต่อมาในปี พ.ศ. 2482 ชาวบ้านได้จับจองหักร้างถางพงที่ดินแปลงใหม่เพื่อเป็นที่ตั้งโรงเรียนที่เป็นเอกเทศ บนเนื้อที่ 10 ไร่ 9 ตารางวา และได้ย้ายโรงเรียนมาสร้างในที่ดินแปลงใหม่จนถึงปัจจุบัน เพื่อความภาคภูมิใจในความเป็นเจ้าของร่วมกันของหมู่บ้านในเขตพื้นที่บริการ โรงเรียนได้รับอนุมัติให้เปลี่ยนชื่อใหม่เป็น “โรงเรียนบ้านหนองสระพังโนนสะอาด” อายุการก่อตั้งนับถึงสิ้นปีการศึกษา 2563 รวม 91 ปี</p>
+        <p style="font-size:15.5px; line-height:1.7; max-width:70ch; color:color-mix(in srgb, var(--color-text) 78%, transparent); margin:16px 0 8px;">โรงเรียนมีหมู่บ้านหลักในเขตบริการ 3 หมู่ ได้แก่ หมู่ที่ 1 บ้านหนองสระพัง หมู่ที่ 3 บ้านโนนสะอาด และหมู่ที่ 15 บ้านหนองสระพัง โดยโรงเรียนตั้งอยู่หมู่ที่ 15 บ้านหนองสระพัง ตำบลเขวาไร่ อำเภอโกสุมพิสัย จังหวัดมหาสารคาม 44140 เป็นโรงเรียนในสังกัดศูนย์พัฒนาคุณภาพการศึกษาวังยาวเขวาไร่ดอนกลาง สำนักงานเขตพื้นที่การศึกษาประถมศึกษามหาสารคาม เขต 3 สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน</p>
       </div>
-      <div class="card">
-        <span class="card-kicker">ผู้บริหารโรงเรียน</span>
-        <p class="card-title" style="font-size:16px; margin:0;">นายกิจภูมิ บุญอบ</p>
-        <p class="card-body">ผู้อำนวยการโรงเรียน</p>
-      </div>
+      <figure style="margin:0; align-self:end;">
+        <image-slot id="director-cutout" shape="rect" fit="contain" style="width: 100%; aspect-ratio: 3/4; background-color: var(--color-bg); border-radius: 0" placeholder="ภาพผู้อำนวยการ (พื้นหลังโปร่งใส .png)"></image-slot>
+        <div style="margin:0; width:100%; background:var(--color-text); border-radius:999px; padding:14px 24px; text-align:center;">
+          <p style="font-family:var(--font-heading); font-weight:800; font-size:16px; margin:0 0 2px; color:var(--color-bg);">นายกิจภูมิ บุญอบ</p>
+          <p style="font-size:13px; margin:0; color:rgba(243,242,242,.65);">ผู้อำนวยการโรงเรียน</p>
+        </div>
+      </figure>
     </div>
 
+    
     <div style="display:grid; grid-template-columns:80px minmax(0,1fr); gap:16px; align-items:baseline; padding:20px 0; border-top:2px solid var(--color-divider);">
       <p style="font-family:var(--font-heading); font-weight:800; font-size:14px; margin:0;">01</p>
-      <div><h3 style="font-size:19px; margin:0 0 6px;">วิสัยทัศน์</h3><p style="font-size:14.5px; line-height:1.6; color:color-mix(in srgb, var(--color-text) 80%, transparent); margin:0; max-width:60ch;">มุ่งพัฒนาผู้เรียนให้มีคุณภาพตามมาตรฐานการศึกษาขั้นพื้นฐาน ควบคู่คุณธรรม จริยธรรม และความเป็นไทย</p></div>
+      <div><h3 style="font-size:19px; margin:0 0 6px;">วิสัยทัศน์</h3><p style="font-size:14.5px; line-height:1.6; color:color-mix(in srgb, var(--color-text) 80%, transparent); margin:0; max-width:60ch;">สู่คุณภาพและมาตรฐานการศึกษาด้วยวิธีการเรียนรู้ สอน และบริหาร ที่หลากหลาย</p></div>
+    </div><div style="display:grid; grid-template-columns:80px minmax(0,1fr); gap:16px; align-items:baseline; padding:20px 0; border-top:2px solid var(--color-divider);">
+      <p style="font-family:var(--font-heading); font-weight:800; font-size:14px; margin:0;">02</p>
+      <div><h3 style="font-size:19px; margin:0 0 6px;">ปรัชญา</h3><p style="font-size:14.5px; line-height:1.6; color:color-mix(in srgb, var(--color-text) 80%, transparent); margin:0; max-width:60ch;">สุวิชาโน ภวังโหติ — ผู้รู้ดี คือผู้เจริญ</p></div>
     </div>
     <div style="display:grid; grid-template-columns:80px minmax(0,1fr); gap:16px; align-items:baseline; padding:20px 0; border-top:2px solid var(--color-divider);">
-      <p style="font-family:var(--font-heading); font-weight:800; font-size:14px; margin:0;">02</p>
-      <div><h3 style="font-size:19px; margin:0 0 6px;">พันธกิจ</h3><p style="font-size:14.5px; line-height:1.6; color:color-mix(in srgb, var(--color-text) 80%, transparent); margin:0; max-width:60ch;">จัดการเรียนการสอนที่เน้นผู้เรียนเป็นสำคัญ ส่งเสริมคุณธรรมจริยธรรม และสร้างความร่วมมือที่ดีกับชุมชนอย่างต่อเนื่อง</p></div>
-    </div>
-    <div style="display:grid; grid-template-columns:80px minmax(0,1fr); gap:16px; align-items:baseline; padding:20px 0; border-top:2px solid var(--color-divider); border-bottom:2px solid var(--color-divider);">
       <p style="font-family:var(--font-heading); font-weight:800; font-size:14px; margin:0;">03</p>
-      <div><h3 style="font-size:19px; margin:0 0 6px;">อัตลักษณ์</h3><p style="font-size:14.5px; line-height:1.6; color:color-mix(in srgb, var(--color-text) 80%, transparent); margin:0; max-width:60ch;">&ldquo;ยิ้มง่าย ไหว้สวย กราบงาม&rdquo; ผู้เรียนมีมารยาทงามตามวิถีไทย</p></div>
+      <div><h3 style="font-size:19px; margin:0 0 6px;">คำขวัญ</h3><p style="font-size:14.5px; line-height:1.6; color:color-mix(in srgb, var(--color-text) 80%, transparent); margin:0; max-width:60ch;">เรียนดี มีวินัย ใฝ่พัฒนา รักษาสิ่งแวดล้อม เพียบพร้อมคุณธรรม ร่วมกิจกรรมชุมชน</p></div>
+    </div>
+    <div style="display:grid; grid-template-columns:80px minmax(0,1fr); gap:16px; align-items:start; padding:20px 0; border-top:2px solid var(--color-divider);">
+      <p style="font-family:var(--font-heading); font-weight:800; font-size:14px; margin:0;">04</p>
+      <div>
+        <h3 style="font-size:19px; margin:0 0 12px;">พันธกิจ</h3>
+        <div style="display:flex; flex-direction:column; gap:12px; max-width:72ch;">
+          <sc-for list="{{ missions }}" as="m" hint-placeholder-count="6">
+            <div style="display:grid; grid-template-columns:28px minmax(0,1fr); gap:12px; align-items:baseline;">
+              <span style="font-family:var(--font-heading); font-weight:800; font-size:13px; color:var(--color-accent-700);">{{ m.no }}</span>
+              <p style="font-size:14.5px; line-height:1.6; color:color-mix(in srgb, var(--color-text) 80%, transparent); margin:0;">{{ m.text }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns:80px minmax(0,1fr); gap:16px; align-items:start; padding:20px 0; border-top:2px solid var(--color-divider); border-bottom:2px solid var(--color-divider);">
+      <p style="font-family:var(--font-heading); font-weight:800; font-size:14px; margin:0;">05</p>
+      <div>
+        <h3 style="font-size:19px; margin:0 0 12px;">กลยุทธ์</h3>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px;">
+          <sc-for list="{{ strategies }}" as="st" hint-placeholder-count="6">
+            <div style="display:flex; gap:12px; align-items:baseline; border:2px solid var(--color-divider); padding:14px 16px;">
+              <span style="flex:none; font-family:var(--font-heading); font-weight:800; font-size:13px; color:var(--color-accent-700);">{{ st.no }}</span>
+              <p style="font-size:14px; line-height:1.55; margin:0;">{{ st.text }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </div>
     </div>
 
     <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:40px 0 20px;">โครงสร้างผู้บริหารและทำเนียบครู</h3>
-    <div style="display:flex; flex-direction:column; align-items:center; margin-bottom:40px;">
-      <div class="tag tag-outline" style="font-size:13px; padding:8px 20px;">ผู้อำนวยการโรงเรียน</div>
-      <div style="width:2px; height:20px; background:var(--color-divider);"></div>
-      <div style="display:flex; width:100%; max-width:760px;">
-        <div style="flex:1; height:2px; background:var(--color-divider); align-self:flex-start; margin-top:0;"></div>
-      </div>
-      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:16px; width:100%; max-width:760px; border-top:2px solid var(--color-divider); padding-top:20px;">
-        <div style="text-align:center; font-size:13px; padding:10px; border:1px solid var(--color-divider);">ฝ่ายบริหารวิชาการ</div>
-        <div style="text-align:center; font-size:13px; padding:10px; border:1px solid var(--color-divider);">ฝ่ายบริหารงบประมาณ</div>
-        <div style="text-align:center; font-size:13px; padding:10px; border:1px solid var(--color-divider);">ฝ่ายบริหารบุคคล</div>
-        <div style="text-align:center; font-size:13px; padding:10px; border:1px solid var(--color-divider);">ฝ่ายบริหารทั่วไป</div>
-      </div>
-    </div>
-
-    <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 20px;">บุคลากรทางการศึกษา</h3>
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; margin-bottom:40px;">
-      <sc-for list="{{ staffList }}" as="t" hint-placeholder-count="5">
-        <div class="card elev-sm" style="opacity:{{ t.reveal.opacity }}; transform:{{ t.reveal.transform }}; transition:opacity .6s ease, transform .6s ease; transition-delay:{{ t.reveal.delay }};">
-          <span class="card-kicker">{{ t.count }}</span>
-          <span class="card-title" style="font-size:16px;">{{ t.name }}</span>
-          <p class="card-body">{{ t.role }}</p>
-        </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px; margin-bottom:12px;">
+      <sc-for list="{{ staffTopGroups }}" as="g" hint-placeholder-count="2">
+        <button type="button" onClick="{{ g.onClick }}" style="display:flex; align-items:center; gap:12px; text-align:left; cursor:pointer; font-family:var(--font-body); padding:16px; border-radius:14px; background:{{ g.bg }}; border:2px solid {{ g.border }}; color:var(--color-text); transition:background .2s ease, border-color .2s ease;">
+          <span style="flex:none; display:flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:10px; background:{{ g.iconBg }}; color:{{ g.iconColor }};">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ g.icon }}"></path></svg>
+          </span>
+          <span style="flex:1; min-width:0; font-size:14.5px; font-weight:800; line-height:1.3;">{{ g.label }}</span>
+          <span style="flex:none; font-size:12.5px; opacity:.7; white-space:nowrap;">{{ g.count }}</span>
+        </button>
       </sc-for>
+    </div>
+    <sc-if value="{{ showSubGroups }}" hint-placeholder-val="{{ false }}">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); gap:10px; margin-bottom:24px; border-left:2px solid var(--color-divider); padding-left:16px;">
+        <sc-for list="{{ staffSubGroups }}" as="g" hint-placeholder-count="9">
+          <button type="button" onClick="{{ g.onClick }}" style="display:flex; align-items:center; gap:10px; text-align:left; cursor:pointer; font-family:var(--font-body); padding:11px 13px; border-radius:12px; background:{{ g.bg }}; border:2px solid {{ g.border }}; color:var(--color-text); transition:background .2s ease, border-color .2s ease;">
+            <span style="flex:none; display:flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:8px; background:{{ g.iconBg }}; color:{{ g.iconColor }};">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ g.icon }}"></path></svg>
+            </span>
+            <span style="flex:1; min-width:0; font-size:12.5px; font-weight:700; line-height:1.3;">{{ g.label }}</span>
+            <span style="flex:none; font-size:12px; opacity:.7; white-space:nowrap;">{{ g.count }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <div style="border:2px solid var(--color-divider); border-radius:16px; padding:clamp(20px,3vw,32px); margin-bottom:40px;">
+      <div style="display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap; border-bottom:2px solid var(--color-divider); padding-bottom:20px; margin-bottom:24px;">
+        <span style="flex:none; display:flex; align-items:center; justify-content:center; width:52px; height:52px; border-radius:12px; background:var(--color-accent); color:var(--color-bg);">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ activeGroup.icon }}"></path></svg>
+        </span>
+        <div style="flex:1; min-width:200px;">
+          <span class="tag tag-accent" style="margin-bottom:8px;">{{ activeGroup.tag }}</span>
+          <p style="font-family:var(--font-heading); font-weight:800; font-size:clamp(22px,2.6vw,30px); line-height:1.15; margin:8px 0 6px;">{{ activeGroup.label }}</p>
+          <p style="font-size:14.5px; line-height:1.6; margin:0; color:color-mix(in srgb, var(--color-text) 72%, transparent);">{{ activeGroup.desc }}</p>
+        </div>
+        <span style="flex:none; font-size:13px; font-weight:700; padding:10px 14px; border-radius:999px; border:2px solid var(--color-divider);">{{ activeGroup.count }}</span>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px;">
+        <sc-for list="{{ activeMembers }}" as="m" hint-placeholder-count="2">
+          <div style="display:flex; gap:16px; border:2px solid var(--color-divider); border-radius:14px; padding:16px;">
+            <figure class="{{ photoClass }}" style="margin:0; flex:none;">
+              <image-slot id="{{ m.photoId }}" shape="rect" style="width:96px; height:120px;" placeholder="ภาพบุคลากร"></image-slot>
+            </figure>
+            <div style="min-width:0;">
+              <p style="font-family:var(--font-heading); font-weight:800; font-size:17px; margin:0 0 4px;">{{ m.name }}</p>
+              <span style="display:block; font-size:12.5px; font-weight:700; color:var(--color-accent-700); margin-bottom:6px;">{{ m.role }}</span>
+              <p style="font-size:13.5px; line-height:1.55; margin:0; color:color-mix(in srgb, var(--color-text) 72%, transparent);">{{ m.note }}</p>
+            </div>
+          </div>
+        </sc-for>
+      </div>
     </div>
 
     <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">ข้อมูลนักเรียน</h3>
@@ -207,7 +282,7 @@ a:hover { color: var(--color-accent-600); }
       <div class="card">
         <span class="card-kicker">เพลงมาร์ชประจำโรงเรียน</span>
         <span class="card-title" style="font-size:15px;">วิดีโอคาราโอเกะเพลงมาร์ช</span>
-        <a href="https://www.youtube.com/results?search_query=%E0%B9%80%E0%B8%9E%E0%B8%A5%E0%B8%87%E0%B8%A1%E0%B8%B2%E0%B8%A3%E0%B9%8C%E0%B8%88+%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B9%80%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%AB%E0%B8%99%E0%B8%AD%E0%B8%87%E0%B8%AA%E0%B8%A3%E0%B8%B0%E0%B8%9E%E0%B8%B1%E0%B8%87%E0%B9%82%E0%B8%99%E0%B8%99%E0%B8%AA%E0%B8%B0%E0%B8%AD%E0%B8%B2%E0%B8%94" target="_blank" rel="noopener" class="btn btn-ghost" style="align-self:flex-start;">รับชมบน YouTube</a>
+        <a href="https://www.youtube.com/@%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B9%80%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%99%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%AB%E0%B8%99%E0%B8%AD%E0%B8%87%E0%B8%AA%E0%B8%A3%E0%B8%B0%E0%B8%9E%E0%B8%B1%E0%B8%87%E0%B9%82%E0%B8%99%E0%B8%99%E0%B8%AA%E0%B8%B0%E0%B8%AD%E0%B8%B2%E0%B8%94/videos" target="_blank" rel="noopener" class="btn btn-ghost" style="align-self:flex-start;">รับชมบน YouTube</a>
       </div>
     </div>
   </div>
@@ -218,7 +293,7 @@ a:hover { color: var(--color-accent-600); }
     <span class="tag tag-accent">ข้อมูลวิชาการ</span>
     <h2 style="font-size:clamp(26px,3.2vw,38px); margin:14px 0 28px;">หลักสูตรและการจัดการเรียนรู้</h2>
 
-    <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">หลักสูตรที่เปิดสอน</h3>
+    <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">ระดับชั้นที่เปิดสอน</h3>
     <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:36px;">
       <sc-for list="{{ grades }}" as="g" hint-placeholder-count="8">
         <span class="tag tag-outline" style="font-size:13px; padding:6px 16px;">{{ g }}</span>
@@ -249,6 +324,17 @@ a:hover { color: var(--color-accent-600); }
       </div>
     </div>
 
+    <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">นวัตกรรมและวิจัยในชั้นเรียน</h3>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-bottom:36px;">
+      <sc-for list="{{ innovations }}" as="iv" hint-placeholder-count="3">
+        <div class="card">
+          <span class="card-kicker">{{ iv.tag }}</span>
+          <span class="card-title" style="font-size:16px;">{{ iv.title }}</span>
+          <p class="card-body">{{ iv.desc }}</p>
+        </div>
+      </sc-for>
+    </div>
+
     <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">การวัดและประเมินผล</h3>
     <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; margin-bottom:36px;">
       <sc-for list="{{ assessments }}" as="ax" hint-placeholder-count="3">
@@ -276,17 +362,52 @@ a:hover { color: var(--color-accent-600); }
     <h2 style="font-size:clamp(26px,3.2vw,38px); margin:14px 0 28px;">ข่าวสาร กิจกรรม และผลงานของโรงเรียน</h2>
 
     <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">ข่าวและกิจกรรมล่าสุด</h3>
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:24px; margin-bottom:40px;">
-      <sc-for list="{{ newsList }}" as="n" hint-placeholder-count="4">
-        <div style="opacity:{{ n.reveal.opacity }}; transform:{{ n.reveal.transform }}; transition:opacity .6s ease, transform .6s ease; transition-delay:{{ n.reveal.delay }};">
-          <figure class="{{ photoClass }}" style="margin:0 0 12px;">
-            <image-slot id="{{ n.photoId }}" shape="rect" style="width:100%; aspect-ratio:4/3;" placeholder="ภาพกิจกรรม"></image-slot>
-          </figure>
-          <span style="font-size:12px; letter-spacing:.05em; text-transform:uppercase; color:var(--color-accent-700); font-weight:700;">{{ n.date }}</span>
-          <h3 style="font-size:17px; margin:6px 0 6px;">{{ n.title }}</h3>
-          <p style="font-size:14px; line-height:1.55; color:color-mix(in srgb, var(--color-text) 78%, transparent); margin:0;">{{ n.excerpt }}</p>
+    <div style="background:var(--color-text); border-radius:24px; padding:clamp(16px,2.5vw,28px); margin-bottom:40px;">
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:clamp(14px,2vw,24px);">
+        <sc-for list="{{ newsList }}" as="n" hint-placeholder-count="6">
+          <a href="https://www.facebook.com/profile.php?id=100058599200322" target="_blank" rel="noopener" style="position:relative; display:block; overflow:hidden; border-radius:16px; aspect-ratio:16/10; text-decoration:none; opacity:{{ n.reveal.opacity }}; transform:{{ n.reveal.transform }}; transition:opacity .6s ease, transform .6s ease; transition-delay:{{ n.reveal.delay }};">
+            <figure class="{{ photoClass }}" style="margin:0; position:absolute; inset:0; border-radius:0;">
+              <image-slot id="{{ n.photoId }}" shape="rect" style="width:100%; height:100%; border-radius:0;" placeholder="ภาพกิจกรรม"></image-slot>
+            </figure>
+            <span style="position:absolute; top:12px; right:12px; z-index:2; display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:999px; background:var(--color-bg); color:var(--color-text);">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M9 7h8v8"></path></svg>
+            </span>
+            <div style="position:absolute; left:0; right:0; bottom:0; z-index:1; padding:18px 20px; background:linear-gradient(to top, rgba(32,30,29,.88) 0%, rgba(32,30,29,.45) 60%, transparent 100%);">
+              <span style="display:block; font-size:11.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--color-accent-200); font-weight:700; margin-bottom:6px;">{{ n.date }}</span>
+              <p style="font-family:var(--font-heading); font-weight:800; font-size:19px; line-height:1.2; margin:0 0 4px; color:#fff;">{{ n.title }}</p>
+              <p style="font-size:13px; line-height:1.5; margin:0; color:#fff; opacity:.85;">{{ n.excerpt }}</p>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+
+    <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">คลังสื่อและภาพกิจกรรม</h3>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px; margin-bottom:40px;">
+      <div class="card elev-sm" style="padding:0; overflow:hidden;">
+        <div style="padding:16px 16px 12px;">
+          <span class="card-kicker">Facebook</span>
+          <span class="card-title" style="font-size:16px;">แฟนเพจโรงเรียน</span>
         </div>
-      </sc-for>
+        <div style="position:relative; width:100%; height:420px; overflow:hidden; border-top:2px solid var(--color-divider);">
+          <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100058599200322&amp;tabs=timeline&amp;width=500&amp;height=420&amp;small_header=true&amp;adapt_container_width=true&amp;hide_cover=false&amp;show_facepile=false" width="100%" height="420" style="border:none; display:block; overflow:hidden;" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" title="Facebook แฟนเพจโรงเรียนบ้านหนองสระพังโนนสะอาด"></iframe>
+        </div>
+        <div style="padding:14px 16px;">
+          <a href="https://www.facebook.com/profile.php?id=100058599200322" target="_blank" rel="noopener" class="btn btn-ghost" style="align-self:flex-start;">เปิดแฟนเพจ</a>
+        </div>
+      </div>
+      <div class="card elev-sm" style="padding:0; overflow:hidden;">
+        <div style="padding:16px 16px 12px;">
+          <span class="card-kicker">YouTube</span>
+          <span class="card-title" style="font-size:16px;">คลิปวิดีโอกิจกรรมโรงเรียน</span>
+        </div>
+        <div style="position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; border-top:2px solid var(--color-divider); border-bottom:2px solid var(--color-divider);">
+          <iframe src="https://www.youtube.com/embed/ImgFAc5CpHQ" width="100%" height="100%" style="border:0; display:block;" title="วิดีโอโรงเรียนบ้านหนองสระพังโนนสะอาด" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
+        </div>
+        <div style="padding:14px 16px;">
+          <a href="https://www.youtube.com/results?search_query=%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B9%80%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%AB%E0%B8%99%E0%B8%AD%E0%B8%87%E0%B8%AA%E0%B8%A3%E0%B8%B0%E0%B8%9E%E0%B8%B1%E0%B8%87%E0%B9%82%E0%B8%99%E0%B8%99%E0%B8%AA%E0%B8%B0%E0%B8%AD%E0%B8%B2%E0%B8%94" target="_blank" rel="noopener" class="btn btn-ghost" style="align-self:flex-start;">ดูทั้งหมดบน YouTube</a>
+        </div>
+      </div>
     </div>
 
     <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">รางวัลเกียรติยศ</h3>
@@ -309,21 +430,6 @@ a:hover { color: var(--color-accent-600); }
       </sc-for>
     </div>
 
-    <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:40px 0 14px;">คลังสื่อและภาพกิจกรรม</h3>
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px; margin-bottom:40px;">
-      <div class="card elev-sm">
-        <span class="card-kicker">Facebook</span>
-        <span class="card-title" style="font-size:16px;">แฟนเพจโรงเรียน</span>
-        <p class="card-body">ข่าวสารและภาพกิจกรรมอัปเดตล่าสุดจากแฟนเพจของโรงเรียน</p>
-        <a href="https://www.facebook.com/profile.php?id=100058599200322" target="_blank" rel="noopener" class="btn btn-ghost" style="align-self:flex-start;">เปิดแฟนเพจ</a>
-      </div>
-      <div class="card elev-sm">
-        <span class="card-kicker">YouTube</span>
-        <span class="card-title" style="font-size:16px;">คลิปวิดีโอกิจกรรมโรงเรียน</span>
-        <p class="card-body">รวมคลิปกิจกรรมและข่าวสารบนช่อง YouTube ของโรงเรียน</p>
-        <a href="https://www.youtube.com/results?search_query=%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B9%80%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%AB%E0%B8%99%E0%B8%AD%E0%B8%87%E0%B8%AA%E0%B8%A3%E0%B8%B0%E0%B8%9E%E0%B8%B1%E0%B8%87%E0%B9%82%E0%B8%99%E0%B8%99%E0%B8%AA%E0%B8%B0%E0%B8%AD%E0%B8%B2%E0%B8%94" target="_blank" rel="noopener" class="btn btn-ghost" style="align-self:flex-start;">ดูทั้งหมดบน YouTube</a>
-      </div>
-    </div>
 
     <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">ดาวน์โหลดเอกสาร</h3>
     <table class="table">
@@ -352,9 +458,7 @@ a:hover { color: var(--color-accent-600); }
       <div>
         <p style="font-size:15px; line-height:1.7; margin:0 0 12px;"><strong>ที่อยู่:</strong> หมู่ที่ 15 บ้านหนองสระพัง ตำบลเขวาไร่ อำเภอโกสุมพิสัย จังหวัดมหาสารคาม 44140</p>
         <p style="font-size:15px; line-height:1.7; margin:0 0 8px;"><strong>โทรศัพท์:</strong> 0XX-XXX-XXXX</p>
-        <p style="font-size:15px; line-height:1.7; margin:0 0 8px;"><strong>อีเมล:</strong> sapangsaardschool@gmail.com</p>
-        <p style="font-size:15px; line-height:1.7; margin:0 0 8px;"><strong>พิกัดทางภูมิศาสตร์:</strong> 8W32+HF ตำบลเขวาไร่ อำเภอโกสุมพิสัย จังหวัดมหาสารคาม (ละติจูด 16.303912, ลองจิจูด 102.900500)</p>
-        <p style="font-size:15px; line-height:1.7; margin:0 0 24px;"><strong>เว็บไซต์:</strong> srapangsa-ard-school.ning.com &middot; <strong>YouTube:</strong> โรงเรียนบ้านหนองสระพังโนนสะอาด</p>
+        <p style="font-size:15px; line-height:1.7; margin:0 0 24px;"><strong>อีเมล:</strong> sapangsaardschool@gmail.com</p>
         <a href="https://maps.app.goo.gl/aRgQZ7Y1n2Ty9Qhn7" target="_blank" rel="noopener" class="btn btn-secondary" style="margin-bottom:16px;">เปิดใน Google Maps</a>
         <div style="width:100%; aspect-ratio:16/9; overflow:hidden;">
           <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1042.107820259591!2d102.90049966957717!3d16.303911699025637!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x312285e0fa96eac1%3A0x7b897f0b9500f9bb!2sBan%20Nong%20Saphang%20Non%20Sa-At%20School!5e1!3m2!1sen!2sth!4v1785747069550!5m2!1sen!2sth" width="100%" height="100%" style="border:0; display:block;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
@@ -370,10 +474,10 @@ a:hover { color: var(--color-accent-600); }
         <sc-if value="{{ formNotSent }}" hint-placeholder-val="{{ true }}">
           <form onSubmit="{{ onSubmitForm }}" style="display:flex; flex-direction:column; gap:16px;">
             <span class="card-kicker" style="margin-bottom:-4px;">แบบฟอร์มติดต่อกลับ / ถาม-ตอบ</span>
-            <div class="field"><label>ชื่อ-นามสกุล</label><input class="input" type="text" /></div>
-            <div class="field"><label>อีเมลหรือเบอร์โทร</label><input class="input" type="text" /></div>
+            <div class="field"><label>ชื่อ-นามสกุล</label><input class="input" type="text"></div>
+            <div class="field"><label>อีเมลหรือเบอร์โทร</label><input class="input" type="text"></div>
             <div class="field"><label>คำถาม / ข้อความ</label><textarea class="input" rows="4"></textarea></div>
-            <button type="submit" class="btn btn-primary btn-block">ส่งข้อความ</button>
+            <button type="submit" class="btn btn-primary btn-block" style="justify-content:center; text-align:center;">ส่งข้อความ</button>
           </form>
         </sc-if>
       </div>
@@ -381,19 +485,90 @@ a:hover { color: var(--color-accent-600); }
   </div>
 </section>
 
-<footer style="background:var(--color-bg); border-top:2px solid var(--color-divider);">
-  <div style="max-width:1200px; margin:0 auto; padding:32px clamp(20px,5vw,72px); display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; font-size:13px; color:color-mix(in srgb, var(--color-text) 65%, transparent);">
-    <span>&copy; 2569 โรงเรียนบ้านหนองสระพังโนนสะอาด &middot; สพป.มหาสารคาม เขต 3</span>
-    <span>ทุกวันจันทร์–ศุกร์ 08:00–15:30 น.</span>
+<footer style="background:var(--color-text); color:var(--color-bg);">
+  <div style="max-width:1200px; margin:0 auto; padding:clamp(40px,6vw,64px) clamp(20px,5vw,72px); display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:40px;">
+    <div>
+      <image-slot id="logo-footer" shape="rect" fit="contain" src="assets/logo-transparent.png" style="width:56px;height:56px;display:block;margin-bottom:16px;"></image-slot>
+      <p style="font-family:var(--font-heading); font-weight:800; font-size:16px; margin:0 0 12px; color:var(--color-bg);">โรงเรียนบ้านหนองสระพังโนนสะอาด</p>
+      <p style="font-size:14px; line-height:1.65; margin:0; max-width:34ch; color:rgba(243,242,242,.82);">สำนักงานเขตพื้นที่การศึกษาประถมศึกษามหาสารคาม เขต 3</p>
+    </div>
+    <div>
+      <p style="font-family:var(--font-heading); font-weight:800; font-size:14px; margin:0 0 18px; color:var(--color-bg);">เมนูหลัก</p>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="5">
+          <a href="{{ item.href }}" onClick="{{ navClick }}" style="font-size:14px; text-decoration:none; color:rgba(243,242,242,.8);" style-hover="color:var(--color-bg);">{{ item.label }}</a>
+        </sc-for>
+      </div>
+    </div>
+    <div>
+      <p style="font-family:var(--font-heading); font-weight:800; font-size:14px; margin:0 0 18px; color:var(--color-bg);">ช่องทางติดต่อ</p>
+      <div style="display:flex; flex-direction:column; gap:12px; font-size:14px; color:rgba(243,242,242,.8);">
+        <span>หมู่ที่ 15 ต.เขวาไร่ อ.โกสุมพิสัย จ.มหาสารคาม 44140</span>
+        <span>sapangsaardschool@gmail.com</span>
+        <span>จันทร์–ศุกร์ 08:00–15:30 น.</span>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:6px;">
+          <a href="https://www.facebook.com/profile.php?id=100058599200322" target="_blank" rel="noopener" aria-label="Facebook แฟนเพจโรงเรียน" title="Facebook" style="display:flex; align-items:center; justify-content:center; width:42px; height:42px; border-radius:999px; color:var(--color-bg); border:2px solid rgba(243,242,242,.35);" style-hover="border-color:var(--color-bg); background:rgba(243,242,242,.12);">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h2.5l.5-3H13v-2c0-.6.4-1 1-1z"></path></svg>
+          </a>
+          <a href="https://www.youtube.com/@%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B9%80%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%99%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%AB%E0%B8%99%E0%B8%AD%E0%B8%87%E0%B8%AA%E0%B8%A3%E0%B8%B0%E0%B8%9E%E0%B8%B1%E0%B8%87%E0%B9%82%E0%B8%99%E0%B8%99%E0%B8%AA%E0%B8%B0%E0%B8%AD%E0%B8%B2%E0%B8%94/videos" target="_blank" rel="noopener" aria-label="ช่อง YouTube โรงเรียน" title="YouTube" style="display:flex; align-items:center; justify-content:center; width:42px; height:42px; border-radius:999px; color:var(--color-bg); border:2px solid rgba(243,242,242,.35);" style-hover="border-color:var(--color-bg); background:rgba(243,242,242,.12);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.6 7.2a2.6 2.6 0 0 0-1.8-1.8C18.1 5 12 5 12 5s-6.1 0-7.8.4A2.6 2.6 0 0 0 2.4 7.2C2 8.9 2 12 2 12s0 3.1.4 4.8a2.6 2.6 0 0 0 1.8 1.8C5.9 19 12 19 12 19s6.1 0 7.8-.4a2.6 2.6 0 0 0 1.8-1.8c.4-1.7.4-4.8.4-4.8s0-3.1-.4-4.8zM10 15.2V8.8l5.5 3.2-5.5 3.2z"></path></svg>
+          </a>
+          <a href="https://maps.app.goo.gl/aRgQZ7Y1n2Ty9Qhn7" target="_blank" rel="noopener" aria-label="แผนที่โรงเรียนบน Google Maps" title="แผนที่" style="display:flex; align-items:center; justify-content:center; width:42px; height:42px; border-radius:999px; color:var(--color-bg); border:2px solid rgba(243,242,242,.35);" style-hover="border-color:var(--color-bg); background:rgba(243,242,242,.12);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p style="font-family:var(--font-heading); font-weight:800; font-size:14px; margin:0 0 18px; color:var(--color-bg);">สำหรับผู้ดูแลระบบ</p>
+      <button type="button" onClick="{{ openAdmin }}" style="display:inline-flex; align-items:center; gap:8px; font-family:var(--font-body); font-size:13px; font-weight:700; cursor:pointer; border:none; border-radius:999px; background:var(--color-accent); color:var(--color-bg); padding:12px 18px;" style-hover="background:var(--color-accent-400);">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        เข้าสู่ระบบผู้ดูแล
+      </button>
+    </div>
+  </div>
+  <div style="border-top:2px solid rgba(243,242,242,.2);">
+    <div style="max-width:1200px; margin:0 auto; padding:20px clamp(20px,5vw,72px); display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; font-size:12.5px; color:rgba(243,242,242,.65);">
+      <span>© 2569 โรงเรียนบ้านหนองสระพังโนนสะอาด · สพป.มหาสารคาม เขต 3</span>
+      <span style="font-family:'Space Mono', monospace; letter-spacing:.02em;">built by campingroom —</span>
+    </div>
   </div>
 </footer>
 
-<button type="button" onClick="{{ scrollTop }}" style="position:fixed; right:24px; bottom:24px; width:46px; height:46px; border:none; background:var(--color-accent); color:var(--color-bg); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:18px; z-index:60; opacity:{{ backToTop.opacity }}; pointer-events:{{ backToTop.pointerEvents }}; transform:{{ backToTop.transform }}; transition:opacity .3s ease, transform .3s ease;">&uarr;</button>
+<sc-if value="{{ adminOpen }}" hint-placeholder-val="{{ false }}">
+  <div onClick="{{ closeAdmin }}" style="position:fixed; inset:0; z-index:80; background:color-mix(in srgb, var(--color-text) 70%, transparent); display:flex; align-items:center; justify-content:center; padding:24px;">
+    <form onSubmit="{{ onAdminSubmit }}" onClick="{{ stopPropagation }}" style="width:100%; max-width:400px; background:var(--color-bg); border:2px solid var(--color-text); padding:32px; box-shadow:var(--shadow-lg);">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:6px;">
+        <p style="font-family:var(--font-heading); font-weight:800; font-size:20px; margin:0;">เข้าสู่ระบบผู้ดูแล</p>
+        <button type="button" onClick="{{ closeAdmin }}" aria-label="ปิด" style="border:none; background:none; cursor:pointer; font-size:20px; line-height:1; color:var(--color-text); padding:4px;">×</button>
+      </div>
+      <p style="font-size:13.5px; line-height:1.6; margin:0 0 24px; color:color-mix(in srgb, var(--color-text) 70%, transparent);">สำหรับครูและเจ้าหน้าที่ที่ได้รับสิทธิ์จัดการเว็บไซต์เท่านั้น</p>
+      <div class="field" style="margin-bottom:16px;">
+        <label for="admin-user">ชื่อผู้ใช้</label>
+        <input class="input" id="admin-user" name="user" type="text" autocomplete="username" placeholder="admin">
+      </div>
+      <div class="field" style="margin-bottom:24px;">
+        <label for="admin-pass">รหัสผ่าน</label>
+        <input class="input" id="admin-pass" name="pass" type="password" autocomplete="current-password" placeholder="••••••••">
+      </div>
+      <sc-if value="{{ adminError }}" hint-placeholder-val="{{ false }}">
+        <p style="font-size:13px; font-weight:700; color:var(--color-accent-700); margin:0 0 16px;">กรุณากรอกชื่อผู้ใช้และรหัสผ่านให้ครบถ้วน</p>
+      </sc-if>
+      <div style="display:flex; gap:12px; flex-wrap:wrap;">
+        <button type="submit" class="btn btn-primary">เข้าสู่ระบบ</button>
+        <button type="button" onClick="{{ closeAdmin }}" class="btn btn-secondary">ยกเลิก</button>
+      </div>
+      <p style="font-size:12px; margin:20px 0 0; color:color-mix(in srgb, var(--color-text) 55%, transparent);">ลืมรหัสผ่าน? ติดต่อผู้ดูแลระบบของโรงเรียน</p>
+    </form>
+  </div>
+</sc-if>
+
+<button type="button" data-backtotop="" onClick="{{ scrollTop }}" style="position:fixed; right:24px; bottom:24px; width:46px; height:46px; border:none; background:var(--color-accent); color:var(--color-bg); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:18px; z-index:60; opacity:0; pointer-events:none; transform:translateY(8px); transition:opacity .3s ease, transform .3s ease;">↑</button>
 
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;navStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;floating&quot;,&quot;options&quot;:[&quot;floating&quot;,&quot;classic&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;motionStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;fade&quot;,&quot;options&quot;:[&quot;fade&quot;,&quot;slide&quot;,&quot;instant&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;photoTreatment&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;grayscale&quot;,&quot;options&quot;:[&quot;grayscale&quot;,&quot;color&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Imagery&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;navStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;floating&quot;,&quot;options&quot;:[&quot;floating&quot;,&quot;classic&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;motionStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;fade&quot;,&quot;options&quot;:[&quot;fade&quot;,&quot;slide&quot;,&quot;instant&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;photoTreatment&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;grayscale&quot;,&quot;color&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Imagery&quot;}}">
 class Component extends DCLogic {
   static NAV = [
     { id: 'home', label: 'หน้าแรก', en: 'Home' },
@@ -407,13 +582,19 @@ class Component extends DCLogic {
     { label: 'สังกัด', text: 'สพป.มค. เขต 3' },
     { label: 'นักเรียนทั้งหมด', target: 110, suffix: ' คน' },
     { label: 'ระดับชั้น', text: 'อนุบาล 2–ป.6' },
-    { label: 'บุคลากรทั้งหมด', target: 16, suffix: ' คน' },
+    { label: 'บุคลากรทั้งหมด', target: 15, suffix: ' คน' },
   ];
   static BANNER = [
     { date: '5 ตุลาคม 2568', caption: 'ฟุตบอล "หนองสระพังโนนสะอาด คัพ" ครั้งที่ 2', sub: 'ผอ.สพป.มหาสารคาม เขต 3 เป็นประธานพิธีเปิด ณ สนามโรงเรียน', photoId: 'banner-photo-0' },
     { date: 'ปีการศึกษา 2567', caption: 'การเลือกตั้งประธานนักเรียน', sub: 'ส่งเสริมวิถีประชาธิปไตยในสถานศึกษา', photoId: 'banner-photo-1' },
     { date: 'กิจกรรมโรงเรียน', caption: '"ได้เรียน เรียนดี มีความสุข"', sub: 'แนวทางการจัดการเรียนรู้ของโรงเรียน', photoId: 'banner-photo-2' },
     { date: 'ติดตามเรา', caption: 'ข่าวสารและภาพกิจกรรมอัปเดตทุกสัปดาห์', sub: 'ทาง Facebook แฟนเพจโรงเรียน', photoId: 'banner-photo-3' },
+    { date: 'กิจกรรมประจำปี', caption: 'พิธีไหว้ครู', sub: 'นักเรียนแสดงความกตัญญูต่อครูผู้สอน', photoId: 'banner-photo-4' },
+    { date: 'วันสำคัญ', caption: 'กิจกรรมวันเด็กแห่งชาติ', sub: 'เกม กิจกรรมสันทนาการ และของรางวัลสำหรับนักเรียน', photoId: 'banner-photo-5' },
+    { date: 'ส่งเสริมคุณธรรม', caption: 'กิจกรรมวันแม่แห่งชาติ', sub: 'พิธีถวายพระพรและกิจกรรมกราบแม่', photoId: 'banner-photo-6' },
+    { date: 'วิชาการ', caption: 'ค่ายวิชาการและกิจกรรมฐานการเรียนรู้', sub: 'บูรณาการทักษะการอ่าน คิดคำนวณ และวิทยาศาสตร์', photoId: 'banner-photo-7' },
+    { date: 'สุขภาวะ', caption: 'กิจกรรมกีฬาสีภายในโรงเรียน', sub: 'ส่งเสริมสุขภาพและความสามัคคีของนักเรียน', photoId: 'banner-photo-8' },
+    { date: 'ปฐมวัย', caption: 'บัณฑิตน้อย ระดับปฐมวัย', sub: 'พิธีมอบวุฒิบัตรแก่นักเรียนชั้นอนุบาล 3', photoId: 'banner-photo-9' },
   ];
   static STAFF = [
     { count: '1 คน', name: 'ผู้บริหารสถานศึกษา', role: 'นายกิจภูมิ บุญอบ — ผู้อำนวยการโรงเรียน' },
@@ -421,6 +602,78 @@ class Component extends DCLogic {
     { count: '1 คน', name: 'ครูธุรการ', role: 'เจ้าหน้าที่ธุรการโรงเรียน' },
     { count: '3 คน', name: 'ครูอัตราจ้าง', role: 'บุคลากรสนับสนุนการสอน' },
     { count: '1 คน', name: 'นักการภารโรง', role: 'ดูแลอาคารสถานที่' },
+  ];
+  static STAFF_GROUPS = [
+    { id: 'admin', icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', tag: 'Administration', label: 'คณะผู้บริหาร', count: '1 คน', desc: 'ผู้อำนวยการโรงเรียนและทีมบริหารสถานศึกษา กำกับงานทั้ง 4 ฝ่าย',
+      members: [
+        { role: 'ผู้อำนวยการโรงเรียน', name: 'นายกิจภูมิ บุญอบ', note: 'กำกับดูแลการบริหารวิชาการ งบประมาณ บุคคล และบริหารทั่วไป', photoId: 'staff-admin-1' },
+      ] },
+    { id: 'teachers', icon: 'M22 10 12 5 2 10l10 5 10-5z M6 12v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5', tag: 'Teaching Staff', label: 'ครูและบุคลากรสนับสนุน', count: '14 คน', desc: 'คณะครูผู้สอนระดับปฐมวัยและประถมศึกษา 8 กลุ่มสาระการเรียนรู้ พร้อมบุคลากรสนับสนุนการจัดการศึกษา',
+      members: [
+            { role: 'ครูชำนาญการ', name: 'นางสาวดวงฤดี สมอบ้าน', note: 'ครูระดับปฐมวัย · ครูประจำชั้นอนุบาล 2', photoId: 'staff-01' },
+            { role: 'ครูชำนาญการ', name: 'นางสาวปาริฉัตร สีร้อยคำ', note: 'ครูระดับปฐมวัย · ครูประจำชั้นอนุบาล 3', photoId: 'staff-02' },
+            { role: 'ครูผู้ช่วย', name: 'นางสาวฐิติรัตน์ จันทร์คำ', note: 'กลุ่มสาระการเรียนรู้ภาษาไทย · ครูประจำชั้น ป.1', photoId: 'staff-03' },
+            { role: 'ครูผู้ช่วย', name: 'นางสาวปรียาภรณ์ วิทักษบุตร', note: 'ภาษาต่างประเทศ (ภาษาจีน) · ครูประจำชั้น ป.2', photoId: 'staff-04' },
+            { role: 'ครูชำนาญการ', name: 'นางสาวมยุเรศ เกษเพ็ชร', note: 'กลุ่มสาระการเรียนรู้ภาษาต่างประเทศ · ครูประจำชั้น ป.3', photoId: 'staff-05' },
+            { role: 'ครูผู้ช่วย', name: 'นางสาวพิยดา กะราม', note: 'วิทยาศาสตร์และเทคโนโลยี · ภาษาต่างประเทศ · ครูประจำชั้น ป.4', photoId: 'staff-06' },
+            { role: 'ครูผู้ช่วย', name: 'นายโฆสิต สิงชู', note: 'กลุ่มสาระการเรียนรู้คณิตศาสตร์ · ครูประจำชั้น ป.5', photoId: 'staff-07' },
+            { role: 'ครูชำนาญการพิเศษ', name: 'นางสาวเนตรนภา มาลาหอม', note: 'วิทยาศาสตร์และเทคโนโลยี · ครูประจำชั้น ป.6', photoId: 'staff-08' },
+            { role: 'ครูอัตราจ้าง', name: 'นายภีรวิทย์ ศรีชัยปัญหา', note: 'กลุ่มสาระการเรียนรู้ภาษาไทย · ครูประจำชั้น ป.1', photoId: 'staff-09' },
+            { role: 'ครูอัตราจ้าง', name: 'นางสาวพิตติรัศมิ์ ศิวสังฆะมณี', note: 'การงานอาชีพ · คณิตศาสตร์ · ครูประจำชั้น ป.2', photoId: 'staff-10' },
+            { role: 'เจ้าหน้าที่ธุรการโรงเรียน', name: 'นายเอกภักดิ์ เข็มพิลา', note: 'ครูประจำชั้น ป.3 และ ป.4', photoId: 'staff-11' },
+            { role: 'ครูผู้ช่วย', name: 'นายรติยากรณ์ ลุนจุนละ', note: 'สังคมศึกษา ศาสนา และวัฒนธรรม · ครูประจำชั้น ป.5', photoId: 'staff-12' },
+            { role: 'ครู', name: 'นายกฤษณพงศ์ เทียงทำ', note: 'สุขศึกษาและพลศึกษา · ศิลปะ · ครูประจำชั้น ป.6', photoId: 'staff-13' },
+            { role: 'นักการภารโรง', name: 'นายอุดร แสงสุรินทร์', note: 'ดูแลอาคารสถานที่และความปลอดภัยของโรงเรียน', photoId: 'staff-14' },
+      ],
+      children: [
+        { id: 'early', icon: 'M12 3 2 8l10 5 10-5-10-5z M4 12v5c0 1.5 3.6 3 8 3s8-1.5 8-3v-5', tag: 'Early Years', label: 'ครูระดับปฐมวัย', count: '2 คน', desc: 'จัดประสบการณ์การเรียนรู้ชั้นอนุบาล 2–3 ตามหลักสูตรการศึกษาปฐมวัย',
+          members: [
+            { role: 'ครูชำนาญการ', name: 'นางสาวดวงฤดี สมอบ้าน', note: 'ครูระดับปฐมวัย · ครูประจำชั้นอนุบาล 2', photoId: 'staff-01' },
+            { role: 'ครูชำนาญการ', name: 'นางสาวปาริฉัตร สีร้อยคำ', note: 'ครูระดับปฐมวัย · ครูประจำชั้นอนุบาล 3', photoId: 'staff-02' },
+          ] },
+        { id: 'thai', icon: 'M4 19.5V5a2 2 0 0 1 2-2h13v18H6a2 2 0 0 1-2-2z M9 3v18', tag: 'Learning Area', label: 'กลุ่มสาระการเรียนรู้ภาษาไทย', count: '2 คน', desc: 'พัฒนาทักษะการอ่าน เขียน ฟัง พูด และการอ่านออกเขียนได้ทุกระดับชั้น',
+          members: [
+            { role: 'ครูผู้ช่วย', name: 'นางสาวฐิติรัตน์ จันทร์คำ', note: 'กลุ่มสาระการเรียนรู้ภาษาไทย · ครูประจำชั้น ป.1', photoId: 'staff-03' },
+            { role: 'ครูอัตราจ้าง', name: 'นายภีรวิทย์ ศรีชัยปัญหา', note: 'กลุ่มสาระการเรียนรู้ภาษาไทย · ครูประจำชั้น ป.1', photoId: 'staff-09' },
+          ] },
+        { id: 'math', icon: 'M4 3h16v18H4z M8 7h8 M8 11h2 M12 11h2 M8 15h2 M12 15h2', tag: 'Learning Area', label: 'กลุ่มสาระการเรียนรู้คณิตศาสตร์', count: '2 คน', desc: 'พัฒนาทักษะการคิดคำนวณและการแก้ปัญหาอย่างเป็นระบบ',
+          members: [
+            { role: 'ครูผู้ช่วย', name: 'นายโฆสิต สิงชู', note: 'กลุ่มสาระการเรียนรู้คณิตศาสตร์ · ครูประจำชั้น ป.5', photoId: 'staff-07' },
+            { role: 'ครูอัตราจ้าง', name: 'นางสาวพิตติรัศมิ์ ศิวสังฆะมณี', note: 'การงานอาชีพ · คณิตศาสตร์ · ครูประจำชั้น ป.2', photoId: 'staff-10' },
+          ] },
+        { id: 'science', icon: 'M9 3h6 M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3', tag: 'Learning Area', label: 'กลุ่มสาระการเรียนรู้วิทยาศาสตร์และเทคโนโลยี', count: '2 คน', desc: 'จัดการเรียนรู้แบบสืบเสาะ วิทยาการคำนวณ และการใช้เทคโนโลยี',
+          members: [
+            { role: 'ครูผู้ช่วย', name: 'นางสาวพิยดา กะราม', note: 'วิทยาศาสตร์และเทคโนโลยี · ภาษาต่างประเทศ · ครูประจำชั้น ป.4', photoId: 'staff-06' },
+            { role: 'ครูชำนาญการพิเศษ', name: 'นางสาวเนตรนภา มาลาหอม', note: 'วิทยาศาสตร์และเทคโนโลยี · ครูประจำชั้น ป.6', photoId: 'staff-08' },
+          ] },
+        { id: 'social', icon: 'M3 21h18 M5 21V10 M19 21V10 M2 10l10-6 10 6 M9 21v-6h6v6', tag: 'Learning Area', label: 'กลุ่มสาระการเรียนรู้สังคมศึกษา ศาสนา และวัฒนธรรม', count: '1 คน', desc: 'ปลูกฝังคุณธรรม ความเป็นพลเมือง และการอยู่ร่วมกันในสังคม',
+          members: [
+            { role: 'ครูผู้ช่วย', name: 'นายรติยากรณ์ ลุนจุนละ', note: 'สังคมศึกษา ศาสนา และวัฒนธรรม · ครูประจำชั้น ป.5', photoId: 'staff-12' },
+          ] },
+        { id: 'health', icon: 'M20.8 6.6a5 5 0 0 0-7.1 0L12 8.3l-1.7-1.7a5 5 0 1 0-7.1 7.1L12 21l8.8-7.3a5 5 0 0 0 0-7.1z', tag: 'Learning Area', label: 'กลุ่มสาระการเรียนรู้สุขศึกษาและพลศึกษา', count: '1 คน', desc: 'ส่งเสริมสุขภาวะ กีฬา และพฤติกรรมสุขภาพของนักเรียน',
+          members: [
+            { role: 'ครู', name: 'นายกฤษณพงศ์ เทียงทำ', note: 'สุขศึกษาและพลศึกษา · ศิลปะ · ครูประจำชั้น ป.6', photoId: 'staff-13' },
+          ] },
+        { id: 'art', icon: 'M12 3a9 9 0 1 0 0 18h1.5a2.5 2.5 0 0 0 0-5H13a2 2 0 0 1 0-4h4a4 4 0 0 0 0-9z', tag: 'Learning Area', label: 'กลุ่มสาระการเรียนรู้ศิลปะ', count: '1 คน', desc: 'ทัศนศิลป์ ดนตรี และนาฏศิลป์ ส่งเสริมความคิดสร้างสรรค์',
+          members: [
+            { role: 'ครู', name: 'นายกฤษณพงศ์ เทียงทำ', note: 'สุขศึกษาและพลศึกษา · ศิลปะ · ครูประจำชั้น ป.6', photoId: 'staff-13' },
+          ] },
+        { id: 'career', icon: 'M3 7h18v13H3z M8 7V4h8v3 M3 12h18', tag: 'Learning Area', label: 'กลุ่มสาระการเรียนรู้การงานอาชีพ', count: '1 คน', desc: 'งานเกษตร งานบ้าน และทักษะอาชีพเพื่อการพึ่งพาตนเอง',
+          members: [
+            { role: 'ครูอัตราจ้าง', name: 'นางสาวพิตติรัศมิ์ ศิวสังฆะมณี', note: 'การงานอาชีพ · คณิตศาสตร์ · ครูประจำชั้น ป.2', photoId: 'staff-10' },
+          ] },
+        { id: 'foreign', icon: 'M4 5h8 M8 5c0 4-2 7-5 9 M5 9c0 3 3 6 7 6 M13 20l4-9 4 9 M14.5 17h5', tag: 'Learning Area', label: 'กลุ่มสาระการเรียนรู้ภาษาต่างประเทศ', count: '3 คน', desc: 'ภาษาอังกฤษและภาษาจีนเพื่อการสื่อสารในชีวิตประจำวัน',
+          members: [
+            { role: 'ครูผู้ช่วย', name: 'นางสาวปรียาภรณ์ วิทักษบุตร', note: 'ภาษาต่างประเทศ (ภาษาจีน) · ครูประจำชั้น ป.2', photoId: 'staff-04' },
+            { role: 'ครูชำนาญการ', name: 'นางสาวมยุเรศ เกษเพ็ชร', note: 'กลุ่มสาระการเรียนรู้ภาษาต่างประเทศ · ครูประจำชั้น ป.3', photoId: 'staff-05' },
+            { role: 'ครูผู้ช่วย', name: 'นางสาวพิยดา กะราม', note: 'วิทยาศาสตร์และเทคโนโลยี · ภาษาต่างประเทศ · ครูประจำชั้น ป.4', photoId: 'staff-06' },
+          ] },
+        { id: 'support', icon: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8 M22 21v-2a4 4 0 0 0-3-3.9', tag: 'Support Staff', label: 'บุคลากรสนับสนุน', count: '2 คน', desc: 'ธุรการโรงเรียนและนักการภารโรง สนับสนุนงานบริหารและอาคารสถานที่',
+          members: [
+            { role: 'เจ้าหน้าที่ธุรการโรงเรียน', name: 'นายเอกภักดิ์ เข็มพิลา', note: 'ครูประจำชั้น ป.3 และ ป.4', photoId: 'staff-11' },
+            { role: 'นักการภารโรง', name: 'นายอุดร แสงสุรินทร์', note: 'ดูแลอาคารสถานที่และความปลอดภัยของโรงเรียน', photoId: 'staff-14' },
+          ] },
+      ] },
   ];
   static STUDENT_STATS = [
     { level: 'ระดับปฐมวัย (อนุบาล 2–3)', rooms: '2 ห้องเรียน', count: '~20 คน' },
@@ -432,6 +685,8 @@ class Component extends DCLogic {
     { date: '20 ก.ค. 2569', title: 'กีฬาสีภายในโรงเรียน', excerpt: 'การแข่งขันกีฬาสีสร้างความสามัคคีระหว่างนักเรียนทุกชั้นเรียน' },
     { date: '9 ส.ค. 2569', title: 'กิจกรรมวันแม่แห่งชาติ', excerpt: 'จัดพิธีถวายพระพรและกิจกรรมวันแม่ให้นักเรียนแสดงความรักต่อครอบครัว' },
     { date: '5 ก.ย. 2569', title: 'ทัศนศึกษาแหล่งเรียนรู้', excerpt: 'นักเรียนชั้น ป.4–ป.6 ทัศนศึกษาแหล่งเรียนรู้นอกสถานที่' },
+    { date: '5 ต.ค. 2568', title: 'ฟุตบอล "หนองสระพังโนนสะอาด คัพ" ครั้งที่ 2', excerpt: 'ผอ.สพป.มหาสารคาม เขต 3 เป็นประธานพิธีเปิด ณ สนามโรงเรียน' },
+    { date: 'ปีการศึกษา 2567', title: 'การเลือกตั้งประธานนักเรียน', excerpt: 'ส่งเสริมวิถีประชาธิปไตยและความรับผิดชอบต่อส่วนรวมในสถานศึกษา' },
   ];
   static GRADES = ['อนุบาล 2', 'อนุบาล 3', 'ป.1', 'ป.2', 'ป.3', 'ป.4', 'ป.5', 'ป.6'];
   static ACHIEVEMENTS = [
@@ -447,8 +702,27 @@ class Component extends DCLogic {
   ];
   static MEDIA = [
     { tag: 'DLTV', title: 'การจัดการเรียนรู้ทางไกลผ่านดาวเทียม', desc: 'ใช้สื่อการสอนจากมูลนิธิการศึกษาทางไกลผ่านดาวเทียม ในพระบรมราชูปถัมภ์ ทุกระดับชั้น', href: '#' },
-    { tag: 'นวัตกรรม', title: 'ชุดกิจกรรมพัฒนาการอ่านออกเขียนได้', desc: 'สื่อและใบงานเสริมทักษะการอ่านออกเขียนได้สำหรับนักเรียนชั้นประถมศึกษา', href: '#' },
-    { tag: 'เกมฝึกทักษะ', title: 'เกม 24 ฝึกคิดเลขเร็ว', desc: 'เกมฝึกทักษะการบวกเลขสำหรับนักเรียนชั้นประถม', href: '#' },
+  ];
+  static MISSIONS = [
+    { no: '1', text: 'พัฒนาคุณภาพนักเรียนผ่านการพัฒนาหลักสูตร แผน และการจัดประสบการณ์การเรียนรู้ ที่เน้นการเอื้ออำนวยต่อการพัฒนานักเรียนให้มีคุณลักษณะในศตวรรษที่ 21' },
+    { no: '2', text: 'จัดการศึกษาเพื่อเสริมสร้างคุณภาพชีวิตที่เป็นมิตรกับสิ่งแวดล้อม เน้นจัดการเรียนรู้เพื่อพัฒนาผู้เรียนตามหลักปรัชญาของเศรษฐกิจพอเพียง' },
+    { no: '3', text: 'สร้างโอกาส ความเสมอภาค และเท่าเทียม ในการเข้าถึงบริการทางการศึกษา เน้นการพัฒนาระบบดูแลช่วยเหลือนักเรียน และการใช้อินเทอร์เน็ตในการบริหารและจัดการเรียนรู้' },
+    { no: '4', text: 'จัดการศึกษาที่เอื้อต่อการส่งเสริมความมั่นคงของชาติ เน้นเสริมสร้างความรู้ความเข้าใจเกี่ยวกับภัยคุกคามในรูปแบบใหม่จากสิ่งเสพติด และภัยจากไซเบอร์' },
+    { no: '5', text: 'พัฒนาครูและบุคลากรทางการศึกษา เน้นให้มีคุณลักษณะของบุคคลในศตวรรษที่ 21 และวิธีสอนที่ใช้เทคโนโลยีดิจิทัล' },
+    { no: '6', text: 'การพัฒนาระบบบริหารจัดการให้มีประสิทธิภาพ เน้นส่งเสริมระบบประกันคุณภาพภายในโรงเรียนให้เข้มแข็ง' },
+  ];
+  static STRATEGIES = [
+    { no: '01', text: 'การพัฒนาคุณภาพผู้เรียนเพื่อสร้างขีดความสามารถในการแข่งขัน' },
+    { no: '02', text: 'การจัดการศึกษาเพื่อเสริมสร้างคุณภาพชีวิตที่เป็นมิตรกับสิ่งแวดล้อม' },
+    { no: '03', text: 'โอกาส ความเสมอภาค และเท่าเทียม ในการเข้าถึงบริการทางการศึกษา' },
+    { no: '04', text: 'การจัดการศึกษาเพื่อความมั่นคงของชาติและให้ผู้เรียนมีความปลอดภัยจากภัยทุกรูปแบบ' },
+    { no: '05', text: 'การพัฒนาครูและบุคลากรทางการศึกษา' },
+    { no: '06', text: 'การพัฒนาระบบบริหารจัดการให้มีประสิทธิภาพ' },
+  ];
+  static INNOVATIONS = [
+    { tag: 'นวัตกรรมการสอน', title: 'ชุดกิจกรรมพัฒนาการอ่านออกเขียนได้', desc: 'สื่อและใบงานเสริมทักษะการอ่านออกเขียนได้สำหรับนักเรียนชั้นประถมศึกษา' },
+    { tag: 'เกมฝึกทักษะ', title: 'เกม 24 ฝึกคิดเลขเร็ว', desc: 'เกมฝึกทักษะการคิดเลขเร็วสำหรับนักเรียนชั้นประถม' },
+    { tag: 'วิจัยในชั้นเรียน', title: 'งานวิจัยเพื่อพัฒนาการเรียนการสอน', desc: 'ครูทุกกลุ่มสาระจัดทำวิจัยในชั้นเรียนอย่างน้อย 1 เรื่องต่อปีการศึกษา' },
   ];
   static ASSESSMENTS = [
     { tag: 'RT', title: 'การประเมินความสามารถด้านการอ่าน', desc: 'นักเรียนชั้น ป.1 เข้ารับการประเมินทุกปีการศึกษา' },
@@ -473,12 +747,15 @@ class Component extends DCLogic {
     activeSection: 'home',
     scrolled: false,
     narrow: false,
-    visible: { home: true },
+    visible: { home: true, about: true, academics: true, news: true, contact: true },
     indicator: { left: 0, width: 0 },
     statsProgress: 1,
     formSent: false,
+    adminOpen: false,
+    adminError: false,
     reducedMotion: false,
     bannerIndex: 0,
+    staffGroup: 'admin',
   };
 
   componentDidMount() {
@@ -499,40 +776,25 @@ class Component extends DCLogic {
     
     this.onScroll = () => {
       const scrolled = window.scrollY > 40;
-      if (scrolled !== this.state.scrolled) this.setState({ scrolled });
+      this.isScrolled = scrolled;
       const line = window.innerHeight * 0.4;
       let current = Component.SECTION_IDS[0];
       for (const id of Component.SECTION_IDS) {
         const el = this.sectionEls[id];
         if (el && el.getBoundingClientRect().top <= line) current = id;
       }
-      if (current !== this.state.activeSection) this.setState({ activeSection: current });
       this.activeId = current;
-      this.syncIndicator();
-      if (!this.state.reducedMotion) {
-        const trigger = window.innerHeight * 0.88;
-        let newly = null;
-        Component.SECTION_IDS.forEach(id => {
-          const el = this.sectionEls[id];
-          if (!el || this.state.visible[id]) return;
-          if (el.getBoundingClientRect().top < trigger) {
-            newly = newly || {};
-            newly[id] = true;
-          }
-        });
-        if (newly) this.setState(s => ({ visible: { ...s.visible, ...newly } }));
-      }
+      this.applyNavChrome();
+      this.applyTextReveal();
     };
     this.onScroll();
     window.addEventListener('scroll', this.onScroll, { passive: true });
     this.onResize = () => {
-      const narrow = window.innerWidth < 1080;
-      if (narrow !== this.state.narrow) this.setState({ narrow });
-      this.syncIndicator();
+      this.applyNavChrome();
     };
     this.onResize();
     window.addEventListener('resize', this.onResize, { passive: true });
-    requestAnimationFrame(() => this.syncIndicator());
+    requestAnimationFrame(() => { this.applyNavChrome(); this.applyTextReveal(); });
     if (window.ResizeObserver) {
       this.roContainer = new ResizeObserver(() => this.syncIndicator());
       this.roActiveTab = new ResizeObserver(() => this.syncIndicator());
@@ -557,6 +819,90 @@ class Component extends DCLogic {
   }
 
   componentDidUpdate() {
+    this.applyNavChrome();
+  }
+
+  applyTextReveal() {
+    if (!this.revealTextEls) {
+      this.revealTextEls = Array.prototype.slice.call(document.querySelectorAll('[data-reveal-text]')).map(el => {
+        if (!el.dataset.revealPrepared) {
+          const words = (el.textContent || '').trim().split(/\s+/);
+          el.textContent = '';
+          words.forEach((w, i) => {
+            const span = document.createElement('span');
+            span.textContent = w + (i < words.length - 1 ? ' ' : '');
+            span.style.transition = 'color .25s ease';
+            el.appendChild(span);
+          });
+          el.dataset.revealPrepared = '1';
+        }
+        return { el, words: Array.prototype.slice.call(el.children) };
+      });
+    }
+    const vh = window.innerHeight;
+    this.revealTextEls.forEach(({ el, words }) => {
+      const r = el.getBoundingClientRect();
+      const span = r.height + vh * 0.45;
+      const p = Math.max(0, Math.min(1, (vh * 0.82 - r.top) / span));
+      const n = words.length;
+      const head = p * (n + 6);
+      words.forEach((w, i) => {
+        const wp = Math.max(0, Math.min(1, (head - i) / 5));
+        w.style.color = `color-mix(in srgb, var(--color-text) ${Math.round(22 + 78 * wp)}%, transparent)`;
+      });
+    });
+  }
+
+  applyNavChrome() {
+    const nav = this.navBarEl;
+    const floating = (this.props.navStyle ?? 'floating') === 'floating';
+    const sc = !!this.isScrolled;
+    const overHero = floating && !sc;
+    const narrow = window.innerWidth < 1080;
+    if (nav) {
+      if (floating) {
+        nav.style.background = sc ? 'color-mix(in srgb, var(--color-bg) 72%, transparent)' : 'color-mix(in srgb, #ffffff 12%, transparent)';
+        const blur = `blur(${sc ? 16 : 6}px) saturate(140%)`;
+        nav.style.backdropFilter = blur;
+        nav.style.webkitBackdropFilter = blur;
+        nav.style.boxShadow = sc ? '0 12px 40px -12px color-mix(in srgb, var(--color-text) 30%, transparent)' : '0 8px 30px -14px rgba(0,0,0,.5)';
+      }
+      nav.style.paddingTop = sc ? '10px' : '18px';
+      nav.style.paddingBottom = sc ? '10px' : '18px';
+      const logo = nav.querySelector('[data-logo]');
+      if (logo) {
+        const size = sc ? (narrow ? 27 : 34) : (narrow ? 38 : 68);
+        logo.style.width = size + 'px';
+        logo.style.height = size + 'px';
+        logo.style.background = overHero ? 'transparent' : '#F3F1F1';
+      }
+      const wm = nav.querySelector('[data-wordmark]');
+      if (wm) {
+        wm.style.color = overHero ? '#ffffff' : 'var(--color-text)';
+        wm.style.textShadow = overHero ? '0 1px 3px rgba(0,0,0,.55)' : 'none';
+        wm.style.display = narrow ? 'none' : 'block';
+      }
+      const wmSub = nav.querySelector('[data-wordmark-sub]');
+      if (wmSub) wmSub.style.color = overHero ? 'rgba(255,255,255,.75)' : 'color-mix(in srgb, var(--color-text) 60%, transparent)';
+    }
+    if (this.navRefs) {
+      Object.keys(this.navRefs).forEach(key => {
+        const tab = this.navRefs[key];
+        if (!tab) return;
+        tab.style.textShadow = overHero ? '0 1px 3px rgba(0,0,0,.55)' : 'none';
+        tab.style.padding = sc ? (narrow ? '6px 10px' : '8px 14px') : (narrow ? '6px 9px' : '8px 14px');
+        tab.style.fontSize = narrow ? '11.5px' : '13px';
+        const en = tab.querySelector('[data-en]');
+        if (en) en.style.display = sc ? 'none' : 'block';
+      });
+    }
+    const btn = document.querySelector('[data-backtotop]');
+    if (btn) {
+      btn.style.opacity = sc ? '1' : '0';
+      btn.style.pointerEvents = sc ? 'auto' : 'none';
+      btn.style.transform = sc ? 'translateY(0)' : 'translateY(8px)';
+    }
+    if (this.indicatorEl) this.indicatorEl.style.background = overHero ? '#ffffff' : 'var(--color-text)';
     this.syncIndicator();
   }
 
@@ -580,7 +926,7 @@ class Component extends DCLogic {
     Object.keys(this.navRefs).forEach(key => {
       const tab = this.navRefs[key];
       if (!tab) return;
-      const overHero = (this.props.navStyle ?? 'floating') === 'floating' && !this.state.scrolled;
+      const overHero = (this.props.navStyle ?? 'floating') === 'floating' && !this.isScrolled;
       if (key === active) tab.style.color = overHero ? 'var(--color-text)' : 'var(--color-bg)';
       else tab.style.color = overHero ? '#ffffff' : 'var(--color-text)';
     });
@@ -589,7 +935,6 @@ class Component extends DCLogic {
   }
 
   startStats() {
-    this.setState({ statsProgress: 0 });
     const start = performance.now();
     const duration = 1200;
     const tick = (now) => {
@@ -604,7 +949,7 @@ class Component extends DCLogic {
   setSectionRef = (el) => { if (el && this.sectionEls) this.sectionEls[el.dataset.sectionId] = el; };
   setNavRef = (el) => { if (el && this.navRefs) this.navRefs[el.dataset.navId] = el; };
   setNavInnerRef = (el) => { if (el) this.navInnerEl = el; };
-  setIndicatorRef = (el) => { if (el) { this.indicatorEl = el; requestAnimationFrame(() => this.syncIndicator()); } };
+  setIndicatorRef = (el) => { if (el) { this.indicatorEl = el; requestAnimationFrame(() => this.applyNavChrome()); } };
   setNavBarRef = (el) => { if (el) this.navBarEl = el; };
 
   scrollToSection = (id) => {
@@ -621,7 +966,6 @@ class Component extends DCLogic {
     const id = href.replace('#', '');
     if (Component.SECTION_IDS.indexOf(id) > -1) {
       this.activeId = id;
-      this.setState({ activeSection: id });
       this.syncIndicator();
     }
     this.scrollToSection(id);
@@ -634,6 +978,18 @@ class Component extends DCLogic {
   onSubmitForm = (e) => {
     e.preventDefault();
     this.setState({ formSent: true });
+  };
+
+  openAdmin = () => { this.setState({ adminOpen: true, adminError: false }); };
+  closeAdmin = () => { this.setState({ adminOpen: false, adminError: false }); };
+  stopPropagation = (e) => { e.stopPropagation(); };
+  onAdminSubmit = (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const user = form.user && form.user.value.trim();
+    const pass = form.pass && form.pass.value.trim();
+    if (!user || !pass) { this.setState({ adminError: true }); return; }
+    this.setState({ adminOpen: false, adminError: false });
   };
 
   prevBanner = () => {
@@ -672,13 +1028,13 @@ class Component extends DCLogic {
     const photoTreatment = this.props.photoTreatment ?? 'grayscale';
     const isFloating = navStyle === 'floating';
     const navRadius = isFloating ? 999 : 0;
-    const overHero = isFloating && !s.scrolled;
+    const overHero = isFloating;
     const navBg = isFloating
       ? (overHero ? 'color-mix(in srgb, #ffffff 12%, transparent)' : 'color-mix(in srgb, var(--color-bg) 72%, transparent)')
       : 'var(--color-bg)';
     const navShellStyle = isFloating
-      ? `position:fixed; top:16px; left:50%; transform:translateX(-50%); width:calc(100% - 32px); max-width:1400px; z-index:50; display:flex; align-items:center; gap:20px; background:${navBg}; backdrop-filter:blur(${overHero ? 6 : 16}px) saturate(140%); -webkit-backdrop-filter:blur(${overHero ? 6 : 16}px) saturate(140%); border-radius:999px; box-shadow:${overHero ? '0 8px 30px -14px rgba(0,0,0,.5)' : '0 12px 40px -12px color-mix(in srgb, var(--color-text) 30%, transparent)'}; padding:${s.scrolled ? '10px' : '18px'} clamp(16px,4vw,36px); transition:padding .3s ease, background .3s ease;`
-      : `position:sticky; top:0; left:0; transform:none; width:100%; max-width:none; z-index:50; display:flex; align-items:center; gap:20px; background:${navBg}; border-radius:0; border-bottom:2px solid var(--color-divider); box-shadow:none; padding:${s.scrolled ? '10px' : '18px'} clamp(16px,5vw,48px); transition:padding .3s ease;`;
+      ? `position:fixed; top:16px; left:50%; transform:translateX(-50%); width:calc(100% - 32px); max-width:1400px; z-index:50; display:flex; align-items:center; gap:20px; background:${navBg}; backdrop-filter:blur(6px) saturate(140%); -webkit-backdrop-filter:blur(6px) saturate(140%); border-radius:999px; box-shadow:0 8px 30px -14px rgba(0,0,0,.5); padding:18px clamp(16px,4vw,36px); transition:padding .3s ease, background .3s ease;`
+      : `position:sticky; top:0; left:0; transform:none; width:100%; max-width:none; z-index:50; display:flex; align-items:center; gap:20px; background:${navBg}; border-radius:0; border-bottom:2px solid var(--color-divider); box-shadow:none; padding:18px clamp(16px,5vw,48px); transition:padding .3s ease;`;
     const wordmarkColor = overHero ? '#ffffff' : 'var(--color-text)';
     const wordmarkSubColor = overHero ? 'rgba(255,255,255,.75)' : 'color-mix(in srgb, var(--color-text) 60%, transparent)';
     const navTextShadow = overHero ? '0 1px 3px rgba(0,0,0,.55)' : 'none';
@@ -697,8 +1053,8 @@ class Component extends DCLogic {
       href: '#' + item.id,
       label: item.label,
       en: item.en,
-      showEn: !s.scrolled,
-      color: s.activeSection === item.id ? 'var(--color-bg)' : 'var(--color-text)',
+      showEn: true,
+      color: 'var(--color-text)',
     }));
 
     const statItems = Component.STATS.map(st => ({
@@ -706,6 +1062,29 @@ class Component extends DCLogic {
       display: st.text ? st.text : (Math.round((st.target || 0) * s.statsProgress) + (st.suffix || '')),
     }));
 
+    const chipStyle = (on) => ({
+      bg: on ? 'var(--color-accent-100)' : 'transparent',
+      border: on ? 'var(--color-accent)' : 'var(--color-divider)',
+      iconBg: on ? 'var(--color-accent)' : 'var(--color-neutral-200)',
+      iconColor: on ? 'var(--color-bg)' : 'var(--color-text)',
+    });
+    const tops = Component.STAFF_GROUPS;
+    let activeTop = tops[0];
+    let activeGroup = tops[0];
+    tops.forEach(t => {
+      if (t.id === s.staffGroup) { activeTop = t; activeGroup = t; }
+      (t.children || []).forEach(c => { if (c.id === s.staffGroup) { activeTop = t; activeGroup = c; } });
+    });
+    const topChips = tops.map(g => ({
+      label: g.label, count: g.count, icon: g.icon,
+      ...chipStyle(g.id === activeTop.id),
+      onClick: () => this.setState({ staffGroup: g.id }),
+    }));
+    const subChips = (activeTop.children || []).map(g => ({
+      label: g.label, count: g.count, icon: g.icon,
+      ...chipStyle(g.id === activeGroup.id),
+      onClick: () => this.setState({ staffGroup: g.id }),
+    }));
     const staffList = Component.STAFF.map((t, i) => ({
       ...t,
       reveal: this.cardReveal('about', i),
@@ -732,6 +1111,8 @@ class Component extends DCLogic {
       navShellStyle,
       navSpacerHeight,
       heroTopPad,
+      historyCols: (typeof window !== 'undefined' && window.innerWidth < 900) ? '1fr' : 'minmax(0,1fr) minmax(0,300px)',
+      homeGridCols: (typeof window !== 'undefined' && window.innerWidth < 1080) ? '1fr' : 'minmax(0,1fr) minmax(0,1.7fr) minmax(0,.75fr)',
       wordmarkColor,
       wordmarkSubColor,
       navTextShadow,
@@ -740,11 +1121,11 @@ class Component extends DCLogic {
       navInnerBorder,
       photoClass,
       logoBg,
-      logoSize: s.scrolled ? (s.narrow ? 27 : 34) : (s.narrow ? 38 : 68),
-      showWordmark: !s.narrow,
-      tabPaddingV: s.scrolled ? (s.narrow ? '6px 10px' : '8px 14px') : (s.narrow ? '6px 9px' : '8px 14px'),
-      tabFontSize: s.narrow ? '11.5px' : '13px',
-      navInnerPad: s.scrolled ? 3 : 4,
+      logoSize: 68,
+      showWordmark: true,
+      tabPaddingV: '8px 14px',
+      tabFontSize: '13px',
+      navInnerPad: 4,
       reveal,
       statItems,
       bannerSlides,
@@ -752,23 +1133,37 @@ class Component extends DCLogic {
       prevBanner: this.prevBanner,
       nextBanner: this.nextBanner,
       staffList,
+      staffTopGroups: topChips,
+      staffSubGroups: subChips,
+      showSubGroups: subChips.length > 0,
+      activeGroup: activeGroup,
+      activeMembers: activeGroup.members,
       studentStats: Component.STUDENT_STATS,
       newsList,
       grades: Component.GRADES,
       honorAchievements: Component.ACHIEVEMENTS.filter(a => a.group === 'honor'),
       healthProjects: Component.ACHIEVEMENTS.filter(a => a.group === 'health'),
       mediaItems: Component.MEDIA,
+      innovations: Component.INNOVATIONS,
+      missions: Component.MISSIONS,
+      strategies: Component.STRATEGIES,
       assessments: Component.ASSESSMENTS,
       allDocs: Component.ALL_DOCS,
       formSent: s.formSent,
       formNotSent: !s.formSent,
+      adminOpen: s.adminOpen,
+      adminError: s.adminError,
       backToTop: {
-        opacity: s.scrolled ? 1 : 0,
-        pointerEvents: s.scrolled ? 'auto' : 'none',
-        transform: s.scrolled ? 'translateY(0)' : 'translateY(8px)',
+        opacity: 0,
+        pointerEvents: 'none',
+        transform: 'translateY(8px)',
       },
       navClick: this.navClick,
       onSubmitForm: this.onSubmitForm,
+      openAdmin: this.openAdmin,
+      closeAdmin: this.closeAdmin,
+      stopPropagation: this.stopPropagation,
+      onAdminSubmit: this.onAdminSubmit,
       scrollTop: this.scrollTop,
       setSectionRef: this.setSectionRef,
       setNavRef: this.setNavRef,
