@@ -26,34 +26,36 @@ a:hover { color: var(--color-accent-600); }
   <a href="#home" onClick="{{ navClick }}" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--color-text); margin-right:auto; flex:none; min-width:0;">
     <image-slot id="logo-nav" shape="rect" fit="contain" src="assets/logo-transparent.png" style="width:{{ logoSize }}px;height:{{ logoSize }}px;flex:none;background:{{ logoBg }};transition:width .3s ease,height .3s ease,background .3s ease;"></image-slot>
     <sc-if value="{{ showWordmark }}" hint-placeholder-val="{{ true }}">
-      <span style="font-family:var(--font-heading); font-weight:800; font-size:14px; line-height:1.2; letter-spacing:-0.01em; white-space:nowrap;">โรงเรียนบ้านหนองสระพังโนนสะอาด<br /><span style="font-weight:400; font-size:10.5px; color:color-mix(in srgb, var(--color-text) 60%, transparent); letter-spacing:0;">สพป.มหาสารคาม เขต 3</span></span>
+      <span style="font-family:var(--font-heading); font-weight:800; font-size:14px; line-height:1.2; letter-spacing:-0.01em; white-space:nowrap; color:{{ wordmarkColor }}; text-shadow:{{ navTextShadow }};">โรงเรียนบ้านหนองสระพังโนนสะอาด<br /><span style="font-weight:400; font-size:10.5px; color:{{ wordmarkSubColor }}; letter-spacing:0;">สพป.มหาสารคาม เขต 3</span></span>
     </sc-if>
   </a>
   <div ref="{{ setNavInnerRef }}" style="position:relative; display:flex; align-items:center; gap:2px; overflow-x:auto; scrollbar-width:thin; border-radius:{{ navRadius }}px; border:{{ navInnerBorder }}; padding:{{ navInnerPad }}px; transition:padding .3s ease; -webkit-mask-image:linear-gradient(90deg, transparent 0, black 14px, black calc(100% - 14px), transparent 100%); mask-image:linear-gradient(90deg, transparent 0, black 14px, black calc(100% - 14px), transparent 100%);">
-    <div ref="{{ setIndicatorRef }}" style="position:absolute; top:{{ navInnerPad }}px; bottom:{{ navInnerPad }}px; border-radius:{{ navRadius }}px; background:var(--color-text); left:0; width:0; transition:left .28s cubic-bezier(.4,0,.2,1), width .28s cubic-bezier(.4,0,.2,1), top .3s ease, bottom .3s ease; z-index:0;"></div>
+    <div ref="{{ setIndicatorRef }}" style="position:absolute; top:{{ navInnerPad }}px; bottom:{{ navInnerPad }}px; border-radius:{{ navRadius }}px; background:{{ indicatorBg }}; left:0; width:0; transition:left .28s cubic-bezier(.4,0,.2,1), width .28s cubic-bezier(.4,0,.2,1), top .3s ease, bottom .3s ease, background .3s ease; z-index:0;"></div>
     <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="6">
-      <a href="{{ item.href }}" ref="{{ setNavRef }}" data-nav-id="{{ item.id }}" onClick="{{ navClick }}" style="position:relative; z-index:1; white-space:nowrap; padding:{{ tabPaddingV }}; font-size:{{ tabFontSize }}; font-weight:700; text-decoration:none; color:var(--color-text); transition:color .12s ease .12s, padding .3s ease, font-size .3s ease; display:flex; flex-direction:column; align-items:center; gap:1px; line-height:1.2;"><span>{{ item.label }}</span><sc-if value="{{ item.showEn }}" hint-placeholder-val="{{ true }}"><span style="font-size:9px; font-weight:600; letter-spacing:.03em; opacity:.6;">{{ item.en }}</span></sc-if></a>
+      <a href="{{ item.href }}" ref="{{ setNavRef }}" data-nav-id="{{ item.id }}" onClick="{{ navClick }}" style="position:relative; z-index:1; white-space:nowrap; padding:{{ tabPaddingV }}; font-size:{{ tabFontSize }}; font-weight:700; text-decoration:none; color:var(--color-text); text-shadow:{{ navTextShadow }}; transition:color .12s ease .12s, padding .3s ease, font-size .3s ease; display:flex; flex-direction:column; align-items:center; gap:1px; line-height:1.2;"><span>{{ item.label }}</span><sc-if value="{{ item.showEn }}" hint-placeholder-val="{{ true }}"><span style="font-size:9px; font-weight:600; letter-spacing:.03em; opacity:.6;">{{ item.en }}</span></sc-if></a>
     </sc-for>
   </div>
 </nav>
 <div style="height:{{ navSpacerHeight }};" aria-hidden="true"></div>
 
 <section data-section-id="home" id="home" ref="{{ setSectionRef }}" style="background:var(--color-bg);">
-  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(20px,5vw,72px);">
-    <div style="display:grid; grid-template-columns:minmax(0,1.3fr) minmax(260px,1fr); gap:44px; align-items:center; padding:48px 0 32px; opacity:{{ reveal.home.opacity }}; transform:{{ reveal.home.transform }}; transition:opacity .8s ease, transform .8s ease;">
-      <div>
-        <span style="display:block; font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:var(--color-accent-700); font-weight:700; margin-bottom:16px;">สำนักงานเขตพื้นที่การศึกษาประถมศึกษามหาสารคาม เขต 3</span>
-        <h1 style="font-family:var(--font-heading); font-weight:800; font-size:clamp(32px,5vw,52px); line-height:1.1; letter-spacing:-0.02em; margin:0 0 20px;">โรงเรียนบ้านหนองสระพังโนนสะอาด</h1>
-        <p style="font-size:17px; line-height:1.65; max-width:56ch; color:color-mix(in srgb, var(--color-text) 82%, transparent); margin:0 0 28px;">&ldquo;เรียนดี มีวินัย ใฝ่คุณธรรม&rdquo; สถานศึกษาขนาดเล็กที่มุ่งพัฒนาเด็กทุกคนให้เติบโตอย่างมีคุณภาพ เปิดสอนตั้งแต่ระดับปฐมวัย (อนุบาล 2–3) ถึงระดับประถมศึกษา (ป.1–6)</p>
+  <div style="position:relative; min-height:min(88vh,720px); display:flex; align-items:flex-end; padding-top:{{ heroTopPad }}; opacity:{{ reveal.home.opacity }}; transform:{{ reveal.home.transform }}; transition:opacity .8s ease, transform .8s ease;">
+    <figure class="{{ photoClass }}" style="margin:0; position:absolute; inset:0; z-index:0;">
+      <image-slot id="hero-photo" shape="rect" style="width:100%; height:100%;" placeholder="ภาพโรงเรียน / กิจกรรมนักเรียน"></image-slot>
+    </figure>
+    <div style="position:relative; z-index:1; width:100%; padding:clamp(40px,7vw,80px) 0; background:linear-gradient(to top, color-mix(in srgb, var(--color-text) 84%, transparent) 0%, color-mix(in srgb, var(--color-text) 58%, transparent) 60%, color-mix(in srgb, var(--color-text) 28%, transparent) 100%);">
+      <div style="max-width:1200px; margin:0 auto; padding:0 clamp(20px,5vw,72px);">
+        <span style="display:block; font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:#fff; font-weight:700; margin-bottom:16px;">สำนักงานเขตพื้นที่การศึกษาประถมศึกษามหาสารคาม เขต 3</span>
+        <h1 style="font-family:var(--font-heading); font-weight:800; font-size:clamp(32px,5vw,52px); line-height:1.1; letter-spacing:-0.02em; margin:0 0 20px; color:#fff;">โรงเรียนบ้านหนองสระพังโนนสะอาด</h1>
+        <p style="font-size:17px; line-height:1.65; max-width:56ch; color:#fff; opacity:.92; margin:0 0 28px;">&ldquo;เรียนดี มีวินัย ใฝ่คุณธรรม&rdquo; สถานศึกษาขนาดเล็กที่มุ่งพัฒนาเด็กทุกคนให้เติบโตอย่างมีคุณภาพ เปิดสอนตั้งแต่ระดับปฐมวัย (อนุบาล 2–3) ถึงระดับประถมศึกษา (ป.1–6)</p>
         <div style="display:flex; gap:12px; flex-wrap:wrap;">
           <a href="#news" onClick="{{ navClick }}" class="btn btn-primary">ข่าวประชาสัมพันธ์</a>
           <a href="#contact" onClick="{{ navClick }}" class="btn btn-secondary">ติดต่อเรา</a>
         </div>
       </div>
-      <figure class="{{ photoClass }}" style="margin:0;">
-        <image-slot id="hero-photo" shape="rect" style="width:100%; aspect-ratio:4/3;" placeholder="ภาพโรงเรียน / กิจกรรมนักเรียน"></image-slot>
-      </figure>
     </div>
+  </div>
+  <div style="max-width:1200px; margin:0 auto; padding:0 clamp(20px,5vw,72px);">
     <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:24px; border-top:2px solid var(--color-divider); padding:32px 0;">
       <sc-for list="{{ statItems }}" as="st" hint-placeholder-count="4">
         <div>
@@ -93,14 +95,14 @@ a:hover { color: var(--color-accent-600); }
 
     <!-- director message + VTR + quick links -->
     <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; border-top:2px solid var(--color-divider); padding:40px 0 48px;">
-      <div class="card elev-sm" style="flex-direction:row; align-items:flex-start; gap:16px;">
-        <figure class="{{ photoClass }}" style="margin:0; flex:none;">
-          <image-slot id="director-photo" shape="rect" style="width:64px;height:64px;" placeholder="ภาพผู้บริหาร"></image-slot>
+      <div class="card elev-sm" style="position:relative; padding:0; overflow:hidden; display:block; min-height:300px;">
+        <figure style="margin:0; position:absolute; inset:0;">
+          <image-slot id="director-photo" shape="rect" style="width:100%;height:100%;" placeholder="ภาพผู้บริหาร"></image-slot>
         </figure>
-        <div>
-          <span class="card-kicker">สารจากผู้อำนวยการ</span>
-          <p class="card-body" style="margin:6px 0 8px;">&ldquo;โรงเรียนมุ่งพัฒนาผู้เรียนทุกคนให้เป็นคนดี มีความรู้ และอยู่ร่วมกับผู้อื่นได้อย่างมีความสุข ขอขอบคุณผู้ปกครองและชุมชนที่ร่วมมือกับโรงเรียนด้วยดีเสมอมา&rdquo;</p>
-          <span class="card-title" style="font-size:14px;">นายกิจภูมิ บุญอบ</span>
+        <div style="position:absolute; left:0; right:0; bottom:0; padding:24px; background:linear-gradient(to top, color-mix(in srgb, var(--color-text) 78%, transparent) 0%, color-mix(in srgb, var(--color-text) 40%, transparent) 55%, transparent 100%);">
+          <span style="display:block; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--color-accent-200); margin-bottom:6px;">สารจากผู้อำนวยการ</span>
+          <p style="margin:0 0 10px; font-family:var(--font-heading); font-size:26px; font-weight:800; line-height:1.15; color:#fff;">นายกิจภูมิ บุญอบ</p>
+          <p style="margin:0; font-size:14px; line-height:1.55; color:#fff; opacity:.92; max-width:38ch;">&ldquo;โรงเรียนมุ่งพัฒนาผู้เรียนทุกคนให้เป็นคนดี มีความรู้ และอยู่ร่วมกับผู้อื่นได้อย่างมีความสุข&rdquo;</p>
         </div>
       </div>
       <div class="card elev-sm">
@@ -473,7 +475,7 @@ class Component extends DCLogic {
     narrow: false,
     visible: { home: true },
     indicator: { left: 0, width: 0 },
-    statsProgress: 0,
+    statsProgress: 1,
     formSent: false,
     reducedMotion: false,
     bannerIndex: 0,
@@ -492,16 +494,6 @@ class Component extends DCLogic {
       this.setState({ reducedMotion: true, visible: allVisible, statsProgress: 1 });
     } else {
       this.startStats();
-      this.revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const id = entry.target.dataset.sectionId;
-            this.setState(s => (s.visible[id] ? null : { visible: { ...s.visible, [id]: true } }));
-            this.revealObserver.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-      Object.values(this.sectionEls).forEach(el => this.revealObserver.observe(el));
     }
 
     
@@ -517,6 +509,19 @@ class Component extends DCLogic {
       if (current !== this.state.activeSection) this.setState({ activeSection: current });
       this.activeId = current;
       this.syncIndicator();
+      if (!this.state.reducedMotion) {
+        const trigger = window.innerHeight * 0.88;
+        let newly = null;
+        Component.SECTION_IDS.forEach(id => {
+          const el = this.sectionEls[id];
+          if (!el || this.state.visible[id]) return;
+          if (el.getBoundingClientRect().top < trigger) {
+            newly = newly || {};
+            newly[id] = true;
+          }
+        });
+        if (newly) this.setState(s => ({ visible: { ...s.visible, ...newly } }));
+      }
     };
     this.onScroll();
     window.addEventListener('scroll', this.onScroll, { passive: true });
@@ -574,13 +579,17 @@ class Component extends DCLogic {
     bar.style.width = width + 'px';
     Object.keys(this.navRefs).forEach(key => {
       const tab = this.navRefs[key];
-      if (tab) tab.style.color = key === active ? 'var(--color-bg)' : 'var(--color-text)';
+      if (!tab) return;
+      const overHero = (this.props.navStyle ?? 'floating') === 'floating' && !this.state.scrolled;
+      if (key === active) tab.style.color = overHero ? 'var(--color-text)' : 'var(--color-bg)';
+      else tab.style.color = overHero ? '#ffffff' : 'var(--color-text)';
     });
     if (left < container.scrollLeft) container.scrollLeft = Math.max(0, left - 8);
     else if (left + width > container.scrollLeft + container.clientWidth) container.scrollLeft = left + width - container.clientWidth + 8;
   }
 
   startStats() {
+    this.setState({ statsProgress: 0 });
     const start = performance.now();
     const duration = 1200;
     const tick = (now) => {
@@ -663,14 +672,22 @@ class Component extends DCLogic {
     const photoTreatment = this.props.photoTreatment ?? 'grayscale';
     const isFloating = navStyle === 'floating';
     const navRadius = isFloating ? 999 : 0;
-    const navBg = isFloating ? 'color-mix(in srgb, var(--color-bg) 68%, transparent)' : 'var(--color-bg)';
+    const overHero = isFloating && !s.scrolled;
+    const navBg = isFloating
+      ? (overHero ? 'color-mix(in srgb, #ffffff 12%, transparent)' : 'color-mix(in srgb, var(--color-bg) 72%, transparent)')
+      : 'var(--color-bg)';
     const navShellStyle = isFloating
-      ? `position:fixed; top:16px; left:50%; transform:translateX(-50%); width:calc(100% - 32px); max-width:1400px; z-index:50; display:flex; align-items:center; gap:20px; background:${navBg}; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border-radius:999px; box-shadow:0 12px 40px -12px color-mix(in srgb, var(--color-text) 30%, transparent); padding:${s.scrolled ? '10px' : '18px'} clamp(16px,4vw,36px); transition:padding .3s ease;`
+      ? `position:fixed; top:16px; left:50%; transform:translateX(-50%); width:calc(100% - 32px); max-width:1400px; z-index:50; display:flex; align-items:center; gap:20px; background:${navBg}; backdrop-filter:blur(${overHero ? 6 : 16}px) saturate(140%); -webkit-backdrop-filter:blur(${overHero ? 6 : 16}px) saturate(140%); border-radius:999px; box-shadow:${overHero ? '0 8px 30px -14px rgba(0,0,0,.5)' : '0 12px 40px -12px color-mix(in srgb, var(--color-text) 30%, transparent)'}; padding:${s.scrolled ? '10px' : '18px'} clamp(16px,4vw,36px); transition:padding .3s ease, background .3s ease;`
       : `position:sticky; top:0; left:0; transform:none; width:100%; max-width:none; z-index:50; display:flex; align-items:center; gap:20px; background:${navBg}; border-radius:0; border-bottom:2px solid var(--color-divider); box-shadow:none; padding:${s.scrolled ? '10px' : '18px'} clamp(16px,5vw,48px); transition:padding .3s ease;`;
-    const navSpacerHeight = isFloating ? '120px' : '0px';
+    const wordmarkColor = overHero ? '#ffffff' : 'var(--color-text)';
+    const wordmarkSubColor = overHero ? 'rgba(255,255,255,.75)' : 'color-mix(in srgb, var(--color-text) 60%, transparent)';
+    const navTextShadow = overHero ? '0 1px 3px rgba(0,0,0,.55)' : 'none';
+    const indicatorBg = overHero ? '#ffffff' : 'var(--color-text)';
+    const navSpacerHeight = '0px';
+    const heroTopPad = isFloating ? 'clamp(140px,16vh,180px)' : '0px';
     const navInnerBorder = isFloating ? 'none' : '2px solid var(--color-divider)';
     const photoClass = photoTreatment === 'grayscale' ? 'grayscale' : '';
-    const logoBg = s.scrolled ? navBg : '#ffffff';
+    const logoBg = overHero ? 'transparent' : '#ffffff';
 
     const reveal = {};
     Component.SECTION_IDS.forEach(id => { reveal[id] = this.sectionReveal(id); });
@@ -714,11 +731,16 @@ class Component extends DCLogic {
       navItems,
       navShellStyle,
       navSpacerHeight,
+      heroTopPad,
+      wordmarkColor,
+      wordmarkSubColor,
+      navTextShadow,
+      indicatorBg,
       navRadius,
       navInnerBorder,
       photoClass,
       logoBg,
-      logoSize: s.scrolled ? (s.narrow ? 34 : 42) : (s.narrow ? 48 : 85),
+      logoSize: s.scrolled ? (s.narrow ? 27 : 34) : (s.narrow ? 38 : 68),
       showWordmark: !s.narrow,
       tabPaddingV: s.scrolled ? (s.narrow ? '6px 10px' : '8px 14px') : (s.narrow ? '6px 9px' : '8px 14px'),
       tabFontSize: s.narrow ? '11.5px' : '13px',
