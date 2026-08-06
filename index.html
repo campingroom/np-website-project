@@ -8,6 +8,8 @@
 <body>
 <x-dc>
 <helmet>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
 <link rel="stylesheet" href="_ds/modernist-e418e37c-5b91-498b-bea5-a9b107ada9e7/styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -19,7 +21,7 @@ html { scroll-behavior: auto; }
 body { margin: 0; text-wrap: pretty; }
 
 /* ── Sci-fi dark skin: token remap ───────────────────────────── */
-:root {
+html[data-theme="dark"] {
   color-scheme: dark;
   --color-bg: #0A0A0C;
   --color-surface: #121216;
@@ -41,6 +43,8 @@ body { margin: 0; text-wrap: pretty; }
   --shadow-md: 0 18px 44px -22px rgba(0,0,0,.9);
   --shadow-lg: 0 40px 90px -40px rgba(0,0,0,.95);
 }
+
+html[data-theme="dark"] {
 body {
   background-color: #0A0A0C;
   background-image:
@@ -130,7 +134,10 @@ a:hover { color: var(--color-accent-200); }
   background: linear-gradient(180deg, #12111a, #0a0910) !important;
   border: 1px solid rgba(255,255,255,.08);
 }
-#dc-root [style*="color: var(--color-bg)"] { color: #F6F5FB !important; }
+#dc-root footer [style*="color: var(--color-bg)"],
+#dc-root section[style*="background: var(--color-accent)"] [style*="color: var(--color-bg)"] { color: #F6F5FB !important; }
+#dc-root [style*="background: var(--color-accent)"][style*="color: var(--color-bg)"],
+#dc-root footer [style*="background: var(--color-accent)"][style*="color: var(--color-bg)"] { color: #1A0A03 !important; }
 #dc-root [style*="background: var(--color-accent)"] { box-shadow: 0 12px 34px -14px rgba(255,106,44,.75); }
 #dc-root section[style*="background: var(--color-accent)"] {
   background:
@@ -211,6 +218,166 @@ a:hover { color: var(--color-accent-200); }
 #dc-root [data-backtotop]:hover {
   box-shadow: 0 0 0 1px #ffffff, 0 18px 52px -12px rgba(255,106,44,.95), 0 0 76px -14px rgba(255,124,52,.85) !important;
 }
+
+}
+
+/* ── Light theme: Modernist brand palette, same rounded geometry ── */
+html[data-theme="light"] { color-scheme: light; --radius-md: 20px; }
+html[data-theme="light"] body { background: var(--color-bg); color: var(--color-text); }
+html[data-theme="light"] #dc-root .card,
+html[data-theme="light"] #dc-root .input,
+html[data-theme="light"] #dc-root .table,
+html[data-theme="light"] #dc-root .dialog { border-radius: 20px; }
+html[data-theme="light"] #dc-root .btn,
+html[data-theme="light"] #dc-root .tag { border-radius: 999px; }
+html[data-theme="light"] #dc-root section img,
+html[data-theme="light"] #dc-root section iframe,
+html[data-theme="light"] #dc-root figure,
+html[data-theme="light"] #dc-root image-slot { border-radius: 20px; }
+html[data-theme="light"] #dc-root #home > div:first-child figure,
+html[data-theme="light"] #dc-root #home > div:first-child image-slot { border-radius: 0; }
+html[data-theme="light"] #dc-root [style*="2px solid var(--color-divider)"] { border-width: 1px !important; }
+html[data-theme="light"] #dc-root [style*="border: 1px solid var(--color-divider)"],
+html[data-theme="light"] #dc-root [style*="border: 2px solid var(--color-divider)"] { border-radius: 20px; }
+html[data-theme="light"] #dc-root .card,
+html[data-theme="light"] #dc-root [data-hi-card] { transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, border-color .35s ease; }
+html[data-theme="light"] #dc-root .card:hover,
+html[data-theme="light"] #dc-root [data-hi-card]:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 26px 56px -32px rgba(32,30,29,.45), 0 0 28px -12px color-mix(in srgb, var(--color-accent) 45%, transparent);
+}
+html[data-theme="light"] #dc-root .btn { transition: transform .28s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease, background .3s ease, border-color .3s ease; }
+html[data-theme="light"] #dc-root .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 14px 34px -16px color-mix(in srgb, var(--color-accent) 70%, transparent); }
+html[data-theme="light"] #dc-root [data-backtotop] { border-radius: 999px !important; }
+/* photo scrims: fade to fully transparent so the overlay has no hard edge */
+html[data-theme="light"] #dc-root [style*="linear-gradient(to top, color-mix(in srgb, var(--color-text)"] {
+  background: linear-gradient(to top,
+    color-mix(in srgb, var(--color-text) 86%, transparent) 0%,
+    color-mix(in srgb, var(--color-text) 52%, transparent) 55%,
+    transparent 100%) !important;
+}
+
+/* ── Light backdrops: A glow · B panels · C grid ──────────────── */
+/* A — Aurora paper: diffuse warm/cool light fields, sections float on it */
+html[data-theme="light"][data-light-bg="glow"] body {
+  background-color: #F7F5F3;
+  background-image:
+    radial-gradient(820px 560px at 8% -8%, rgba(236,48,19,.14), transparent 64%),
+    radial-gradient(820px 600px at 94% 6%, rgba(84,124,214,.12), transparent 64%),
+    radial-gradient(1100px 780px at 52% 106%, rgba(236,48,19,.08), transparent 68%);
+  background-attachment: fixed; background-repeat: no-repeat;
+}
+html[data-theme="light"][data-light-bg="glow"] #dc-root [style*="min-height: 100vh"],
+html[data-theme="light"][data-light-bg="glow"] #dc-root section[style*="background: var(--color-bg)"] { background: transparent !important; }
+html[data-theme="light"][data-light-bg="glow"] #dc-root section[style*="background: var(--color-surface)"] {
+  background: linear-gradient(180deg, rgba(255,255,255,.78), rgba(255,255,255,.42)) !important;
+}
+html[data-theme="light"][data-light-bg="glow"] #dc-root .card,
+html[data-theme="light"][data-light-bg="glow"] #dc-root [data-hi-card] {
+  background: rgba(255,255,255,.74) !important;
+  backdrop-filter: blur(10px) saturate(120%); -webkit-backdrop-filter: blur(10px) saturate(120%);
+  border: 1px solid rgba(32,30,29,.09) !important;
+  box-shadow: 0 20px 44px -30px rgba(32,30,29,.45), inset 0 1px 0 rgba(255,255,255,.7) !important;
+}
+
+/* B — Stacked panels: depth from surfaces, no glow at all */
+html[data-theme="light"][data-light-bg="panels"] body { background: #E9E7E5; }
+html[data-theme="light"][data-light-bg="panels"] #dc-root [style*="min-height: 100vh"] { background: transparent !important; }
+html[data-theme="light"][data-light-bg="panels"] #dc-root section[style*="background: var(--color-bg)"] { background: #FBFAF9 !important; }
+html[data-theme="light"][data-light-bg="panels"] #dc-root section[style*="background: var(--color-surface)"] { background: #F1EFED !important; }
+html[data-theme="light"][data-light-bg="panels"] #dc-root .card,
+html[data-theme="light"][data-light-bg="panels"] #dc-root [data-hi-card] {
+  background: #ffffff !important;
+  border: 1px solid rgba(32,30,29,.08) !important;
+  box-shadow: 0 16px 34px -24px rgba(32,30,29,.5) !important;
+}
+
+/* C — Blueprint grid: the modular grid shows through, soft top light */
+html[data-theme="light"][data-light-bg="grid"] body {
+  background-color: #F4F3F2;
+  background-image:
+    linear-gradient(rgba(32,30,29,.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(32,30,29,.055) 1px, transparent 1px),
+    radial-gradient(1200px 700px at 50% -12%, rgba(255,255,255,.95), transparent 70%),
+    radial-gradient(900px 600px at 50% 112%, rgba(236,48,19,.07), transparent 70%);
+  background-size: 96px 96px, 96px 96px, 100% 100%, 100% 100%;
+  background-attachment: fixed; background-repeat: repeat, repeat, no-repeat, no-repeat;
+}
+html[data-theme="light"][data-light-bg="grid"] #dc-root [style*="min-height: 100vh"],
+html[data-theme="light"][data-light-bg="grid"] #dc-root section[style*="background: var(--color-bg)"] { background: transparent !important; }
+html[data-theme="light"][data-light-bg="grid"] #dc-root section[style*="background: var(--color-surface)"] {
+  background: linear-gradient(180deg, rgba(255,255,255,.72), rgba(255,255,255,.34)) !important;
+}
+html[data-theme="light"][data-light-bg="grid"] #dc-root .card,
+html[data-theme="light"][data-light-bg="grid"] #dc-root [data-hi-card] {
+  background: #ffffff !important;
+  border: 1px solid rgba(32,30,29,.12) !important;
+  box-shadow: 0 10px 26px -20px rgba(32,30,29,.5) !important;
+}
+
+/* A+C — glow fields over the modular grid */
+html[data-theme="light"][data-light-bg="glowgrid"] body {
+  background-color: #F6F4F2;
+  background-image:
+    linear-gradient(rgba(32,30,29,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(32,30,29,.045) 1px, transparent 1px),
+    radial-gradient(820px 560px at 8% -8%, rgba(236,48,19,.15), transparent 64%),
+    radial-gradient(820px 600px at 94% 6%, rgba(84,124,214,.13), transparent 64%),
+    radial-gradient(1100px 780px at 52% 106%, rgba(236,48,19,.08), transparent 68%);
+  background-size: 96px 96px, 96px 96px, 100% 100%, 100% 100%, 100% 100%;
+  background-repeat: repeat, repeat, no-repeat, no-repeat, no-repeat;
+  background-attachment: fixed;
+}
+html[data-theme="light"][data-light-bg="glowgrid"] #dc-root [style*="min-height: 100vh"],
+html[data-theme="light"][data-light-bg="glowgrid"] #dc-root section[style*="background: var(--color-bg)"] { background: transparent !important; }
+html[data-theme="light"][data-light-bg="glowgrid"] #dc-root section[style*="background: var(--color-surface)"] {
+  background: linear-gradient(180deg, rgba(255,255,255,.7), rgba(255,255,255,.34)) !important;
+}
+html[data-theme="light"][data-light-bg="glowgrid"] #dc-root .card,
+html[data-theme="light"][data-light-bg="glowgrid"] #dc-root [data-hi-card] {
+  background: rgba(255,255,255,.8) !important;
+  backdrop-filter: blur(10px) saturate(120%); -webkit-backdrop-filter: blur(10px) saturate(120%);
+  border: 1px solid rgba(32,30,29,.10) !important;
+  box-shadow: 0 18px 40px -28px rgba(32,30,29,.45), inset 0 1px 0 rgba(255,255,255,.75) !important;
+}
+
+/* ── Theme switch (both themes) ───────────────────────────────── */
+html[data-theme-switching] body,
+html[data-theme-switching] #dc-root section,
+html[data-theme-switching] #dc-root footer,
+html[data-theme-switching] #dc-root .card,
+html[data-theme-switching] #dc-root .btn,
+html[data-theme-switching] #dc-root .tag,
+html[data-theme-switching] #dc-root .input,
+html[data-theme-switching] #dc-root [data-hi-card],
+html[data-theme-switching] #dc-root [data-backtotop],
+html[data-theme-switching] #dc-root nav {
+  transition: background-color .42s ease, background-image .42s ease, color .42s ease,
+              border-color .42s ease, box-shadow .42s ease !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-theme-switching] * { transition: none !important; }
+}
+#dc-root [data-theme-toggle] {
+  flex: none; display: flex; align-items: center; gap: 2px; padding: 3px;
+  border-radius: 999px; border: 1px solid rgba(255,255,255,.22);
+  background: rgba(12,12,16,.42); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+#dc-root [data-theme-opt] {
+  width: 30px; height: 30px; display: grid; place-items: center; padding: 0; cursor: pointer;
+  border: none; border-radius: 999px; background: transparent; color: rgba(255,255,255,.72);
+  transition: background .25s ease, color .25s ease, box-shadow .25s ease, transform .25s ease;
+}
+#dc-root [data-theme-opt]:hover { color: #fff; transform: translateY(-1px); }
+html[data-theme="dark"] #dc-root [data-theme-opt="dark"] {
+  background: #EDEDF0; color: #141216;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.5), 0 8px 22px -8px rgba(255,106,44,.85);
+}
+html[data-theme="light"] #dc-root [data-theme-opt="light"] {
+  background: #ffffff; color: #201e1d;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.7), 0 6px 18px -8px rgba(0,0,0,.45);
+}
+
 @keyframes orbitSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes orbitCounter { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
 @keyframes orbFloat { from { transform: translateY(-7px); } to { transform: translateY(7px); } }
@@ -237,7 +404,7 @@ a:hover { color: var(--color-accent-200); }
 
 <nav ref="{{ setNavBarRef }}" style="{{ navShellStyle }}">
   <a href="#home" onClick="{{ navClick }}" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--color-text); margin-right:auto; flex:none; min-width:0;">
-    <image-slot id="logo-nav" data-logo="" shape="rect" fit="contain" src="assets/logo-transparent.png" style="width:68px;height:68px;flex:none;background:transparent;border-radius:0;transition:width .3s ease,height .3s ease,background .3s ease;"></image-slot>
+    <image-slot id="logo-nav" data-logo="" shape="rect" fit="contain" src="assets/logo-crest.png" style="width:68px;height:68px;flex:none;background:transparent;border-radius:0;transition:width .3s ease,height .3s ease,background .3s ease;"></image-slot>
     <sc-if value="{{ showWordmark }}" hint-placeholder-val="{{ true }}">
       <span data-wordmark="" style="display:inline-block; font-family:var(--font-heading); font-weight:800; font-size:14px; line-height:1.2; letter-spacing:-0.01em; white-space:nowrap; color:#ffffff; text-shadow:0 1px 3px rgba(0,0,0,.55);"><span data-wordmark-thai="" style="display:block; opacity:0;">โรงเรียนบ้านหนองสระพังโนนสะอาด</span><span data-wordmark-sub="" style="display: block; width: 100%; white-space: normal; text-align: justify; text-align-last: justify; font-weight: 400; font-size: 10px; color: rgba(255,255,255,.75); letter-spacing: 0; opacity: 0">BANNONGSAPUNGNONSA-ARD SCHOOL</span></span>
     </sc-if>
@@ -247,6 +414,14 @@ a:hover { color: var(--color-accent-200); }
     <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="6">
       <a href="{{ item.href }}" ref="{{ setNavRef }}" data-nav-id="{{ item.id }}" onClick="{{ navClick }}" style="position:relative; z-index:1; white-space:nowrap; padding:8px 14px; font-size:13px; font-weight:700; text-decoration:none; color:#ffffff; text-shadow:0 1px 3px rgba(0,0,0,.55); transition:color .12s ease .12s, padding .3s ease, font-size .3s ease; display:flex; flex-direction:column; align-items:center; gap:1px; line-height:1.2;"><span>{{ item.label }}</span><span data-en="" style="font-size:9px; font-weight:600; letter-spacing:.03em; opacity:.6;">{{ item.en }}</span></a>
     </sc-for>
+  </div>
+  <div data-theme-toggle="" role="group" aria-label="สลับธีมสว่างและมืด" style="margin-left:8px;">
+    <button type="button" data-theme-opt="light" onClick="{{ setLightTheme }}" aria-label="ธีมสว่าง" title="ธีมสว่าง">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path></svg>
+    </button>
+    <button type="button" data-theme-opt="dark" onClick="{{ setDarkTheme }}" aria-label="ธีมมืด" title="ธีมมืด">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1z"></path></svg>
+    </button>
   </div>
   <a href="https://www.facebook.com/profile.php?id=100058599200322" target="_blank" rel="noopener" aria-label="Facebook แฟนเพจโรงเรียน" title="Facebook" style="flex:none; display:flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:999px; border:2px solid rgba(255,255,255,.45); color:#ffffff; margin-left:8px; transition:background .2s ease, border-color .2s ease;" style-hover="background:rgba(255,255,255,.15); border-color:#ffffff;">
     <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h2.5l.5-3H13v-2c0-.6.4-1 1-1z"></path></svg>
@@ -267,7 +442,7 @@ a:hover { color: var(--color-accent-200); }
           <h1 data-hero-thai="" style="font-family:var(--font-heading); font-weight:800; font-size:clamp(32px,5vw,52px); line-height:1.1; letter-spacing:-0.02em; margin:0 0 4px; color:#fff;">โรงเรียนบ้านหนองสระพังโนนสะอาด</h1>
           <p data-hero-en="" style="display:block; margin:0; padding-left:0.9em; font-family:var(--font-heading); font-weight:400; font-size:19px; line-height:1.2; letter-spacing:0; text-align:left; white-space:nowrap; color:rgba(255,255,255,.78);">BANNONGSAPUNGNONSA-ARD SCHOOL</p>
         </div>
-        <p style="font-size:17px; line-height:1.65; max-width:56ch; color:#fff; opacity:.92; margin:0 0 28px;">“เรียนดี มีวินัย ใฝ่คุณธรรม” สถานศึกษาขนาดเล็กที่มุ่งพัฒนาเด็กทุกคนให้เติบโตอย่างมีคุณภาพ เปิดสอนตั้งแต่ระดับปฐมวัย (อนุบาล 2–3) ถึงระดับประถมศึกษา (ป.1–6)</p>
+        <p style="font-size:17px; line-height:1.65; max-width:56ch; color:#fff; opacity:.92; margin:0 0 28px;">“เรียนดี มีวินัย ใฝ่พัฒนา รักษาสิ่งแวดล้อม เพียบพร้อมคุณธรรม ร่วมกิจกรรมชุมชน” สถานศึกษาที่มุ่งพัฒนาเด็กทุกคนให้เติบโตอย่างมีคุณภาพ เปิดสอนตั้งแต่ระดับปฐมวัย (อนุบาล 2–3) ถึงระดับประถมศึกษา (ป.1–6)</p>
         <div style="display:flex; gap:12px; flex-wrap:wrap;">
           <a href="#news" onClick="{{ navClick }}" class="btn btn-primary">ข่าวประชาสัมพันธ์</a>
           <a href="#contact" onClick="{{ navClick }}" class="btn btn-secondary" style="color:#ffffff; border-color:rgba(255,255,255,.7); background:transparent;" style-hover="background:rgba(255,255,255,.16); border-color:#ffffff;">ติดต่อเรา</a>
@@ -288,7 +463,6 @@ a:hover { color: var(--color-accent-200); }
     <!-- banner slider -->
     <div style="position:relative; border-top:2px solid var(--color-divider); padding:32px 0 40px;">
       <span class="tag tag-accent" style="margin-bottom:16px;">ไฮไลต์</span>
-      <h2 style="font-family:var(--font-heading); font-weight:800; font-size:clamp(28px,4vw,48px); line-height:1.1; margin:14px 0 4px; max-width:18ch;">ภาพความเคลื่อนไหว<br>จากรั้วโรงเรียนของเรา</h2>
       <div ref="{{ setHiWrapRef }}" style="perspective:1500px; perspective-origin:50% 45%; display:flex; flex-direction:column; align-items:center; gap:clamp(36px,6vw,88px); padding:clamp(28px,6vw,80px) 0 clamp(20px,4vw,56px);">
         <sc-for list="{{ highlightCards }}" as="h" hint-placeholder-count="4">
           <article data-hi-card="" style="transform-style:preserve-3d; will-change:transform, opacity; align-self:{{ h.align }}; width:min(800px,100%); display:flex; flex-wrap:wrap; flex-direction:{{ h.dir }}; gap:clamp(14px,2vw,24px); padding:clamp(14px,2vw,20px); border:2px solid var(--color-divider); border-radius:22px; background:{{ h.bg }}; box-shadow:0 30px 60px -40px color-mix(in srgb, var(--color-text) 70%, transparent);">
@@ -419,7 +593,7 @@ a:hover { color: var(--color-accent-200); }
     <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px;">
       <div class="card">
         <span class="card-kicker">ตราสัญลักษณ์</span>
-        <image-slot id="logo-about" shape="rect" fit="contain" src="assets/logo-transparent.png" style="width:72px;height:72px;"></image-slot>
+        <image-slot id="logo-about" shape="rect" fit="contain" src="assets/logo-crest.png" style="width:72px;height:72px;"></image-slot>
       </div>
       <div class="card">
         <span class="card-kicker">สีประจำโรงเรียน</span>
@@ -441,7 +615,7 @@ a:hover { color: var(--color-accent-200); }
 <section data-section-id="staff" id="staff" ref="{{ setSectionRef }}" style="background:var(--color-bg); border-top:2px solid var(--color-divider);">
   <div style="max-width:1200px; margin:0 auto; padding:56px clamp(20px,5vw,72px); opacity:{{ reveal.staff.opacity }}; transform:{{ reveal.staff.transform }}; transition:opacity .8s ease, transform .8s ease;">
     <span class="tag tag-accent">บุคลากร</span>
-    <h2 style="font-size:clamp(26px,3.2vw,38px); margin:14px 0 28px;">โครงสร้างผู้บริหารและทำเนียบครู</h2>
+    <h2 style="font-size:clamp(26px,3.2vw,38px); margin:14px 0 28px;">ผู้บริหาร ครูและบุคลากรสนับสนุน</h2>
 
     <div style="position:relative; overflow:hidden; border:2px solid var(--color-divider); border-radius:16px; padding:clamp(20px,3vw,40px); margin:0 0 8px; display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:clamp(24px,4vw,48px); align-items:center;">
       <div style="position:relative; width:100%; max-width:520px; margin:0 auto; display:flex; flex-direction:column; gap:20px;">
@@ -533,35 +707,45 @@ a:hover { color: var(--color-accent-200); }
           </div>
         </div>
       </sc-if>
-    </div>
 
-
-    <div style="border:2px solid var(--color-divider); border-radius:16px; margin-top:24px; padding:clamp(20px,3vw,32px); margin-bottom:40px;">
-      <div style="display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap; border-bottom:2px solid var(--color-divider); padding-bottom:20px; margin-bottom:24px;">
-        <span style="flex:none; display:flex; align-items:center; justify-content:center; width:52px; height:52px; border-radius:12px; background:var(--color-accent); color:var(--color-bg);">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ activeGroup.icon }}"></path></svg>
-        </span>
-        <div style="flex:1; min-width:200px;">
-          <span class="tag tag-accent" style="margin-bottom:8px;">{{ activeGroup.tag }}</span>
-          <p style="font-family:var(--font-heading); font-weight:800; font-size:clamp(22px,2.6vw,30px); line-height:1.15; margin:8px 0 6px;">{{ activeGroup.label }}</p>
-          <p style="font-size:14.5px; line-height:1.6; margin:0; color:color-mix(in srgb, var(--color-text) 72%, transparent);">{{ activeGroup.desc }}</p>
-        </div>
-        <span style="flex:none; font-size:13px; font-weight:700; padding:10px 14px; border-radius:999px; border:2px solid var(--color-divider);">{{ activeGroup.count }}</span>
-      </div>
-      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px;">
-        <sc-for list="{{ activeMembers }}" as="m" hint-placeholder-count="2">
-          <div style="display:flex; gap:16px; border:2px solid var(--color-divider); border-radius:14px; padding:16px;">
-            <figure class="{{ photoClass }}" style="margin:0; flex:none;">
-              <image-slot id="{{ m.photoId }}" shape="rect" style="width:96px; height:120px;" placeholder="ภาพบุคลากร"></image-slot>
-            </figure>
-            <div style="min-width:0;">
-              <p style="font-family:var(--font-heading); font-weight:800; font-size:17px; margin:0 0 4px;">{{ m.name }}</p>
-              <span style="display:block; font-size:12.5px; font-weight:700; color:var(--color-accent-700); margin-bottom:6px;">{{ m.role }}</span>
-              <p style="font-size:13.5px; line-height:1.55; margin:0; color:color-mix(in srgb, var(--color-text) 72%, transparent);">{{ m.note }}</p>
+      <sc-if value="{{ groupOpen }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ closeGroup }}" style="position:absolute; inset:0; z-index:500; background:color-mix(in srgb, var(--color-text) 45%, transparent);"></div>
+        <div style="position:absolute; top:0; right:0; bottom:0; z-index:501; width:min(100%,440px); background:var(--color-bg); border-left:2px solid var(--color-text); box-shadow:var(--shadow-lg); display:flex; flex-direction:column; animation:orbDrawerIn .32s cubic-bezier(.2,.85,.3,1) both;">
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 20px; border-bottom:2px solid var(--color-divider);">
+            <p style="font-family:var(--font-body); font-size:12px; letter-spacing:.08em; margin:0; color:color-mix(in srgb, var(--color-text) 55%, transparent);">{{ groupCounter }}</p>
+            <button type="button" onClick="{{ closeGroup }}" aria-label="ปิด" style="width:34px; height:34px; display:grid; place-items:center; padding:0; border:2px solid var(--color-accent); background:var(--color-accent); cursor:pointer; color:var(--color-bg); transition:background .2s ease;" style-hover="background:var(--color-accent-600);">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+            </button>
+          </div>
+          <div style="padding:24px 20px; overflow-y:auto; flex:1;">
+            <span style="display:flex; align-items:center; justify-content:center; width:48px; height:48px; border-radius:12px; background:var(--color-accent); color:var(--color-bg); margin-bottom:16px;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ activeGroup.icon }}"></path></svg>
+            </span>
+            <p style="font-family:var(--font-body); font-size:11.5px; text-transform:uppercase; letter-spacing:.08em; margin:0 0 8px; color:var(--color-accent-700);">{{ activeGroup.tag }}</p>
+            <p style="font-family:var(--font-heading); font-weight:800; font-size:22px; line-height:1.25; margin:0 0 10px;">{{ activeGroup.label }}</p>
+            <p style="font-size:14.5px; line-height:1.65; margin:0 0 14px; color:color-mix(in srgb, var(--color-text) 74%, transparent);">{{ activeGroup.desc }}</p>
+            <span style="display:inline-block; font-size:12.5px; font-weight:700; padding:7px 14px; border-radius:999px; border:2px solid var(--color-divider); margin-bottom:20px;">{{ activeGroup.count }}</span>
+            <div style="display:flex; flex-direction:column; gap:14px;">
+              <sc-for list="{{ activeMembers }}" as="m" hint-placeholder-count="2">
+                <div style="display:flex; gap:14px; border:2px solid var(--color-divider); border-radius:14px; padding:14px;">
+                  <figure class="{{ photoClass }}" style="margin:0; flex:none;">
+                    <image-slot id="{{ m.photoId }}" shape="rect" style="width:84px; height:106px;" placeholder="ภาพบุคลากร"></image-slot>
+                  </figure>
+                  <div style="min-width:0;">
+                    <p style="font-family:var(--font-heading); font-weight:800; font-size:16px; margin:0 0 4px;">{{ m.name }}</p>
+                    <span style="display:block; font-size:12px; font-weight:700; color:var(--color-accent-700); margin-bottom:6px;">{{ m.role }}</span>
+                    <p style="font-size:13px; line-height:1.55; margin:0; color:color-mix(in srgb, var(--color-text) 72%, transparent);">{{ m.note }}</p>
+                  </div>
+                </div>
+              </sc-for>
             </div>
           </div>
-        </sc-for>
-      </div>
+          <div style="display:flex; gap:10px; padding:16px 20px; border-top:2px solid var(--color-divider);">
+            <button type="button" onClick="{{ groupPrev }}" class="btn btn-secondary" style="flex:1; cursor:pointer;">ก่อนหน้า</button>
+            <button type="button" onClick="{{ groupNext }}" class="btn btn-secondary" style="flex:1; cursor:pointer;">ถัดไป</button>
+          </div>
+        </div>
+      </sc-if>
     </div>
 
   </div>
@@ -726,7 +910,7 @@ a:hover { color: var(--color-accent-200); }
         <div data-orbit-anim="" style="position:absolute; left:50%; top:50%; width:52%; aspect-ratio:1/1; transform:translate(-50%,-50%); animation:awardLogoFloat 4.5s ease-in-out infinite alternate;">
           <div data-orbit-anim="" style="position:absolute; inset:0; border-radius:999px; background:var(--color-accent); opacity:.5; animation:awardRingPulse 2.6s ease-out infinite;"></div>
           <div style="position:absolute; inset:8%; border-radius:999px; border:2px solid var(--color-text); background:var(--color-surface); overflow:hidden; display:flex; align-items:center; justify-content:center; padding:14%;">
-            <image-slot id="logo-award-orbit" shape="rect" fit="contain" src="assets/logo-transparent.png" style="width:100%; height:100%;" placeholder="ตราโรงเรียน"></image-slot>
+            <image-slot id="logo-award-orbit" shape="rect" fit="contain" src="assets/logo-crest.png" style="width:100%; height:100%;" placeholder="ตราโรงเรียน"></image-slot>
           </div>
         </div>
 
@@ -860,7 +1044,7 @@ a:hover { color: var(--color-accent-200); }
 <footer style="background:var(--color-text); color:var(--color-bg);">
   <div style="max-width:1200px; margin:0 auto; padding:clamp(40px,6vw,64px) clamp(20px,5vw,72px); display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:40px;">
     <div>
-      <image-slot id="logo-footer" shape="rect" fit="contain" src="assets/logo-transparent.png" style="width:56px;height:56px;display:block;margin-bottom:16px;"></image-slot>
+      <image-slot id="logo-footer" shape="rect" fit="contain" src="assets/logo-crest.png" style="width:56px;height:56px;display:block;margin-bottom:16px;"></image-slot>
       <p style="font-family:var(--font-heading); font-weight:800; font-size:16px; margin:0 0 12px; color:var(--color-bg);">โรงเรียนบ้านหนองสระพังโนนสะอาด</p>
       <p style="font-size:14px; line-height:1.65; margin:0; max-width:34ch; color:rgba(243,242,242,.82);">สำนักงานเขตพื้นที่การศึกษาประถมศึกษามหาสารคาม เขต 3</p>
     </div>
@@ -940,7 +1124,7 @@ a:hover { color: var(--color-accent-200); }
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;navStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;floating&quot;,&quot;options&quot;:[&quot;floating&quot;,&quot;classic&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;motionStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;fade&quot;,&quot;options&quot;:[&quot;fade&quot;,&quot;slide&quot;,&quot;instant&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;photoTreatment&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;grayscale&quot;,&quot;color&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Imagery&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;navStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;floating&quot;,&quot;options&quot;:[&quot;floating&quot;,&quot;classic&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;motionStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;fade&quot;,&quot;options&quot;:[&quot;fade&quot;,&quot;slide&quot;,&quot;instant&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;lightBackdrop&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;glow&quot;,&quot;options&quot;:[&quot;glow&quot;,&quot;panels&quot;,&quot;grid&quot;,&quot;glowgrid&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Light theme&quot;},&quot;photoTreatment&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;grayscale&quot;,&quot;color&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Imagery&quot;}}">
 class Component extends DCLogic {
   static ORG_CHART = [
     { id: 'academic', tag: 'Academic Affairs', label: 'ฝ่ายบริหารงานวิชาการ', icon: 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20 M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15Z', desc: 'วางแผน พัฒนา และกำกับดูแลหลักสูตร การจัดการเรียนรู้ และการวัดประเมินผลของโรงเรียน', tasks: ['จัดทำและพัฒนาหลักสูตรสถานศึกษา', 'นิเทศและติดตามการจัดการเรียนรู้', 'งานวัดและประเมินผลการเรียน', 'งานห้องสมุดและสื่อการเรียนรู้'] },
@@ -983,7 +1167,7 @@ class Component extends DCLogic {
     { count: '1 คน', name: 'นักการภารโรง', role: 'ดูแลอาคารสถานที่' },
   ];
   static STAFF_GROUPS = [
-    { id: 'admin', icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', tag: 'Administration', label: 'คณะผู้บริหาร', count: '1 คน', desc: 'ผู้อำนวยการโรงเรียนและทีมบริหารสถานศึกษา กำกับงานทั้ง 4 ฝ่าย',
+    { id: 'admin', icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', tag: 'Administration', label: 'ผู้บริหาร', count: '1 คน', desc: 'ผู้อำนวยการโรงเรียนและทีมบริหารสถานศึกษา กำกับงานทั้ง 4 ฝ่าย',
       members: [
         { role: 'ผู้อำนวยการโรงเรียน', name: 'นายกิจภูมิ บุญอบ', note: 'กำกับดูแลการบริหารวิชาการ งบประมาณ บุคคล และบริหารทั่วไป', photoId: 'staff-admin-1' },
       ] },
@@ -1140,9 +1324,46 @@ class Component extends DCLogic {
     reducedMotion: false,
     bannerIndex: 0,
     staffGroup: 'admin',
+    groupOpen: false,
+    theme: (() => {
+      try {
+        const saved = localStorage.getItem('school-site-theme');
+        if (saved === 'light' || saved === 'dark') return saved;
+      } catch (e) {}
+      try {
+        return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+      } catch (e) { return 'dark'; }
+    })(),
   };
 
+  applyTheme = () => {
+    const root = document.documentElement;
+    root.setAttribute('data-light-bg', this.props.lightBackdrop ?? 'glow');
+    if (!this.state.reducedMotion) {
+      root.setAttribute('data-theme-switching', '');
+      clearTimeout(this._themeFadeT);
+      this._themeFadeT = setTimeout(() => root.removeAttribute('data-theme-switching'), 480);
+    }
+    root.setAttribute('data-theme', this.state.theme);
+    try { localStorage.setItem('school-site-theme', this.state.theme); } catch (e) {}
+  };
+  applyThemeNoStore = () => {
+    document.documentElement.setAttribute('data-theme', this.state.theme);
+  };
+  setTheme = (t) => this.setState({ theme: t }, () => { this.applyTheme(); this.applyNavChrome(); });
+
   componentDidMount() {
+    this.applyTheme();
+    try {
+      this._sysTheme = window.matchMedia('(prefers-color-scheme: light)');
+      this._onSysTheme = (e) => {
+        let saved = null;
+        try { saved = localStorage.getItem('school-site-theme'); } catch (err) {}
+        if (saved) return;
+        this.setState({ theme: e.matches ? 'light' : 'dark' }, () => { this.applyThemeNoStore(); this.applyNavChrome(); });
+      };
+      this._sysTheme.addEventListener('change', this._onSysTheme);
+    } catch (e) {}
     this.sectionEls = {};
     this.navRefs = {};
     document.querySelectorAll('[data-section-id]').forEach(el => { this.sectionEls[el.dataset.sectionId] = el; });
@@ -1342,6 +1563,7 @@ class Component extends DCLogic {
   }
 
   componentDidUpdate() {
+    document.documentElement.setAttribute('data-light-bg', this.props.lightBackdrop ?? 'glow');
     this.applyNavChrome();
     this.applyMasthead();
   }
@@ -1516,7 +1738,7 @@ class Component extends DCLogic {
       const tab = this.navRefs[key];
       if (!tab) return;
       const overHero = (this.props.navStyle ?? 'floating') === 'floating' && !this.isScrolled;
-      if (key === active) tab.style.color = '#0b0a12';
+      if (key === active) tab.style.color = this.state.theme === 'light' ? (overHero ? 'var(--color-text)' : 'var(--color-bg)') : '#0b0a12';
       else tab.style.color = overHero ? '#ffffff' : 'var(--color-text)';
     });
     if (left < container.scrollLeft) container.scrollLeft = Math.max(0, left - 8);
@@ -1717,7 +1939,7 @@ class Component extends DCLogic {
       bg: on ? 'var(--color-accent-100)' : 'transparent',
       border: on ? 'var(--color-accent)' : 'var(--color-divider)',
       iconBg: on ? 'var(--color-accent)' : 'var(--color-neutral-200)',
-      iconColor: on ? 'var(--color-bg)' : 'var(--color-text)',
+      iconColor: on ? '#1A0A03' : 'var(--color-text)',
     });
     const tops = Component.STAFF_GROUPS;
     let activeTop = tops[0];
@@ -1740,9 +1962,16 @@ class Component extends DCLogic {
       const on = g.id === activeTop.id;
       return { label: g.label, icon: g.icon,
         tabBg: on ? 'var(--color-accent)' : 'transparent',
-        tabColor: on ? 'var(--color-bg)' : 'color-mix(in srgb, var(--color-text) 65%, transparent)',
-        onClick: () => this.setState({ staffGroup: g.id }) };
+        tabColor: on ? '#1A0A03' : 'color-mix(in srgb, var(--color-text) 65%, transparent)',
+        onClick: () => this.setState({ staffGroup: g.id, groupOpen: false }) };
     });
+    const groupSibs = (activeTop.children || []);
+    const groupIdx = Math.max(0, groupSibs.findIndex(c => c.id === activeGroup.id));
+    const groupStep = (dir) => {
+      if (!groupSibs.length) return;
+      const n = (groupIdx + dir + groupSibs.length) % groupSibs.length;
+      this.setState({ staffGroup: groupSibs[n].id, groupOpen: true });
+    };
     const activeTopInfo = { num: String(activeTop.count || '').replace(/\D/g, '') || '—', tag: activeTop.tag, desc: activeTop.desc };
     const staffSubRows = (activeTop.children && activeTop.children.length)
       ? activeTop.children.map(g => {
@@ -1750,7 +1979,7 @@ class Component extends DCLogic {
           return { label: g.label, count: g.count,
             bg: on ? 'color-mix(in srgb, var(--color-accent) 9%, transparent)' : 'transparent',
             dot: on ? 'var(--color-accent)' : 'color-mix(in srgb, var(--color-text) 28%, transparent)',
-            onClick: () => this.setState({ staffGroup: g.id }) };
+            onClick: () => this.setState({ staffGroup: g.id, groupOpen: true }) };
         })
       : Component.ORG_CHART.map((o, i) => ({
           label: o.label, count: 'ดูภาระงาน',
@@ -1819,6 +2048,13 @@ class Component extends DCLogic {
       staffSubRows,
       activeGroup: activeGroup,
       activeMembers: activeGroup.members,
+      groupOpen: !!s.groupOpen && !!groupSibs.length,
+      groupCounter: (groupIdx + 1) + ' / ' + (groupSibs.length || 1),
+      groupPrev: () => groupStep(-1),
+      groupNext: () => groupStep(1),
+      closeGroup: () => this.setState({ groupOpen: false }),
+      setLightTheme: () => this.setTheme('light'),
+      setDarkTheme: () => this.setTheme('dark'),
       staffCards: Component.staffRoster().map((p, i) => ({ ...p, photoId: 'staff-photo-' + i, delay: (i * 0.06).toFixed(2) + 's' })),
       setStaffStripRef: this.setStaffStripRef,
       staffStripPrev: this.staffStripPrev,
