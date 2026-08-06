@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="_ds/modernist-e418e37c-5b91-498b-bea5-a9b107ada9e7/styles.css">
+<script src="_ds/modernist-e418e37c-5b91-498b-bea5-a9b107ada9e7/_ds_bundle.js"></script>
+<style>
+  body { margin:0; background:var(--color-bg); font-family:var(--font-body); color:var(--color-text); }
+  @keyframes optIn { from { opacity:0; transform:translateY(10px);} to { opacity:1; transform:none;} }
+</style>
+</helmet>
+
+<section style="padding:48px clamp(20px,4vw,56px); display:flex; flex-direction:column; gap:20px;">
+  <div>
+    <span class="tag tag-accent">รอบที่ 1</span>
+    <h2 style="font-family:var(--font-heading); font-weight:800; font-size:30px; margin:12px 0 4px;">แทนที่ผังบริหารงาน ด้วยปุ่มกลุ่มบุคลากร</h2>
+    <p style="font-size:14.5px; margin:0; color:color-mix(in srgb, var(--color-text) 68%, transparent); max-width:640px;">สามแบบสำหรับคอลัมน์ซ้ายของบล็อกบุคลากร กดเลือกกลุ่มในแต่ละแบบเพื่อดูการทำงานจริง แล้วบอกหมายเลขที่ชอบ</p>
+  </div>
+
+  <div style="display:flex; flex-wrap:wrap; gap:24px; align-items:flex-start;">
+
+    <div id="1a" style="flex:1 1 380px; min-width:340px; max-width:520px; display:flex; flex-direction:column; gap:10px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="font-family:var(--font-heading); font-weight:800; font-size:13px; background:var(--color-accent); color:var(--color-bg); padding:4px 9px;">1a</span>
+        <span style="font-size:14px; font-weight:700;">รายการแนวตั้ง — ตรงไปตรงมา</span>
+      </div>
+      <div style="border:2px solid var(--color-divider); border-radius:16px; padding:24px; background:var(--color-surface); display:flex; flex-direction:column; gap:12px;">
+        <sc-for list="{{ optA }}" as="g" hint-placeholder-count="2">
+          <button type="button" onClick="{{ g.onClick }}" style="display:flex; align-items:flex-start; gap:14px; text-align:left; cursor:pointer; font-family:var(--font-body); padding:18px; border-radius:14px; background:{{ g.bg }}; border:2px solid {{ g.border }}; color:var(--color-text); transition:background .2s ease, border-color .2s ease, transform .2s ease;" style-hover="transform:translateY(-2px);">
+            <span style="flex:none; display:flex; align-items:center; justify-content:center; width:42px; height:42px; border-radius:11px; background:{{ g.iconBg }}; color:{{ g.iconColor }};">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ g.icon }}"></path></svg>
+            </span>
+            <span style="flex:1; min-width:0;">
+              <span style="display:flex; align-items:center; gap:8px; justify-content:space-between;">
+                <span style="font-size:15px; font-weight:800; line-height:1.3;">{{ g.label }}</span>
+                <span style="flex:none; font-size:12.5px; font-weight:700; padding:3px 10px; border-radius:999px; border:2px solid {{ g.border }};">{{ g.count }}</span>
+              </span>
+              <span style="display:block; font-size:12.5px; line-height:1.55; margin-top:6px; color:color-mix(in srgb, var(--color-text) 66%, transparent);">{{ g.desc }}</span>
+            </span>
+          </button>
+        </sc-for>
+        <div style="display:flex; flex-wrap:wrap; gap:8px; padding-top:4px;">
+          <sc-for list="{{ subsA }}" as="s" hint-placeholder-count="5">
+            <span style="font-size:12px; font-weight:700; padding:7px 12px; border-radius:999px; border:2px solid var(--color-divider); color:color-mix(in srgb, var(--color-text) 74%, transparent); animation:optIn .3s ease both;">{{ s.label }} · {{ s.count }}</span>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div id="1b" style="flex:1 1 380px; min-width:340px; max-width:520px; display:flex; flex-direction:column; gap:10px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="font-family:var(--font-heading); font-weight:800; font-size:13px; background:var(--color-accent); color:var(--color-bg); padding:4px 9px;">1b</span>
+        <span style="font-size:14px; font-weight:700;">แท็บสลับ + แผงรายละเอียด</span>
+      </div>
+      <div style="border:2px solid var(--color-divider); border-radius:16px; padding:24px; background:var(--color-surface); display:flex; flex-direction:column; gap:18px;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; padding:6px; border-radius:999px; background:color-mix(in srgb, var(--color-text) 6%, transparent);">
+          <sc-for list="{{ optB }}" as="g" hint-placeholder-count="2">
+            <button type="button" onClick="{{ g.onClick }}" style="display:flex; align-items:center; justify-content:center; gap:8px; cursor:pointer; font-family:var(--font-body); font-size:13.5px; font-weight:800; padding:11px 10px; border-radius:999px; border:none; background:{{ g.tabBg }}; color:{{ g.tabColor }}; transition:background .2s ease, color .2s ease;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ g.icon }}"></path></svg>
+              {{ g.label }}
+            </button>
+          </sc-for>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:16px;">
+          <span style="flex:none; font-family:var(--font-heading); font-weight:800; font-size:52px; line-height:.9; color:var(--color-accent);">{{ activeB.num }}</span>
+          <span style="flex:1; min-width:0;">
+            <span style="display:block; font-size:11.5px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--color-accent-700); margin-bottom:6px;">{{ activeB.tag }}</span>
+            <span style="display:block; font-size:13px; line-height:1.6; color:color-mix(in srgb, var(--color-text) 70%, transparent);">{{ activeB.desc }}</span>
+          </span>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px; border-top:2px solid var(--color-divider); padding-top:16px;">
+          <sc-for list="{{ subsB }}" as="s" hint-placeholder-count="5">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; font-size:13px; animation:optIn .3s ease both;">
+              <span style="display:flex; align-items:center; gap:9px; font-weight:700;">
+                <span style="width:6px; height:6px; border-radius:999px; background:var(--color-accent); flex:none;"></span>{{ s.label }}
+              </span>
+              <span style="opacity:.65;">{{ s.count }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div id="1c" style="flex:1 1 380px; min-width:340px; max-width:520px; display:flex; flex-direction:column; gap:10px;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="font-family:var(--font-heading); font-weight:800; font-size:13px; background:var(--color-accent); color:var(--color-bg); padding:4px 9px;">1c</span>
+        <span style="font-size:14px; font-weight:700;">การ์ดตัวเลขใหญ่ — เด่นที่สุด</span>
+      </div>
+      <div style="border:2px solid var(--color-divider); border-radius:16px; padding:24px; background:var(--color-surface); display:flex; flex-direction:column; gap:14px;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <sc-for list="{{ optC }}" as="g" hint-placeholder-count="2">
+            <button type="button" onClick="{{ g.onClick }}" style="display:flex; flex-direction:column; align-items:flex-start; gap:10px; text-align:left; cursor:pointer; font-family:var(--font-body); padding:18px; border-radius:14px; background:{{ g.tileBg }}; border:2px solid {{ g.tileBorder }}; color:{{ g.tileColor }}; transition:background .2s ease, border-color .2s ease, transform .2s ease;" style-hover="transform:translateY(-3px);">
+              <span style="display:flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:10px; background:{{ g.tileIconBg }}; color:{{ g.tileIconColor }};">
+                <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ g.icon }}"></path></svg>
+              </span>
+              <span style="font-family:var(--font-heading); font-weight:800; font-size:38px; line-height:1;">{{ g.num }}</span>
+              <span style="font-size:13.5px; font-weight:800; line-height:1.3;">{{ g.label }}</span>
+            </button>
+          </sc-for>
+        </div>
+        <p style="font-size:13px; line-height:1.6; margin:0; color:color-mix(in srgb, var(--color-text) 70%, transparent);">{{ activeC.desc }}</p>
+        <div style="display:flex; flex-wrap:wrap; gap:8px;">
+          <sc-for list="{{ subsC }}" as="s" hint-placeholder-count="5">
+            <span style="font-size:12px; font-weight:700; padding:7px 12px; border-radius:12px; background:color-mix(in srgb, var(--color-accent) 9%, transparent); color:var(--color-accent-700); animation:optIn .3s ease both;">{{ s.label }} · {{ s.count }}</span>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  static GROUPS = [
+    { id: 'admin', num: '1', icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', tag: 'Administration', label: 'คณะผู้บริหาร', count: '1 คน',
+      desc: 'ผู้อำนวยการโรงเรียนและทีมบริหารสถานศึกษา กำกับงานทั้ง 4 ฝ่าย',
+      subs: [
+        { label: 'ฝ่ายบริหารงานวิชาการ', count: '' },
+        { label: 'ฝ่ายบริหารงานงบประมาณ', count: '' },
+        { label: 'ฝ่ายบริหารงานบุคคล', count: '' },
+        { label: 'ฝ่ายบริหารงานทั่วไป', count: '' },
+      ] },
+    { id: 'teachers', num: '14', icon: 'M22 10 12 5 2 10l10 5 10-5z M6 12v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5', tag: 'Teaching Staff', label: 'ครูและบุคลากรสนับสนุน', count: '14 คน',
+      desc: 'คณะครูผู้สอนระดับปฐมวัยและประถมศึกษา 8 กลุ่มสาระการเรียนรู้ พร้อมบุคลากรสนับสนุน',
+      subs: [
+        { label: 'ครูระดับปฐมวัย', count: '2 คน' },
+        { label: 'ภาษาไทย', count: '2 คน' },
+        { label: 'คณิตศาสตร์', count: '2 คน' },
+        { label: 'วิทยาศาสตร์และเทคโนโลยี', count: '2 คน' },
+        { label: 'สังคมศึกษาฯ', count: '1 คน' },
+        { label: 'ภาษาต่างประเทศ', count: '2 คน' },
+        { label: 'สุขศึกษาและศิลปะ', count: '1 คน' },
+        { label: 'บุคลากรสนับสนุน', count: '2 คน' },
+      ] },
+  ];
+  state = { a: 'admin', b: 'teachers', c: 'teachers' };
+
+  pick(key, id) { this.setState({ [key]: id }); }
+
+  renderVals() {
+    const G = Component.GROUPS;
+    const acc = 'var(--color-accent)';
+    const find = id => G.find(g => g.id === id) || G[0];
+    const activeA = find(this.state.a), activeB = find(this.state.b), activeC = find(this.state.c);
+
+    const optA = G.map(g => {
+      const on = g.id === this.state.a;
+      return { ...g,
+        bg: on ? 'color-mix(in srgb, var(--color-accent) 8%, var(--color-surface))' : 'transparent',
+        border: on ? acc : 'var(--color-divider)',
+        iconBg: on ? acc : 'color-mix(in srgb, var(--color-text) 7%, transparent)',
+        iconColor: on ? 'var(--color-bg)' : 'color-mix(in srgb, var(--color-text) 65%, transparent)',
+        onClick: () => this.pick('a', g.id) };
+    });
+    const optB = G.map(g => {
+      const on = g.id === this.state.b;
+      return { ...g,
+        tabBg: on ? acc : 'transparent',
+        tabColor: on ? 'var(--color-bg)' : 'color-mix(in srgb, var(--color-text) 65%, transparent)',
+        onClick: () => this.pick('b', g.id) };
+    });
+    const optC = G.map(g => {
+      const on = g.id === this.state.c;
+      return { ...g,
+        tileBg: on ? acc : 'transparent',
+        tileBorder: on ? acc : 'var(--color-divider)',
+        tileColor: on ? 'var(--color-bg)' : 'var(--color-text)',
+        tileIconBg: on ? 'color-mix(in srgb, #ffffff 24%, transparent)' : 'color-mix(in srgb, var(--color-accent) 12%, transparent)',
+        tileIconColor: on ? 'var(--color-bg)' : 'var(--color-accent-700)',
+        onClick: () => this.pick('c', g.id) };
+    });
+
+    return { optA, optB, optC, activeA, activeB, activeC,
+      subsA: activeA.subs, subsB: activeB.subs, subsC: activeC.subs };
+  }
+}
+
+</script>
+</body>
+</html>
