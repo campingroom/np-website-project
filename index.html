@@ -28,7 +28,21 @@ a:hover { color: var(--color-accent-600); }
 #dc-root [style*="border:2px solid var(--color-divider)"] { border-radius: 14px; }
 #dc-root [style*="border:2px solid var(--color-accent)"] { border-radius: 14px; }
 #dc-root .table { overflow: hidden; }
-#dc-root image-slot#director-cutout::part(image) { mix-blend-mode: multiply; }
+@keyframes orbitSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes orbitCounter { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+@keyframes orbFloat { from { transform: translateY(-7px); } to { transform: translateY(7px); } }
+@keyframes orbMapFloat { from { transform: translateY(-9px); } to { transform: translateY(9px); } }
+@keyframes orbDrawerIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+@keyframes orbPinPulse { 0% { transform: scale(.45); opacity: .55; } 70% { opacity: 0; } 100% { transform: scale(1.7); opacity: 0; } }
+@keyframes awardSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes awardSpinRev { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+@keyframes awardLogoFloat { from { transform: translate(-50%,-50%) translateY(-8px); } to { transform: translate(-50%,-50%) translateY(8px); } }
+@keyframes awardRingPulse { 0% { transform: scale(.9); opacity: .5; } 100% { transform: scale(1.35); opacity: 0; } }
+@keyframes orgNodeIn { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes orgTrunkGrow { from { transform: scaleY(0); opacity: 0; } to { transform: scaleY(1); opacity: 1; } }
+@keyframes orgBarGrow { from { transform: scaleX(0); opacity: 0; } to { transform: scaleX(1); opacity: 1; } }
+@keyframes orgBoxIn { from { opacity: 0; transform: translateY(16px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@media (prefers-reduced-motion: reduce) { #dc-root [data-orbit-anim] { animation: none !important; } }
 </style>
 <template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#ec3013"></rect><text x="30" y="115" font-family="Arial" font-size="72" font-weight="800" fill="#f3f2f2">รร</text></svg></template>
 </helmet>
@@ -80,7 +94,7 @@ a:hover { color: var(--color-accent-600); }
 
     <!-- banner slider -->
     <div style="position:relative; border-top:2px solid var(--color-divider); padding:32px 0 40px;">
-      <span class="tag tag-accent" style="margin-bottom:16px;">ประชาสัมพันธ์</span>
+      <span class="tag tag-accent" style="margin-bottom:16px;">ไฮไลต์</span>
       <div style="position:relative; width:100%; aspect-ratio:21/9; margin-top:14px; overflow:hidden;">
         <sc-for list="{{ bannerSlides }}" as="b" hint-placeholder-count="4">
           <figure class="{{ photoClass }}" style="position:absolute; inset:0; margin:0; opacity:{{ b.opacity }}; transition:opacity .7s ease;">
@@ -153,10 +167,10 @@ a:hover { color: var(--color-accent-600); }
         <p style="font-size:15.5px; line-height:1.7; max-width:70ch; color:color-mix(in srgb, var(--color-text) 78%, transparent); margin:16px 0 8px;">โรงเรียนมีหมู่บ้านหลักในเขตบริการ 3 หมู่ ได้แก่ หมู่ที่ 1 บ้านหนองสระพัง หมู่ที่ 3 บ้านโนนสะอาด และหมู่ที่ 15 บ้านหนองสระพัง โดยโรงเรียนตั้งอยู่หมู่ที่ 15 บ้านหนองสระพัง ตำบลเขวาไร่ อำเภอโกสุมพิสัย จังหวัดมหาสารคาม 44140 เป็นโรงเรียนในสังกัดศูนย์พัฒนาคุณภาพการศึกษาวังยาวเขวาไร่ดอนกลาง สำนักงานเขตพื้นที่การศึกษาประถมศึกษามหาสารคาม เขต 3 สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน</p>
       </div>
       <figure style="margin:0; align-self:end;">
-        <image-slot id="director-cutout" shape="rect" fit="contain" style="width: 100%; aspect-ratio: 3/4; background-color: var(--color-bg); border-radius: 0" placeholder="ภาพผู้อำนวยการ (พื้นหลังโปร่งใส .png)"></image-slot>
-        <div style="margin:0; width:100%; background:var(--color-text); border-radius:999px; padding:14px 24px; text-align:center;">
+        <image-slot id="director-cutout" shape="rect" fit="contain" src="assets/director-cutout-bg.png" style="width: 100%; aspect-ratio: 3/4; background-color: var(--color-bg); border-radius: 0" placeholder="ภาพผู้อำนวยการ"></image-slot>
+        <div style="margin:0; width:100%; background:var(--color-text); border-radius:0; padding:14px 24px; text-align:center;">
           <p style="font-family:var(--font-heading); font-weight:800; font-size:16px; margin:0 0 2px; color:var(--color-bg);">นายกิจภูมิ บุญอบ</p>
-          <p style="font-size:13px; margin:0; color:rgba(243,242,242,.65);">ผู้อำนวยการโรงเรียน</p>
+          <p style="font-size:13px; margin:0; color:var(--color-accent);">ผู้อำนวยการโรงเรียน</p>
         </div>
       </figure>
     </div>
@@ -202,7 +216,128 @@ a:hover { color: var(--color-accent-600); }
       </div>
     </div>
 
-    <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:40px 0 20px;">โครงสร้างผู้บริหารและทำเนียบครู</h3>
+    <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:32px 0 14px;">ข้อมูลนักเรียน</h3>
+    <table class="table" style="margin-bottom:40px;">
+      <thead><tr><th>ระดับชั้น</th><th>จำนวนห้องเรียน</th><th>จำนวนนักเรียน</th></tr></thead>
+      <tbody>
+        <sc-for list="{{ studentStats }}" as="ss" hint-placeholder-count="3">
+          <tr><td>{{ ss.level }}</td><td>{{ ss.rooms }}</td><td>{{ ss.count }}</td></tr>
+        </sc-for>
+      </tbody>
+    </table>
+
+    <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">สัญลักษณ์โรงเรียน</h3>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px;">
+      <div class="card">
+        <span class="card-kicker">ตราสัญลักษณ์</span>
+        <image-slot id="logo-about" shape="rect" fit="contain" src="assets/logo-transparent.png" style="width:72px;height:72px;"></image-slot>
+      </div>
+      <div class="card">
+        <span class="card-kicker">สีประจำโรงเรียน</span>
+        <div style="display:flex; gap:16px; margin-top:6px;">
+          <div style="display:flex; align-items:center; gap:8px;"><span style="width:22px;height:22px;background:#ffffff;border:1px solid var(--color-divider);"></span><span style="font-size:13px;">ขาว</span></div>
+          <div style="display:flex; align-items:center; gap:8px;"><span style="width:22px;height:22px;background:var(--color-accent);"></span><span style="font-size:13px;">แดง</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <span class="card-kicker">เพลงมาร์ชประจำโรงเรียน</span>
+        <span class="card-title" style="font-size:15px;">วิดีโอคาราโอเกะเพลงมาร์ช</span>
+        <a href="https://www.youtube.com/@%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B9%80%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%99%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%AB%E0%B8%99%E0%B8%AD%E0%B8%87%E0%B8%AA%E0%B8%A3%E0%B8%B0%E0%B8%9E%E0%B8%B1%E0%B8%87%E0%B9%82%E0%B8%99%E0%B8%99%E0%B8%AA%E0%B8%B0%E0%B8%AD%E0%B8%B2%E0%B8%94/videos" target="_blank" rel="noopener" class="btn btn-ghost" style="align-self:flex-start;">รับชมบน YouTube</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section data-section-id="staff" id="staff" ref="{{ setSectionRef }}" style="background:var(--color-bg); border-top:2px solid var(--color-divider);">
+  <div style="max-width:1200px; margin:0 auto; padding:56px clamp(20px,5vw,72px); opacity:{{ reveal.staff.opacity }}; transform:{{ reveal.staff.transform }}; transition:opacity .8s ease, transform .8s ease;">
+    <span class="tag tag-accent">บุคลากร</span>
+    <h2 style="font-size:clamp(26px,3.2vw,38px); margin:14px 0 28px;">โครงสร้างผู้บริหารและทำเนียบครู</h2>
+
+    <div style="position:relative; overflow:hidden; border:2px solid var(--color-divider); border-radius:16px; padding:clamp(20px,3vw,40px); margin:0 0 8px; display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:clamp(24px,4vw,48px); align-items:center;">
+      <div>
+        <span class="tag tag-accent">โครงสร้างองค์กร</span>
+
+        <div style="display:flex; flex-wrap:wrap; gap:28px; margin-top:18px;">
+          <div>
+            <p style="font-family:var(--font-heading); font-weight:800; font-size:28px; line-height:1; margin:0 0 6px; color:var(--color-accent-700);">15</p>
+            <p style="font-size:13px; line-height:1.4; margin:0; color:color-mix(in srgb, var(--color-text) 66%, transparent);">ครูและบุคลากร</p>
+          </div>
+          <div>
+            <p style="font-family:var(--font-heading); font-weight:800; font-size:28px; line-height:1; margin:0 0 6px; color:var(--color-accent-700);">4</p>
+            <p style="font-size:13px; line-height:1.4; margin:0; color:color-mix(in srgb, var(--color-text) 66%, transparent);">ฝ่ายบริหารงาน</p>
+          </div>
+          <div>
+            <p style="font-family:var(--font-heading); font-weight:800; font-size:28px; line-height:1; margin:0 0 6px; color:var(--color-accent-700);">8</p>
+            <p style="font-size:13px; line-height:1.4; margin:0; color:color-mix(in srgb, var(--color-text) 66%, transparent);">กลุ่มสาระการเรียนรู้</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="position:relative; width:100%; max-width:520px; margin:0 auto; display:flex; flex-direction:column; align-items:center;">
+        <div style="display:inline-flex; align-items:center; gap:10px; border:2px solid var(--color-accent); border-radius:14px; padding:12px 20px; background:var(--color-surface); box-shadow:0 8px 20px color-mix(in srgb, var(--color-text) 18%, transparent); animation:orgNodeIn .5s ease both;">
+          <span style="flex:none; display:flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:10px; background:var(--color-accent); color:var(--color-bg);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          </span>
+          <span>
+            <p style="font-family:var(--font-heading); font-weight:800; font-size:14.5px; margin:0; line-height:1.2; white-space:nowrap;">ผู้อำนวยการโรงเรียน</p>
+            <p style="font-size:12px; margin:2px 0 0; color:var(--color-accent-700);">นายกิจภูมิ บุญอบ</p>
+          </span>
+        </div>
+
+        <div style="width:2px; height:26px; background:color-mix(in srgb, var(--color-text) 22%, transparent); transform-origin:top; animation:orgTrunkGrow .35s ease .4s both;"></div>
+        <div style="width:100%; max-width:420px; height:2px; background:color-mix(in srgb, var(--color-text) 22%, transparent); transform-origin:center; animation:orgBarGrow .4s ease .6s both;"></div>
+
+        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px; width:100%;">
+          <sc-for list="{{ orgChart }}" as="o" hint-placeholder-count="4">
+            <div style="display:flex; flex-direction:column; align-items:center;">
+              <div style="width:2px; height:20px; background:color-mix(in srgb, var(--color-text) 18%, transparent); transform-origin:top; animation:orgTrunkGrow .3s ease {{ o.delay }} both;"></div>
+              <button type="button" data-org-i="{{ $index }}" onClick="{{ orgClick }}" aria-label="ดูรายละเอียด {{ o.label }}" style="width:100%; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center; border:2px solid var(--color-divider); border-radius:14px; background:var(--color-surface); padding:16px 10px; font-family:var(--font-body); color:var(--color-text); transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease; animation:orgBoxIn .4s ease {{ o.delay }} both;" style-hover="transform:translateY(-4px); border-color:var(--color-accent); box-shadow:0 10px 22px color-mix(in srgb, var(--color-text) 16%, transparent);">
+                <span style="display:flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:10px; background:color-mix(in srgb, var(--color-accent) 12%, var(--color-surface)); color:var(--color-accent-700);">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ o.icon }}"></path></svg>
+                </span>
+                <span style="font-size:12.5px; font-weight:800; line-height:1.3;">{{ o.label }}</span>
+              </button>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <sc-if value="{{ orgOpen }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ closeOrg }}" style="position:absolute; inset:0; z-index:500; background:color-mix(in srgb, var(--color-text) 45%, transparent);"></div>
+        <div style="position:absolute; top:0; right:0; bottom:0; z-index:501; width:min(100%,380px); background:var(--color-bg); border-left:2px solid var(--color-text); box-shadow:var(--shadow-lg); display:flex; flex-direction:column; animation:orbDrawerIn .32s cubic-bezier(.2,.85,.3,1) both;">
+          <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 20px; border-bottom:2px solid var(--color-divider);">
+            <p style="font-family:var(--font-body); font-size:12px; letter-spacing:.08em; margin:0; color:color-mix(in srgb, var(--color-text) 55%, transparent);">{{ orgCounter }}</p>
+            <button type="button" onClick="{{ closeOrg }}" aria-label="ปิด" style="width:34px; height:34px; display:grid; place-items:center; padding:0; border:2px solid var(--color-accent); background:var(--color-accent); cursor:pointer; color:var(--color-bg); transition:background .2s ease;" style-hover="background:var(--color-accent-600);">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+            </button>
+          </div>
+          <div style="padding:24px 20px; overflow-y:auto; flex:1;">
+            <span style="display:flex; align-items:center; justify-content:center; width:48px; height:48px; border-radius:12px; background:var(--color-accent); color:var(--color-bg); margin-bottom:16px;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ orgActive.icon }}"></path></svg>
+            </span>
+            <p style="font-family:var(--font-body); font-size:11.5px; text-transform:uppercase; letter-spacing:.08em; margin:0 0 8px; color:var(--color-accent-700);">{{ orgActive.tag }}</p>
+            <p style="font-family:var(--font-heading); font-weight:800; font-size:22px; line-height:1.25; margin:0 0 12px;">{{ orgActive.label }}</p>
+            <p style="font-size:14.5px; line-height:1.65; margin:0 0 20px; color:color-mix(in srgb, var(--color-text) 74%, transparent);">{{ orgActive.desc }}</p>
+            <p style="font-size:11.5px; text-transform:uppercase; letter-spacing:.06em; font-weight:700; margin:0 0 10px; color:color-mix(in srgb, var(--color-text) 55%, transparent);">ภาระงานหลัก</p>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <sc-for list="{{ orgActive.tasks }}" as="t" hint-placeholder-count="4">
+                <div style="display:flex; gap:8px; align-items:flex-start; font-size:14px; line-height:1.5;">
+                  <span style="width:6px; height:6px; border-radius:999px; background:var(--color-accent); flex:none; margin-top:7px;"></span>
+                  <span>{{ t }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex; gap:10px; padding:16px 20px; border-top:2px solid var(--color-divider);">
+            <button type="button" onClick="{{ orgPrev }}" class="btn btn-secondary" style="flex:1; cursor:pointer;">ก่อนหน้า</button>
+            <button type="button" onClick="{{ orgNext }}" class="btn btn-secondary" style="flex:1; cursor:pointer;">ถัดไป</button>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+
+
     <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px; margin-bottom:12px;">
       <sc-for list="{{ staffTopGroups }}" as="g" hint-placeholder-count="2">
         <button type="button" onClick="{{ g.onClick }}" style="display:flex; align-items:center; gap:12px; text-align:left; cursor:pointer; font-family:var(--font-body); padding:16px; border-radius:14px; background:{{ g.bg }}; border:2px solid {{ g.border }}; color:var(--color-text); transition:background .2s ease, border-color .2s ease;">
@@ -256,35 +391,6 @@ a:hover { color: var(--color-accent-600); }
       </div>
     </div>
 
-    <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">ข้อมูลนักเรียน</h3>
-    <table class="table" style="margin-bottom:40px;">
-      <thead><tr><th>ระดับชั้น</th><th>จำนวนห้องเรียน</th><th>จำนวนนักเรียน</th></tr></thead>
-      <tbody>
-        <sc-for list="{{ studentStats }}" as="ss" hint-placeholder-count="3">
-          <tr><td>{{ ss.level }}</td><td>{{ ss.rooms }}</td><td>{{ ss.count }}</td></tr>
-        </sc-for>
-      </tbody>
-    </table>
-
-    <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">สัญลักษณ์โรงเรียน</h3>
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px;">
-      <div class="card">
-        <span class="card-kicker">ตราสัญลักษณ์</span>
-        <image-slot id="logo-about" shape="rect" fit="contain" src="assets/logo-transparent.png" style="width:72px;height:72px;"></image-slot>
-      </div>
-      <div class="card">
-        <span class="card-kicker">สีประจำโรงเรียน</span>
-        <div style="display:flex; gap:16px; margin-top:6px;">
-          <div style="display:flex; align-items:center; gap:8px;"><span style="width:22px;height:22px;background:#ffffff;border:1px solid var(--color-divider);"></span><span style="font-size:13px;">ขาว</span></div>
-          <div style="display:flex; align-items:center; gap:8px;"><span style="width:22px;height:22px;background:var(--color-accent);"></span><span style="font-size:13px;">แดง</span></div>
-        </div>
-      </div>
-      <div class="card">
-        <span class="card-kicker">เพลงมาร์ชประจำโรงเรียน</span>
-        <span class="card-title" style="font-size:15px;">วิดีโอคาราโอเกะเพลงมาร์ช</span>
-        <a href="https://www.youtube.com/@%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B9%80%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%99%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%AB%E0%B8%99%E0%B8%AD%E0%B8%87%E0%B8%AA%E0%B8%A3%E0%B8%B0%E0%B8%9E%E0%B8%B1%E0%B8%87%E0%B9%82%E0%B8%99%E0%B8%99%E0%B8%AA%E0%B8%B0%E0%B8%AD%E0%B8%B2%E0%B8%94/videos" target="_blank" rel="noopener" class="btn btn-ghost" style="align-self:flex-start;">รับชมบน YouTube</a>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -327,6 +433,17 @@ a:hover { color: var(--color-accent-600); }
     <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">นวัตกรรมและวิจัยในชั้นเรียน</h3>
     <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-bottom:36px;">
       <sc-for list="{{ innovations }}" as="iv" hint-placeholder-count="3">
+        <div class="card">
+          <span class="card-kicker">{{ iv.tag }}</span>
+          <span class="card-title" style="font-size:16px;">{{ iv.title }}</span>
+          <p class="card-body">{{ iv.desc }}</p>
+        </div>
+      </sc-for>
+    </div>
+
+    <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">เกมและสื่อการเรียนรู้</h3>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; margin-bottom:36px;">
+      <sc-for list="{{ games }}" as="iv" hint-placeholder-count="1">
         <div class="card">
           <span class="card-kicker">{{ iv.tag }}</span>
           <span class="card-title" style="font-size:16px;">{{ iv.title }}</span>
@@ -411,6 +528,72 @@ a:hover { color: var(--color-accent-600); }
     </div>
 
     <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">รางวัลเกียรติยศ</h3>
+
+    <div style="position:relative; overflow:hidden; border:2px solid var(--color-divider); border-radius:16px; padding:clamp(20px,3vw,40px); margin:0 0 28px; display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:clamp(24px,4vw,48px); align-items:center;">
+      <div>
+        <span class="tag tag-accent">รางวัลเกียรติยศ</span>
+        <p style="font-family:var(--font-heading); font-weight:800; font-size:clamp(24px,3.2vw,38px); line-height:1.18; margin:14px 0 14px; max-width:22ch;">ผลงานและรางวัลที่โรงเรียนภาคภูมิใจ</p>
+        <p style="font-size:15.5px; line-height:1.7; margin:0 0 24px; max-width:44ch; color:color-mix(in srgb, var(--color-text) 74%, transparent);">คลิกเหรียญรางวัลที่โคจรรอบตราโรงเรียน เพื่อดูรายละเอียดผลงานแต่ละรางวัล</p>
+
+        <div style="display:flex; flex-wrap:wrap; gap:28px;">
+          <div>
+            <p style="font-family:var(--font-heading); font-weight:800; font-size:28px; line-height:1; margin:0 0 6px; color:var(--color-accent-700);">7</p>
+            <p style="font-size:13px; line-height:1.4; margin:0; color:color-mix(in srgb, var(--color-text) 66%, transparent);">รางวัลเกียรติยศ</p>
+          </div>
+          <div>
+            <p style="font-family:var(--font-heading); font-weight:800; font-size:28px; line-height:1; margin:0 0 6px; color:var(--color-accent-700);">2</p>
+            <p style="font-size:13px; line-height:1.4; margin:0; color:color-mix(in srgb, var(--color-text) 66%, transparent);">เหรียญทอง OBEC Awards</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="position:relative; width:100%; max-width:480px; margin:0 auto; aspect-ratio:1/1;">
+        <div style="position:absolute; left:50%; top:50%; width:78%; height:78%; transform:translate(-50%,-50%); border-radius:999px; border:2px dashed color-mix(in srgb, var(--color-text) 12%, transparent);"></div>
+
+        <div data-orbit-anim="" style="position:absolute; left:50%; top:50%; width:30%; aspect-ratio:1/1; transform:translate(-50%,-50%); animation:awardLogoFloat 4.5s ease-in-out infinite alternate;">
+          <div data-orbit-anim="" style="position:absolute; inset:0; border-radius:999px; background:var(--color-accent); opacity:.5; animation:awardRingPulse 2.6s ease-out infinite;"></div>
+          <div style="position:absolute; inset:8%; border-radius:999px; border:2px solid var(--color-text); background:var(--color-surface); overflow:hidden; display:flex; align-items:center; justify-content:center; padding:14%;">
+            <image-slot id="logo-award-orbit" shape="rect" fit="contain" src="assets/logo-transparent.png" style="width:100%; height:100%;" placeholder="ตราโรงเรียน"></image-slot>
+          </div>
+        </div>
+
+        <div data-orbit-anim="" onClick="{{ awardOrbitClick }}" style="position:absolute; inset:0; pointer-events:none; animation:awardSpin 26s linear infinite;">
+          <sc-for list="{{ awardOrbit }}" as="a" hint-placeholder-count="7">
+            <div style="position:absolute; left:{{ a.left }}%; top:{{ a.top }}%; width:18%; aspect-ratio:1/1; transform:translate(-50%,-50%);">
+              <div data-orbit-anim="" style="width:100%; height:100%; animation:awardSpinRev 26s linear infinite;">
+                <div data-orbit-anim="" style="width:100%; height:100%; animation:orbFloat {{ a.floatDur }} ease-in-out {{ a.floatDelay }} infinite alternate;">
+                  <button type="button" data-award-i="{{ $index }}" title="{{ a.title }}" aria-label="ดูรายละเอียดรางวัล {{ a.title }}" style="pointer-events:auto; width:100%; height:100%; padding:0; border:2px solid var(--color-accent); border-radius:999px; overflow:hidden; cursor:pointer; background:var(--color-surface); box-shadow:0 8px 20px color-mix(in srgb, var(--color-text) 20%, transparent); transition:transform .25s ease, box-shadow .25s ease;" style-hover="transform:scale(1.1); box-shadow:0 12px 26px color-mix(in srgb, var(--color-text) 30%, transparent);">
+                    <image-slot id="award-photo-{{ $index }}" shape="circle" fit="cover" style="width:100%; height:100%;" placeholder="รางวัล"></image-slot>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+
+        <sc-if value="{{ awardOrbitOpen }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ closeAwardOrbit }}" style="position:absolute; inset:0; z-index:500; background:color-mix(in srgb, var(--color-text) 45%, transparent);"></div>
+          <div style="position:absolute; top:0; right:0; bottom:0; z-index:501; width:min(100%,340px); background:var(--color-bg); border-left:2px solid var(--color-text); box-shadow:var(--shadow-lg); display:flex; flex-direction:column; text-align:left; animation:orbDrawerIn .32s cubic-bezier(.2,.85,.3,1) both;">
+            <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 20px; border-bottom:2px solid var(--color-divider);">
+              <p style="font-family:var(--font-body); font-size:12px; letter-spacing:.08em; margin:0; color:color-mix(in srgb, var(--color-text) 55%, transparent);">{{ awardOrbitCounter }}</p>
+              <button type="button" onClick="{{ closeAwardOrbit }}" aria-label="ปิด" style="width:34px; height:34px; display:grid; place-items:center; padding:0; border:2px solid var(--color-accent); background:var(--color-accent); cursor:pointer; color:var(--color-bg); transition:background .2s ease;" style-hover="background:var(--color-accent-600);">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+              </button>
+            </div>
+            <div style="padding:24px 20px; overflow-y:auto; flex:1;">
+              <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="var(--color-accent-700)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:16px;"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0V4zM7 6H4a3 3 0 0 0 3 5M17 6h3a3 3 0 0 1-3 5"></path></svg>
+              <p style="font-family:var(--font-body); font-size:11.5px; text-transform:uppercase; letter-spacing:.08em; margin:0 0 8px; color:var(--color-accent-700);">{{ awardOrbitActive.year }}</p>
+              <p style="font-family:var(--font-heading); font-weight:800; font-size:19px; line-height:1.4; margin:0;">{{ awardOrbitActive.title }}</p>
+            </div>
+            <div style="display:flex; gap:10px; padding:16px 20px; border-top:2px solid var(--color-divider);">
+              <button type="button" onClick="{{ awardOrbitPrev }}" class="btn btn-secondary" style="flex:1; cursor:pointer;">ก่อนหน้า</button>
+              <button type="button" onClick="{{ awardOrbitNext }}" class="btn btn-secondary" style="flex:1; cursor:pointer;">ถัดไป</button>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+
     <div style="display:flex; flex-direction:column; margin-bottom:36px;">
       <sc-for list="{{ honorAchievements }}" as="a" hint-placeholder-count="6">
         <div style="display:flex; justify-content:space-between; gap:16px; padding:16px 0; border-top:2px solid var(--color-divider); flex-wrap:wrap;">
@@ -570,9 +753,16 @@ a:hover { color: var(--color-accent-600); }
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;navStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;floating&quot;,&quot;options&quot;:[&quot;floating&quot;,&quot;classic&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;motionStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;fade&quot;,&quot;options&quot;:[&quot;fade&quot;,&quot;slide&quot;,&quot;instant&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;photoTreatment&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;grayscale&quot;,&quot;color&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Imagery&quot;}}">
 class Component extends DCLogic {
+  static ORG_CHART = [
+    { id: 'academic', tag: 'Academic Affairs', label: 'ฝ่ายบริหารงานวิชาการ', icon: 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20 M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15Z', desc: 'วางแผน พัฒนา และกำกับดูแลหลักสูตร การจัดการเรียนรู้ และการวัดประเมินผลของโรงเรียน', tasks: ['จัดทำและพัฒนาหลักสูตรสถานศึกษา', 'นิเทศและติดตามการจัดการเรียนรู้', 'งานวัดและประเมินผลการเรียน', 'งานห้องสมุดและสื่อการเรียนรู้'] },
+    { id: 'budget', tag: 'Budget Affairs', label: 'ฝ่ายบริหารงานงบประมาณ', icon: 'M12 2v20 M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 1 1 0 7H6', desc: 'บริหารการเงิน บัญชี พัสดุ และงบประมาณของโรงเรียนให้เป็นไปตามระเบียบราชการ', tasks: ['จัดทำแผนงบประมาณประจำปี', 'งานการเงินและบัญชี', 'งานพัสดุและสินทรัพย์', 'งานระดมทรัพยากรทางการศึกษา'] },
+    { id: 'personnel', tag: 'Personnel Affairs', label: 'ฝ่ายบริหารงานบุคคล', icon: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8 M22 21v-2a4 4 0 0 0-3-3.9 M16 3.1a4 4 0 0 1 0 7.8', desc: 'ดูแลงานบุคลากรครูและเจ้าหน้าที่ ตั้งแต่การสรรหาจนถึงการพัฒนาและสวัสดิการ', tasks: ['งานสรรหาและบรรจุแต่งตั้ง', 'งานทะเบียนและสิทธิประโยชน์บุคลากร', 'งานพัฒนาครูและบุคลากร', 'งานวินัยและนิติการ'] },
+    { id: 'general', tag: 'General Affairs', label: 'ฝ่ายบริหารงานทั่วไป', icon: 'M20 7h-3V5a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1ZM9 5h6v2H9V5Z M3 12h18', desc: 'ดูแลงานสารบรรณ อาคารสถานที่ ความปลอดภัย และการประสานงานกับชุมชน', tasks: ['งานสารบรรณและธุรการ', 'งานอาคารสถานที่และสิ่งแวดล้อม', 'งานอนามัยและความปลอดภัย', 'งานชุมชนและประชาสัมพันธ์'] },
+  ];
   static NAV = [
     { id: 'home', label: 'หน้าแรก', en: 'Home' },
     { id: 'about', label: 'เกี่ยวกับโรงเรียน', en: 'About Us' },
+    { id: 'staff', label: 'บุคลากร', en: 'Staff' },
     { id: 'academics', label: 'ข้อมูลวิชาการ', en: 'Academics' },
     { id: 'news', label: 'ข่าวประชาสัมพันธ์', en: 'News & Events' },
     { id: 'contact', label: 'ติดต่อเรา', en: 'Contact Us' },
@@ -721,8 +911,10 @@ class Component extends DCLogic {
   ];
   static INNOVATIONS = [
     { tag: 'นวัตกรรมการสอน', title: 'ชุดกิจกรรมพัฒนาการอ่านออกเขียนได้', desc: 'สื่อและใบงานเสริมทักษะการอ่านออกเขียนได้สำหรับนักเรียนชั้นประถมศึกษา' },
-    { tag: 'เกมฝึกทักษะ', title: 'เกม 24 ฝึกคิดเลขเร็ว', desc: 'เกมฝึกทักษะการคิดเลขเร็วสำหรับนักเรียนชั้นประถม' },
     { tag: 'วิจัยในชั้นเรียน', title: 'งานวิจัยเพื่อพัฒนาการเรียนการสอน', desc: 'ครูทุกกลุ่มสาระจัดทำวิจัยในชั้นเรียนอย่างน้อย 1 เรื่องต่อปีการศึกษา' },
+  ];
+  static GAMES = [
+    { tag: 'เกมฝึกทักษะ', title: 'เกม 24 ฝึกคิดเลขเร็ว', desc: 'เกมฝึกทักษะการคิดเลขเร็วสำหรับนักเรียนชั้นประถม' },
   ];
   static ASSESSMENTS = [
     { tag: 'RT', title: 'การประเมินความสามารถด้านการอ่าน', desc: 'นักเรียนชั้น ป.1 เข้ารับการประเมินทุกปีการศึกษา' },
@@ -747,7 +939,7 @@ class Component extends DCLogic {
     activeSection: 'home',
     scrolled: false,
     narrow: false,
-    visible: { home: true, about: true, academics: true, news: true, contact: true },
+    visible: { home: true, about: true, staff: true, academics: true, news: true, contact: true },
     indicator: { left: 0, width: 0 },
     statsProgress: 1,
     formSent: false,
@@ -1022,8 +1214,39 @@ class Component extends DCLogic {
     return { opacity: vis ? 1 : 0, transform: vis ? (motion === 'slide' ? 'translateX(0)' : 'translateY(0)') : hidden };
   }
 
+  orgClick = (e) => {
+    const btn = e.target.closest('[data-org-i]');
+    if (!btn) return;
+    this.setState({ orgOpen: Number(btn.getAttribute('data-org-i')) });
+  };
+  closeOrg = () => { this.setState({ orgOpen: -1 }); };
+  orgStep = (d) => {
+    const n = Component.ORG_CHART.length;
+    this.setState((s) => {
+      const cur = typeof s.orgOpen === 'number' && s.orgOpen >= 0 ? s.orgOpen : 0;
+      return { orgOpen: (cur + d + n) % n };
+    });
+  };
+  orgPrev = () => this.orgStep(-1);
+  orgNext = () => this.orgStep(1);
+
+  awardOrbitClick = (e) => {
+    const btn = e.target.closest('[data-award-i]');
+    if (!btn) return;
+    this.setState({ awardOrbitOpen: Number(btn.getAttribute('data-award-i')) });
+  };
+  closeAwardOrbit = () => this.setState({ awardOrbitOpen: -1 });
+  awardOrbitStep = (d) => {
+    const n = Component.ACHIEVEMENTS.filter(a => a.group === 'honor').length;
+    this.setState((s) => ({ awardOrbitOpen: ((s.awardOrbitOpen >= 0 ? s.awardOrbitOpen : 0) + d + n) % n }));
+  };
+  awardOrbitPrev = () => this.awardOrbitStep(-1);
+  awardOrbitNext = () => this.awardOrbitStep(1);
+
   renderVals() {
     const s = this.state;
+    const orgIdx = typeof s.orgOpen === 'number' ? s.orgOpen : -1;
+    const orgActive = Component.ORG_CHART[orgIdx] || { label: '', tag: '', desc: '', tasks: [] };
     const navStyle = this.props.navStyle ?? 'floating';
     const photoTreatment = this.props.photoTreatment ?? 'grayscale';
     const isFloating = navStyle === 'floating';
@@ -1087,7 +1310,7 @@ class Component extends DCLogic {
     }));
     const staffList = Component.STAFF.map((t, i) => ({
       ...t,
-      reveal: this.cardReveal('about', i),
+      reveal: this.cardReveal('staff', i),
     }));
 
     const newsList = Component.NEWS.map((n, i) => ({
@@ -1138,13 +1361,50 @@ class Component extends DCLogic {
       showSubGroups: subChips.length > 0,
       activeGroup: activeGroup,
       activeMembers: activeGroup.members,
+      orgChart: Component.ORG_CHART.map((o, i) => ({ ...o, delay: (0.55 + i * 0.12).toFixed(2) + 's' })),
+      orgOpen: orgIdx >= 0,
+      orgActive,
+      orgClick: this.orgClick,
+      orgCounter: (orgIdx >= 0 ? (orgIdx + 1) : 0) + ' / ' + Component.ORG_CHART.length,
+      orgPrev: this.orgPrev,
+      orgNext: this.orgNext,
+      closeOrg: this.closeOrg,
       studentStats: Component.STUDENT_STATS,
       newsList,
       grades: Component.GRADES,
       honorAchievements: Component.ACHIEVEMENTS.filter(a => a.group === 'honor'),
+      ...(() => {
+        const honors = Component.ACHIEVEMENTS.filter(a => a.group === 'honor');
+        const n = honors.length;
+        const floatDurs = ['3.4s', '4s', '3.7s', '4.3s', '3.9s', '4.1s', '3.6s'];
+        const floatDelays = ['0s', '-0.6s', '-1.4s', '-2.1s', '-0.9s', '-1.7s', '-2.5s'];
+        const awardOrbit = honors.map((a, i) => {
+          const angle = (i / n) * Math.PI * 2;
+          const r = 42;
+          return {
+            ...a,
+            left: (50 + r * Math.sin(angle)).toFixed(1),
+            top: (50 - r * Math.cos(angle)).toFixed(1),
+            floatDur: floatDurs[i % floatDurs.length],
+            floatDelay: floatDelays[i % floatDelays.length],
+          };
+        });
+        const awardIdx = typeof s.awardOrbitOpen === 'number' ? s.awardOrbitOpen : -1;
+        return {
+          awardOrbit,
+          awardOrbitOpen: awardIdx >= 0,
+          awardOrbitActive: awardOrbit[awardIdx] || { title: '', year: '' },
+          awardOrbitCounter: (awardIdx >= 0 ? awardIdx + 1 : 0) + ' / ' + n,
+          awardOrbitClick: this.awardOrbitClick,
+          closeAwardOrbit: this.closeAwardOrbit,
+          awardOrbitPrev: this.awardOrbitPrev,
+          awardOrbitNext: this.awardOrbitNext,
+        };
+      })(),
       healthProjects: Component.ACHIEVEMENTS.filter(a => a.group === 'health'),
       mediaItems: Component.MEDIA,
       innovations: Component.INNOVATIONS,
+      games: Component.GAMES,
       missions: Component.MISSIONS,
       strategies: Component.STRATEGIES,
       assessments: Component.ASSESSMENTS,
