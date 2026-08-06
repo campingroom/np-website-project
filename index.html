@@ -341,6 +341,84 @@ html[data-theme="light"][data-light-bg="glowgrid"] #dc-root [data-hi-card] {
   box-shadow: 0 18px 40px -28px rgba(32,30,29,.45), inset 0 1px 0 rgba(255,255,255,.75) !important;
 }
 
+/* news tiles: lift, zoom and slide on hover */
+#dc-root [data-news-tile] { transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s ease !important; will-change: transform; }
+#dc-root [data-news-tile]:hover {
+  transform: translateY(-6px) scale(1.015) !important;
+  box-shadow: 0 30px 62px -30px rgba(0,0,0,.8), 0 0 34px -12px color-mix(in srgb, var(--color-accent) 55%, transparent) !important;
+}
+#dc-root [data-news-tile] image-slot { transition: transform .7s cubic-bezier(.2,.8,.2,1); }
+#dc-root [data-news-tile]:hover image-slot { transform: scale(1.07); }
+#dc-root [data-news-tile] [data-news-copy] { transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+#dc-root [data-news-tile]:hover [data-news-copy] { transform: translateY(-4px); }
+#dc-root [data-news-tile] [data-news-arrow] { transition: transform .45s cubic-bezier(.2,.8,.2,1), background .3s ease, color .3s ease; }
+#dc-root [data-news-tile]:hover [data-news-arrow] { transform: translate(3px,-3px) scale(1.08); background: var(--color-accent) !important; color: #fff !important; }
+
+#dc-root [data-rail] {
+  --rail-card: min(560px, 74vw); --rail-gap: clamp(14px, 2vw, 26px);
+  --rail-step: calc(var(--rail-card) + var(--rail-gap));
+  position: relative; user-select: none;
+}
+#dc-root [data-rail-track] {
+  display: flex; gap: var(--rail-gap); align-items: stretch;
+  height: clamp(340px, 42vw, 470px); will-change: transform;
+}
+#dc-root [data-slide] { flex: 0 0 auto; width: var(--rail-card); cursor: pointer; }
+#dc-root [data-rail-nav] {
+  width: 46px; height: 46px; display: grid; place-items: center; padding: 0; cursor: pointer;
+  border-radius: 999px; border: 1px solid var(--color-divider); background: transparent;
+  color: var(--color-text); transition: border-color .25s ease, transform .25s ease, background .25s ease;
+}
+#dc-root [data-rail-nav]:hover { border-color: var(--color-accent); transform: translateY(-1px); background: color-mix(in srgb, var(--color-accent) 12%, transparent); }
+html[data-theme="dark"] #dc-root [data-slide] .card { background: linear-gradient(180deg, #16161d, #0e0e13) !important; backdrop-filter: none !important; }
+html[data-theme="light"] #dc-root [data-slide] .card { background: #ffffff !important; backdrop-filter: none !important; }
+@media (max-width: 720px) { /* staff card: photo fills the card, sharp inside the window, blurred outside */
+#dc-root [data-staff-veil] {
+  position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  backdrop-filter: blur(4px) saturate(110%); -webkit-backdrop-filter: blur(4px) saturate(110%);
+  -webkit-mask-image: linear-gradient(#000, #000), linear-gradient(#000, #000);
+  mask-image: linear-gradient(#000, #000), linear-gradient(#000, #000);
+  -webkit-mask-position: 0 0, 14px 14px; mask-position: 0 0, 14px 14px;
+  -webkit-mask-size: 100% 100%, calc(100% - 28px) 250px; mask-size: 100% 100%, calc(100% - 28px) 250px;
+  -webkit-mask-repeat: no-repeat, no-repeat; mask-repeat: no-repeat, no-repeat;
+  -webkit-mask-composite: xor; mask-composite: exclude;
+}
+html[data-theme="dark"] #dc-root [data-staff-veil] { background: rgba(8,8,11,.52); }
+html[data-theme="light"] #dc-root [data-staff-veil] { background: rgba(247,245,243,.62); }
+#dc-root [data-staff-window] {
+  position: absolute; left: 14px; top: 14px; right: 14px; height: 250px; z-index: 1;
+  border-radius: 0; pointer-events: none;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.34), 0 14px 30px -18px rgba(0,0,0,.7);
+}
+html[data-theme="light"] #dc-root [data-staff-window] { box-shadow: 0 0 0 1px rgba(255,255,255,.9), 0 14px 30px -20px rgba(32,30,29,.55); }
+#dc-root [data-staff-card] image-slot::part(frame) { background: transparent; }
+
+/* news tiles: lift, zoom and slide on hover */
+#dc-root [data-news-tile] { transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s ease !important; will-change: transform; }
+#dc-root [data-news-tile]:hover {
+  transform: translateY(-6px) scale(1.015) !important;
+  box-shadow: 0 30px 62px -30px rgba(0,0,0,.8), 0 0 34px -12px color-mix(in srgb, var(--color-accent) 55%, transparent) !important;
+}
+#dc-root [data-news-tile] image-slot { transition: transform .7s cubic-bezier(.2,.8,.2,1); }
+#dc-root [data-news-tile]:hover image-slot { transform: scale(1.07); }
+#dc-root [data-news-tile] [data-news-copy] { transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+#dc-root [data-news-tile]:hover [data-news-copy] { transform: translateY(-4px); }
+#dc-root [data-news-tile] [data-news-arrow] { transition: transform .45s cubic-bezier(.2,.8,.2,1), background .3s ease, color .3s ease; }
+#dc-root [data-news-tile]:hover [data-news-arrow] { transform: translate(3px,-3px) scale(1.08); background: var(--color-accent) !important; color: #fff !important; }
+
+#dc-root [data-rail] { --rail-card: min(560px, 86vw); } }
+#dc-root [data-acc] > [data-acc-panel] {
+  display: grid; grid-template-rows: 0fr;
+  transition: grid-template-rows .42s cubic-bezier(.2,.8,.2,1);
+}
+#dc-root [data-acc] > [data-acc-panel] > div { opacity: 0; transform: translateY(-6px); transition: opacity .34s ease, transform .34s ease; }
+#dc-root [data-acc][data-open="true"] > [data-acc-panel] { grid-template-rows: 1fr; }
+#dc-root [data-acc][data-open="true"] > [data-acc-panel] > div { opacity: 1; transform: translateY(0); transition-delay: .1s; }
+#dc-root [data-acc][data-open="true"] [data-plus-v] { transform: scaleY(0); }
+#dc-root [data-acc] button:hover [data-plus] { color: var(--color-accent) !important; }
+#dc-root image-slot[id^="logo-"] { background: transparent !important; }
+#dc-root image-slot[id^="logo-"]::part(frame) { background: transparent !important; }
+
 /* ── Theme switch (both themes) ───────────────────────────────── */
 html[data-theme-switching] body,
 html[data-theme-switching] #dc-root section,
@@ -415,7 +493,7 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
       <a href="{{ item.href }}" ref="{{ setNavRef }}" data-nav-id="{{ item.id }}" onClick="{{ navClick }}" style="position:relative; z-index:1; white-space:nowrap; padding:8px 14px; font-size:13px; font-weight:700; text-decoration:none; color:#ffffff; text-shadow:0 1px 3px rgba(0,0,0,.55); transition:color .12s ease .12s, padding .3s ease, font-size .3s ease; display:flex; flex-direction:column; align-items:center; gap:1px; line-height:1.2;"><span>{{ item.label }}</span><span data-en="" style="font-size:9px; font-weight:600; letter-spacing:.03em; opacity:.6;">{{ item.en }}</span></a>
     </sc-for>
   </div>
-  <div data-theme-toggle="" role="group" aria-label="สลับธีมสว่างและมืด" style="margin-left:8px;">
+  <div data-theme-toggle="" role="group" aria-label="สลับธีมสว่างและมืด" style="margin-left:8px; margin-right:-4px;">
     <button type="button" data-theme-opt="light" onClick="{{ setLightTheme }}" aria-label="ธีมสว่าง" title="ธีมสว่าง">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path></svg>
     </button>
@@ -483,38 +561,62 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
       </p>
     </div>
 
-    <!-- director message + VTR + quick links -->
-    <div style="display:grid; grid-template-columns:{{ homeGridCols }}; gap:24px; align-items:stretch; border-top:2px solid var(--color-divider); padding:40px 0 48px;">
-      <div class="card elev-sm" style="position:relative; padding:0; overflow:hidden; display:block; height:100%; min-height:0;">
-        <figure style="margin:0; position:absolute; inset:0;">
-          <image-slot id="director-photo" shape="rect" style="width:100%;height:100%;" placeholder="ภาพผู้บริหาร"></image-slot>
-        </figure>
-        <div style="position:absolute; left:0; right:0; bottom:0; padding:24px; background:linear-gradient(to top, color-mix(in srgb, var(--color-text) 78%, transparent) 0%, color-mix(in srgb, var(--color-text) 40%, transparent) 55%, transparent 100%);">
-          <span style="display:block; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--color-accent-200); margin-bottom:6px;">สารจากผู้อำนวยการ</span>
-          <p style="margin:0 0 10px; font-family:var(--font-heading); font-size:26px; font-weight:800; line-height:1.15; color:#fff;">นายกิจภูมิ บุญอบ</p>
-          <p style="margin:0; font-size:14px; line-height:1.55; color:#fff; opacity:.92; max-width:38ch;">“โรงเรียนมุ่งพัฒนาผู้เรียนทุกคนให้เป็นคนดี มีความรู้ และอยู่ร่วมกับผู้อื่นได้อย่างมีความสุข”</p>
+    <!-- director message + VTR + quick links — Osmo-style deck -->
+    <div style="border-top:2px solid var(--color-divider); padding:36px 0 44px;">
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:clamp(18px,2.6vw,28px);">
+        <button type="button" data-rail-nav="" onClick="{{ deckPrev }}" aria-label="การ์ดก่อนหน้า">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>
+        </button>
+        <button type="button" data-rail-nav="" onClick="{{ deckNext }}" aria-label="การ์ดถัดไป">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+        </button>
+        <span style="margin-left:6px; font-family:var(--font-heading); font-weight:800; font-size:13px; letter-spacing:.06em; color:color-mix(in srgb, var(--color-text) 55%, transparent);">{{ deckCounter }}</span>
+      </div>
+
+      <div ref="{{ setDeckRef }}" data-rail="" style="touch-action:pan-y;">
+        <div ref="{{ setRailRef }}" data-rail-track="" data-at="{{ deckAt }}">
+        <div data-slide="" onClick="{{ deck1.onClick }}">
+          <div class="card elev-sm" style="position:relative; padding:0; overflow:hidden; display:block; height:100%;">
+            <figure style="margin:0; position:absolute; inset:0;">
+              <image-slot id="director-photo" shape="rect" style="width:100%;height:100%;" placeholder="ภาพผู้บริหาร"></image-slot>
+            </figure>
+            <div style="position:absolute; left:0; right:0; bottom:0; padding:24px; background:linear-gradient(to top, color-mix(in srgb, var(--color-text) 78%, transparent) 0%, color-mix(in srgb, var(--color-text) 40%, transparent) 55%, transparent 100%);">
+              <span style="display:block; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--color-accent-200); margin-bottom:6px;">สารจากผู้อำนวยการ</span>
+              <p style="margin:0 0 10px; font-family:var(--font-heading); font-size:26px; font-weight:800; line-height:1.15; color:#fff;">นายกิจภูมิ บุญอบ</p>
+              <p style="margin:0; font-size:14px; line-height:1.55; color:#fff; opacity:.92; max-width:38ch;">“โรงเรียนมุ่งพัฒนาผู้เรียนทุกคนให้เป็นคนดี มีความรู้ และอยู่ร่วมกับผู้อื่นได้อย่างมีความสุข”</p>
+            </div>
+          </div>
+        </div>
+
+        <div data-slide="" onClick="{{ deck2.onClick }}">
+          <a href="https://www.youtube.com/watch?v=ImgFAc5CpHQ" target="_blank" rel="noopener" class="card elev-sm" style="position:relative; padding:0; overflow:hidden; display:block; height:100%; text-decoration:none;">
+            <img src="https://img.youtube.com/vi/ImgFAc5CpHQ/maxresdefault.jpg" alt="ภาพปกวิดีโอแนะนำโรงเรียน" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;">
+            <div style="position:absolute; inset:0; z-index:1; display:flex; align-items:center; justify-content:center;">
+              <span style="display:flex; align-items:center; justify-content:center; width:60px; height:60px; background:var(--color-accent); color:var(--color-bg);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+              </span>
+            </div>
+            <div style="position:absolute; left:0; right:0; bottom:0; z-index:2; padding:20px; background:linear-gradient(to top, color-mix(in srgb, var(--color-text) 86%, transparent) 0%, color-mix(in srgb, var(--color-text) 45%, transparent) 70%, transparent 100%);">
+              <span style="display:block; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--color-accent-200); margin-bottom:6px;">วิดีโอแนะนำโรงเรียน (VTR)</span>
+              <p style="margin:0 0 4px; font-family:var(--font-heading); font-size:18px; font-weight:800; line-height:1.2; color:#fff;">รับชมผ่านช่อง YouTube ของโรงเรียน</p>
+              <p style="margin:0; font-size:13px; color:#fff; opacity:.85;">“โรงเรียนบ้านหนองสระพังโนนสะอาด”</p>
+            </div>
+          </a>
+        </div>
+
+        <div data-slide="" onClick="{{ deck3.onClick }}">
+          <div class="card elev-sm" style="height:100%; justify-content:center; gap:10px; padding:clamp(18px,2.4vw,26px);">
+            <span class="card-kicker">เมนูลัด</span>
+            <a href="#academics" onClick="{{ navClick }}" class="btn btn-block" style="border:1px solid var(--color-divider);">ระบบ e-Learning / ตารางเรียน</a>
+            <a href="#about" onClick="{{ navClick }}" class="btn btn-block" style="border:1px solid var(--color-divider);">สรุปข้อมูลจำนวนนักเรียน</a>
+            <a href="#news" onClick="{{ navClick }}" class="btn btn-block" style="border:1px solid var(--color-divider);">ข่าวประชาสัมพันธ์ / ดาวน์โหลดเอกสาร</a>
+            <a href="#contact" onClick="{{ navClick }}" class="btn btn-block" style="border:1px solid var(--color-divider);">ระบบดูผลการเรียน</a>
+          </div>
+        </div>
         </div>
       </div>
-      <a href="https://www.youtube.com/watch?v=ImgFAc5CpHQ" target="_blank" rel="noopener" class="card elev-sm" style="position:relative; padding:0; overflow:hidden; display:block; aspect-ratio:16/9; min-height:0; text-decoration:none;">
-        <img src="https://img.youtube.com/vi/ImgFAc5CpHQ/maxresdefault.jpg" alt="ภาพปกวิดีโอแนะนำโรงเรียน" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0;">
-        <div style="position:absolute; inset:0; z-index:1; display:flex; align-items:center; justify-content:center;">
-          <span style="display:flex; align-items:center; justify-content:center; width:60px; height:60px; background:var(--color-accent); color:var(--color-bg);">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
-          </span>
-        </div>
-        <div style="position:absolute; left:0; right:0; bottom:0; z-index:2; padding:20px; background:linear-gradient(to top, color-mix(in srgb, var(--color-text) 86%, transparent) 0%, color-mix(in srgb, var(--color-text) 45%, transparent) 70%, transparent 100%);">
-          <span style="display:block; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--color-accent-200); margin-bottom:6px;">วิดีโอแนะนำโรงเรียน (VTR)</span>
-          <p style="margin:0 0 4px; font-family:var(--font-heading); font-size:18px; font-weight:800; line-height:1.2; color:#fff;">รับชมผ่านช่อง YouTube ของโรงเรียน</p>
-          <p style="margin:0; font-size:13px; color:#fff; opacity:.85;">“โรงเรียนบ้านหนองสระพังโนนสะอาด”</p>
-        </div>
-      </a>
-      <div class="card elev-sm" style="height:100%; justify-content:flex-start; gap:8px; padding:16px;">
-        <span class="card-kicker">เมนูลัด</span>
-        <a href="#academics" onClick="{{ navClick }}" class="btn btn-block" style="border:1px solid var(--color-divider);">ระบบ e-Learning / ตารางเรียน</a>
-        <a href="#about" onClick="{{ navClick }}" class="btn btn-block" style="border:1px solid var(--color-divider);">สรุปข้อมูลจำนวนนักเรียน</a>
-        <a href="#news" onClick="{{ navClick }}" class="btn btn-block" style="border:1px solid var(--color-divider);">ข่าวประชาสัมพันธ์ / ดาวน์โหลดเอกสาร</a>
-        <a href="#contact" onClick="{{ navClick }}" class="btn btn-block" style="border:1px solid var(--color-divider);">ระบบดูผลการเรียน</a>
-      </div>
+
+      <p style="margin:clamp(14px,2vw,22px) 0 0; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 50%, transparent);">ลากเพื่อเลื่อน · แตะการ์ดถัดไปเพื่อเลื่อน</p>
     </div>
   </div>
 </section>
@@ -525,69 +627,154 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
     <h2 style="font-size:clamp(26px,3.2vw,38px); margin:14px 0 24px;">ประวัติและข้อมูลทั่วไป</h2>
     <div style="display:grid; grid-template-columns:{{ historyCols }}; gap:clamp(16px,3vw,40px); align-items:end;">
       <div>
-        <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">ประวัติโรงเรียน</h3>
         <p data-reveal-text="" style="font-size:clamp(17px,2vw,22px); font-weight:700; line-height:1.65; max-width:52ch; color:var(--color-text); margin:0 0 8px;">โรงเรียนบ้านหนองสระพังโนนสะอาด ก่อตั้งขึ้นเมื่อวันที่ 19 ตุลาคม พ.ศ. 2474 โดยใช้ศาลาการเปรียญวัดหนองสระพังจัดการเรียนการสอน ต่อมาในปี พ.ศ. 2482 ชาวบ้านได้จับจองหักร้างถางพงที่ดินแปลงใหม่เพื่อเป็นที่ตั้งโรงเรียนที่เป็นเอกเทศ บนเนื้อที่ 10 ไร่ 9 ตารางวา และได้ย้ายโรงเรียนมาสร้างในที่ดินแปลงใหม่จนถึงปัจจุบัน เพื่อความภาคภูมิใจในความเป็นเจ้าของร่วมกันของหมู่บ้านในเขตพื้นที่บริการ โรงเรียนได้รับอนุมัติให้เปลี่ยนชื่อใหม่เป็น “โรงเรียนบ้านหนองสระพังโนนสะอาด” อายุการก่อตั้งนับถึงสิ้นปีการศึกษา 2563 รวม 91 ปี</p>
         <p style="font-size:15.5px; line-height:1.7; max-width:70ch; color:color-mix(in srgb, var(--color-text) 78%, transparent); margin:16px 0 8px;">โรงเรียนมีหมู่บ้านหลักในเขตบริการ 3 หมู่ ได้แก่ หมู่ที่ 1 บ้านหนองสระพัง หมู่ที่ 3 บ้านโนนสะอาด และหมู่ที่ 15 บ้านหนองสระพัง โดยโรงเรียนตั้งอยู่หมู่ที่ 15 บ้านหนองสระพัง ตำบลเขวาไร่ อำเภอโกสุมพิสัย จังหวัดมหาสารคาม 44140 เป็นโรงเรียนในสังกัดศูนย์พัฒนาคุณภาพการศึกษาวังยาวเขวาไร่ดอนกลาง สำนักงานเขตพื้นที่การศึกษาประถมศึกษามหาสารคาม เขต 3 สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน</p>
       </div>
       <figure style="margin:0; align-self:end;">
         <image-slot id="director-cutout" shape="rect" fit="contain" src="assets/director-cutout-bg.png" style="width: 100%; aspect-ratio: 3/4; background-color: var(--color-bg); border-radius: 0" placeholder="ภาพผู้อำนวยการ"></image-slot>
-        <div style="margin:0; width:100%; background:var(--color-text); border-radius:0; padding:14px 24px; text-align:center;">
-          <p style="font-family:var(--font-heading); font-weight:800; font-size:16px; margin:0 0 2px; color:var(--color-bg);">นายกิจภูมิ บุญอบ</p>
-          <p style="font-size:13px; margin:0; color:var(--color-accent);">ผู้อำนวยการโรงเรียน</p>
+        <div style="margin:0; width:100%; background:var(--color-accent); border-radius:0; padding:14px 24px; text-align:center;">
+          <p style="font-family:var(--font-heading); font-weight:800; font-size:16px; margin:0 0 2px; color:#ffffff;">นายกิจภูมิ บุญอบ</p>
+          <p style="font-size:13px; margin:0; color:rgba(255,255,255,.88);">ผู้อำนวยการโรงเรียน</p>
         </div>
       </figure>
     </div>
 
     
-    <div style="display:grid; grid-template-columns:80px minmax(0,1fr); gap:16px; align-items:baseline; padding:20px 0; border-top:2px solid var(--color-divider);">
-      <p style="font-family:var(--font-heading); font-weight:800; font-size:14px; margin:0;">01</p>
-      <div><h3 style="font-size:19px; margin:0 0 6px;">วิสัยทัศน์</h3><p style="font-size:14.5px; line-height:1.6; color:color-mix(in srgb, var(--color-text) 80%, transparent); margin:0; max-width:60ch;">สู่คุณภาพและมาตรฐานการศึกษาด้วยวิธีการเรียนรู้ สอน และบริหาร ที่หลากหลาย</p></div>
-    </div><div style="display:grid; grid-template-columns:80px minmax(0,1fr); gap:16px; align-items:baseline; padding:20px 0; border-top:2px solid var(--color-divider);">
-      <p style="font-family:var(--font-heading); font-weight:800; font-size:14px; margin:0;">02</p>
-      <div><h3 style="font-size:19px; margin:0 0 6px;">ปรัชญา</h3><p style="font-size:14.5px; line-height:1.6; color:color-mix(in srgb, var(--color-text) 80%, transparent); margin:0; max-width:60ch;">สุวิชาโน ภวังโหติ — ผู้รู้ดี คือผู้เจริญ</p></div>
-    </div>
-    <div style="display:grid; grid-template-columns:80px minmax(0,1fr); gap:16px; align-items:baseline; padding:20px 0; border-top:2px solid var(--color-divider);">
-      <p style="font-family:var(--font-heading); font-weight:800; font-size:14px; margin:0;">03</p>
-      <div><h3 style="font-size:19px; margin:0 0 6px;">คำขวัญ</h3><p style="font-size:14.5px; line-height:1.6; color:color-mix(in srgb, var(--color-text) 80%, transparent); margin:0; max-width:60ch;">เรียนดี มีวินัย ใฝ่พัฒนา รักษาสิ่งแวดล้อม เพียบพร้อมคุณธรรม ร่วมกิจกรรมชุมชน</p></div>
-    </div>
-    <div style="display:grid; grid-template-columns:80px minmax(0,1fr); gap:16px; align-items:start; padding:20px 0; border-top:2px solid var(--color-divider);">
-      <p style="font-family:var(--font-heading); font-weight:800; font-size:14px; margin:0;">04</p>
-      <div>
-        <h3 style="font-size:19px; margin:0 0 12px;">พันธกิจ</h3>
-        <div style="display:flex; flex-direction:column; gap:12px; max-width:72ch;">
-          <sc-for list="{{ missions }}" as="m" hint-placeholder-count="6">
-            <div style="display:grid; grid-template-columns:28px minmax(0,1fr); gap:12px; align-items:baseline;">
-              <span style="font-family:var(--font-heading); font-weight:800; font-size:13px; color:var(--color-accent-700);">{{ m.no }}</span>
-              <p style="font-size:14.5px; line-height:1.6; color:color-mix(in srgb, var(--color-text) 80%, transparent); margin:0;">{{ m.text }}</p>
+    <div data-acc="" data-open="{{ acc1.openStr }}" style="border-top:2px solid var(--color-divider);">
+      <button type="button" onClick="{{ acc1.onClick }}" aria-expanded="{{ acc1.openStr }}" style="display:grid; grid-template-columns:80px minmax(0,1fr) 18px; gap:16px; align-items:center; width:100%; padding:20px 0; border:none; background:none; cursor:pointer; text-align:left; color:var(--color-text);">
+        <span style="font-family:var(--font-heading); font-weight:800; font-size:14px; color:{{ acc1.numColor }}; transition:color .3s ease;">01</span>
+        <span style="font-family:var(--font-heading); font-weight:800; font-size:19px; line-height:1.25;">วิสัยทัศน์</span>
+        <span data-plus="" aria-hidden="true" style="position:relative; width:18px; height:18px; color:{{ acc1.numColor }}; transition:color .3s ease;">
+          <span style="position:absolute; top:8px; left:0; width:18px; height:2px; background:currentColor;"></span>
+          <span data-plus-v="" style="position:absolute; left:8px; top:0; width:2px; height:18px; background:currentColor; transition:transform .34s cubic-bezier(.2,.8,.2,1);"></span>
+        </span>
+      </button>
+      <div data-acc-panel="">
+        <div style="overflow:hidden;">
+          <div style="display:grid; grid-template-columns:80px minmax(0,1fr); gap:16px; padding:0 0 24px;">
+            <span aria-hidden="true"></span>
+            <div>
+              <p style="font-size:14.5px; line-height:1.6; color:color-mix(in srgb, var(--color-text) 80%, transparent); margin:0; max-width:60ch;">สู่คุณภาพและมาตรฐานการศึกษาด้วยวิธีการเรียนรู้ สอน และบริหาร ที่หลากหลาย</p>
             </div>
-          </sc-for>
+          </div>
         </div>
       </div>
     </div>
-    <div style="display:grid; grid-template-columns:80px minmax(0,1fr); gap:16px; align-items:start; padding:20px 0; border-top:2px solid var(--color-divider); border-bottom:2px solid var(--color-divider);">
-      <p style="font-family:var(--font-heading); font-weight:800; font-size:14px; margin:0;">05</p>
-      <div>
-        <h3 style="font-size:19px; margin:0 0 12px;">กลยุทธ์</h3>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px;">
-          <sc-for list="{{ strategies }}" as="st" hint-placeholder-count="6">
-            <div style="display:flex; gap:12px; align-items:baseline; border:2px solid var(--color-divider); padding:14px 16px;">
-              <span style="flex:none; font-family:var(--font-heading); font-weight:800; font-size:13px; color:var(--color-accent-700);">{{ st.no }}</span>
-              <p style="font-size:14px; line-height:1.55; margin:0;">{{ st.text }}</p>
+    <div data-acc="" data-open="{{ acc2.openStr }}" style="border-top:2px solid var(--color-divider);">
+      <button type="button" onClick="{{ acc2.onClick }}" aria-expanded="{{ acc2.openStr }}" style="display:grid; grid-template-columns:80px minmax(0,1fr) 18px; gap:16px; align-items:center; width:100%; padding:20px 0; border:none; background:none; cursor:pointer; text-align:left; color:var(--color-text);">
+        <span style="font-family:var(--font-heading); font-weight:800; font-size:14px; color:{{ acc2.numColor }}; transition:color .3s ease;">02</span>
+        <span style="font-family:var(--font-heading); font-weight:800; font-size:19px; line-height:1.25;">ปรัชญา</span>
+        <span data-plus="" aria-hidden="true" style="position:relative; width:18px; height:18px; color:{{ acc2.numColor }}; transition:color .3s ease;">
+          <span style="position:absolute; top:8px; left:0; width:18px; height:2px; background:currentColor;"></span>
+          <span data-plus-v="" style="position:absolute; left:8px; top:0; width:2px; height:18px; background:currentColor; transition:transform .34s cubic-bezier(.2,.8,.2,1);"></span>
+        </span>
+      </button>
+      <div data-acc-panel="">
+        <div style="overflow:hidden;">
+          <div style="display:grid; grid-template-columns:80px minmax(0,1fr); gap:16px; padding:0 0 24px;">
+            <span aria-hidden="true"></span>
+            <div>
+              <p style="font-size:14.5px; line-height:1.6; color:color-mix(in srgb, var(--color-text) 80%, transparent); margin:0; max-width:60ch;">สุวิชาโน ภวังโหติ — ผู้รู้ดี คือผู้เจริญ</p>
             </div>
-          </sc-for>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div data-acc="" data-open="{{ acc3.openStr }}" style="border-top:2px solid var(--color-divider);">
+      <button type="button" onClick="{{ acc3.onClick }}" aria-expanded="{{ acc3.openStr }}" style="display:grid; grid-template-columns:80px minmax(0,1fr) 18px; gap:16px; align-items:center; width:100%; padding:20px 0; border:none; background:none; cursor:pointer; text-align:left; color:var(--color-text);">
+        <span style="font-family:var(--font-heading); font-weight:800; font-size:14px; color:{{ acc3.numColor }}; transition:color .3s ease;">03</span>
+        <span style="font-family:var(--font-heading); font-weight:800; font-size:19px; line-height:1.25;">คำขวัญ</span>
+        <span data-plus="" aria-hidden="true" style="position:relative; width:18px; height:18px; color:{{ acc3.numColor }}; transition:color .3s ease;">
+          <span style="position:absolute; top:8px; left:0; width:18px; height:2px; background:currentColor;"></span>
+          <span data-plus-v="" style="position:absolute; left:8px; top:0; width:2px; height:18px; background:currentColor; transition:transform .34s cubic-bezier(.2,.8,.2,1);"></span>
+        </span>
+      </button>
+      <div data-acc-panel="">
+        <div style="overflow:hidden;">
+          <div style="display:grid; grid-template-columns:80px minmax(0,1fr); gap:16px; padding:0 0 24px;">
+            <span aria-hidden="true"></span>
+            <div>
+              <p style="font-size:14.5px; line-height:1.6; color:color-mix(in srgb, var(--color-text) 80%, transparent); margin:0; max-width:60ch;">เรียนดี มีวินัย ใฝ่พัฒนา รักษาสิ่งแวดล้อม เพียบพร้อมคุณธรรม ร่วมกิจกรรมชุมชน</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div data-acc="" data-open="{{ acc4.openStr }}" style="border-top:2px solid var(--color-divider);">
+      <button type="button" onClick="{{ acc4.onClick }}" aria-expanded="{{ acc4.openStr }}" style="display:grid; grid-template-columns:80px minmax(0,1fr) 18px; gap:16px; align-items:center; width:100%; padding:20px 0; border:none; background:none; cursor:pointer; text-align:left; color:var(--color-text);">
+        <span style="font-family:var(--font-heading); font-weight:800; font-size:14px; color:{{ acc4.numColor }}; transition:color .3s ease;">04</span>
+        <span style="font-family:var(--font-heading); font-weight:800; font-size:19px; line-height:1.25;">พันธกิจ</span>
+        <span data-plus="" aria-hidden="true" style="position:relative; width:18px; height:18px; color:{{ acc4.numColor }}; transition:color .3s ease;">
+          <span style="position:absolute; top:8px; left:0; width:18px; height:2px; background:currentColor;"></span>
+          <span data-plus-v="" style="position:absolute; left:8px; top:0; width:2px; height:18px; background:currentColor; transition:transform .34s cubic-bezier(.2,.8,.2,1);"></span>
+        </span>
+      </button>
+      <div data-acc-panel="">
+        <div style="overflow:hidden;">
+          <div style="display:grid; grid-template-columns:80px minmax(0,1fr); gap:16px; padding:0 0 24px;">
+            <span aria-hidden="true"></span>
+            <div>
+              <div style="display:flex; flex-direction:column; gap:12px; max-width:72ch;">
+                <sc-for list="{{ missions }}" as="m" hint-placeholder-count="6">
+                  <div style="display:grid; grid-template-columns:28px minmax(0,1fr); gap:12px; align-items:baseline;">
+                    <span style="font-family:var(--font-heading); font-weight:800; font-size:13px; color:var(--color-accent-700);">{{ m.no }}</span>
+                    <p style="font-size:14.5px; line-height:1.6; color:color-mix(in srgb, var(--color-text) 80%, transparent); margin:0; max-width:60ch;">{{ m.text }}</p>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div data-acc="" data-open="{{ acc5.openStr }}" style="border-top:2px solid var(--color-divider); border-bottom:2px solid var(--color-divider);">
+      <button type="button" onClick="{{ acc5.onClick }}" aria-expanded="{{ acc5.openStr }}" style="display:grid; grid-template-columns:80px minmax(0,1fr) 18px; gap:16px; align-items:center; width:100%; padding:20px 0; border:none; background:none; cursor:pointer; text-align:left; color:var(--color-text);">
+        <span style="font-family:var(--font-heading); font-weight:800; font-size:14px; color:{{ acc5.numColor }}; transition:color .3s ease;">05</span>
+        <span style="font-family:var(--font-heading); font-weight:800; font-size:19px; line-height:1.25;">กลยุทธ์</span>
+        <span data-plus="" aria-hidden="true" style="position:relative; width:18px; height:18px; color:{{ acc5.numColor }}; transition:color .3s ease;">
+          <span style="position:absolute; top:8px; left:0; width:18px; height:2px; background:currentColor;"></span>
+          <span data-plus-v="" style="position:absolute; left:8px; top:0; width:2px; height:18px; background:currentColor; transition:transform .34s cubic-bezier(.2,.8,.2,1);"></span>
+        </span>
+      </button>
+      <div data-acc-panel="">
+        <div style="overflow:hidden;">
+          <div style="display:grid; grid-template-columns:80px minmax(0,1fr); gap:16px; padding:0 0 24px;">
+            <span aria-hidden="true"></span>
+            <div>
+              <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px;">
+                <sc-for list="{{ strategies }}" as="st" hint-placeholder-count="6">
+                  <div style="display:flex; gap:12px; align-items:baseline; border:2px solid var(--color-divider); padding:14px 16px;">
+                    <span style="flex:none; font-family:var(--font-heading); font-weight:800; font-size:13px; color:var(--color-accent-700);">{{ st.no }}</span>
+                    <p style="font-size:14px; line-height:1.55; margin:0;">{{ st.text }}</p>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:32px 0 14px;">ข้อมูลนักเรียน</h3>
-    <table class="table" style="margin-bottom:40px;">
-      <thead><tr><th>ระดับชั้น</th><th>จำนวนห้องเรียน</th><th>จำนวนนักเรียน</th></tr></thead>
-      <tbody>
-        <sc-for list="{{ studentStats }}" as="ss" hint-placeholder-count="3">
-          <tr><td>{{ ss.level }}</td><td>{{ ss.rooms }}</td><td>{{ ss.count }}</td></tr>
-        </sc-for>
-      </tbody>
-    </table>
+    <div data-acc="" data-open="{{ studentAcc.openStr }}" style="border-bottom:2px solid var(--color-divider); margin:0 0 40px;">
+      <button type="button" onClick="{{ studentAcc.onClick }}" aria-expanded="{{ studentAcc.openStr }}" style="display:grid; grid-template-columns:minmax(0,1fr) 18px; gap:16px; align-items:center; width:100%; padding:20px 0; border:none; background:none; cursor:pointer; text-align:left; color:var(--color-text);">
+        <span style="font-family:var(--font-heading); font-weight:800; font-size:19px; line-height:1.25;">ข้อมูลนักเรียน</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color:{{ studentAcc.numColor }}; transform:{{ studentAcc.chevron }}; transition:transform .34s cubic-bezier(.2,.8,.2,1), color .3s ease; flex:none;"><path d="M6 9l6 6 6-6"></path></svg>
+      </button>
+      <div data-acc-panel="">
+        <div style="overflow:hidden;">
+          <div style="padding:0 0 24px;">
+            <table class="table" style="margin:0;">
+              <thead><tr><th>ระดับชั้น</th><th>จำนวนห้องเรียน</th><th>จำนวนนักเรียน</th></tr></thead>
+              <tbody>
+                <sc-for list="{{ studentStats }}" as="ss" hint-placeholder-count="3">
+                  <tr><td>{{ ss.level }}</td><td>{{ ss.rooms }}</td><td>{{ ss.count }}</td></tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">สัญลักษณ์โรงเรียน</h3>
     <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px;">
@@ -643,7 +830,7 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
                 <span style="width:6px; height:6px; border-radius:999px; flex:none; background:{{ r.dot }};"></span>
                 <span style="min-width:0;">{{ r.label }}</span>
               </span>
-              <span style="flex:none; font-size:12.5px; opacity:.62;">{{ r.count }}</span>
+              
             </button>
           </sc-for>
         </div>
@@ -663,9 +850,9 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
         </div>
         <div ref="{{ setStaffStripRef }}" data-staff-strip="" style="display:flex; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth; padding:6px 2px 14px;">
           <sc-for list="{{ staffCards }}" as="sp" hint-placeholder-count="4">
-            <article style="flex:none; width:min(258px,82%); scroll-snap-align:start; border-radius:18px; border:1px solid rgba(255,255,255,.7); background:color-mix(in srgb, #ffffff 52%, transparent); backdrop-filter:blur(16px) saturate(150%); -webkit-backdrop-filter:blur(16px) saturate(150%); box-shadow:0 18px 38px -22px color-mix(in srgb, var(--color-text) 60%, transparent); padding:14px; animation:staffCardIn .55s cubic-bezier(.2,.85,.3,1) {{ sp.delay }} both;">
+            <article style="flex:none; width:min(310px,86%); min-height:360px; scroll-snap-align:start; border-radius:18px; border:1px solid rgba(255,255,255,.7); background:color-mix(in srgb, #ffffff 52%, transparent); backdrop-filter:blur(16px) saturate(150%); -webkit-backdrop-filter:blur(16px) saturate(150%); box-shadow:0 18px 38px -22px color-mix(in srgb, var(--color-text) 60%, transparent); padding:14px; animation:staffCardIn .55s cubic-bezier(.2,.85,.3,1) {{ sp.delay }} both;">
               <figure class="{{ photoClass }}" style="margin:0 0 12px; border-radius:12px; overflow:hidden;">
-                <image-slot id="{{ sp.photoId }}" shape="rect" style="width:100%; height:190px; border-radius:0;" placeholder="ภาพบุคลากร"></image-slot>
+                <image-slot id="{{ sp.photoId }}" shape="rect" style="width:100%; aspect-ratio:1/1; height:auto; border-radius:0;" placeholder="ภาพบุคลากร"></image-slot>
               </figure>
               <span style="display:block; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--color-accent-700); margin-bottom:6px;">{{ sp.role }}</span>
               <p style="font-family:var(--font-heading); font-weight:800; font-size:16.5px; line-height:1.25; margin:0 0 6px;">{{ sp.name }}</p>
@@ -680,9 +867,17 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
         <div style="position:absolute; top:0; right:0; bottom:0; z-index:501; width:min(100%,380px); background:var(--color-bg); border-left:2px solid var(--color-text); box-shadow:var(--shadow-lg); display:flex; flex-direction:column; animation:orbDrawerIn .32s cubic-bezier(.2,.85,.3,1) both;">
           <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 20px; border-bottom:2px solid var(--color-divider);">
             <p style="font-family:var(--font-body); font-size:12px; letter-spacing:.08em; margin:0; color:color-mix(in srgb, var(--color-text) 55%, transparent);">{{ orgCounter }}</p>
+            <div style="display:flex; align-items:center; gap:8px;">
+            <button type="button" onClick="{{ orgPrev }}" aria-label="ก่อนหน้า" title="ก่อนหน้า" style="width:34px; height:34px; display:grid; place-items:center; padding:0; cursor:pointer; border:2px solid var(--color-divider); border-radius:999px; background:transparent; color:var(--color-text); transition:border-color .2s ease, background .2s ease;" style-hover="border-color:var(--color-accent); background:color-mix(in srgb, var(--color-accent) 12%, transparent);">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg>
+            </button>
+            <button type="button" onClick="{{ orgNext }}" aria-label="ถัดไป" title="ถัดไป" style="width:34px; height:34px; display:grid; place-items:center; padding:0; cursor:pointer; border:2px solid var(--color-divider); border-radius:999px; background:transparent; color:var(--color-text); transition:border-color .2s ease, background .2s ease;" style-hover="border-color:var(--color-accent); background:color-mix(in srgb, var(--color-accent) 12%, transparent);">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg>
+            </button>
             <button type="button" onClick="{{ closeOrg }}" aria-label="ปิด" style="width:34px; height:34px; display:grid; place-items:center; padding:0; border:2px solid var(--color-accent); background:var(--color-accent); cursor:pointer; color:var(--color-bg); transition:background .2s ease;" style-hover="background:var(--color-accent-600);">
               <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"><path d="M18 6L6 18M6 6l12 12"></path></svg>
             </button>
+            </div>
           </div>
           <div style="padding:24px 20px; overflow-y:auto; flex:1;">
             <span style="display:flex; align-items:center; justify-content:center; width:48px; height:48px; border-radius:12px; background:var(--color-accent); color:var(--color-bg); margin-bottom:16px;">
@@ -701,10 +896,6 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
               </sc-for>
             </div>
           </div>
-          <div style="display:flex; gap:10px; padding:16px 20px; border-top:2px solid var(--color-divider);">
-            <button type="button" onClick="{{ orgPrev }}" class="btn btn-secondary" style="flex:1; cursor:pointer;">ก่อนหน้า</button>
-            <button type="button" onClick="{{ orgNext }}" class="btn btn-secondary" style="flex:1; cursor:pointer;">ถัดไป</button>
-          </div>
         </div>
       </sc-if>
 
@@ -713,9 +904,17 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
         <div style="position:absolute; top:0; right:0; bottom:0; z-index:501; width:min(100%,440px); background:var(--color-bg); border-left:2px solid var(--color-text); box-shadow:var(--shadow-lg); display:flex; flex-direction:column; animation:orbDrawerIn .32s cubic-bezier(.2,.85,.3,1) both;">
           <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 20px; border-bottom:2px solid var(--color-divider);">
             <p style="font-family:var(--font-body); font-size:12px; letter-spacing:.08em; margin:0; color:color-mix(in srgb, var(--color-text) 55%, transparent);">{{ groupCounter }}</p>
+            <div style="display:flex; align-items:center; gap:8px;">
+            <button type="button" onClick="{{ groupPrev }}" aria-label="ก่อนหน้า" title="ก่อนหน้า" style="width:34px; height:34px; display:grid; place-items:center; padding:0; cursor:pointer; border:2px solid var(--color-divider); border-radius:999px; background:transparent; color:var(--color-text); transition:border-color .2s ease, background .2s ease;" style-hover="border-color:var(--color-accent); background:color-mix(in srgb, var(--color-accent) 12%, transparent);">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg>
+            </button>
+            <button type="button" onClick="{{ groupNext }}" aria-label="ถัดไป" title="ถัดไป" style="width:34px; height:34px; display:grid; place-items:center; padding:0; cursor:pointer; border:2px solid var(--color-divider); border-radius:999px; background:transparent; color:var(--color-text); transition:border-color .2s ease, background .2s ease;" style-hover="border-color:var(--color-accent); background:color-mix(in srgb, var(--color-accent) 12%, transparent);">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg>
+            </button>
             <button type="button" onClick="{{ closeGroup }}" aria-label="ปิด" style="width:34px; height:34px; display:grid; place-items:center; padding:0; border:2px solid var(--color-accent); background:var(--color-accent); cursor:pointer; color:var(--color-bg); transition:background .2s ease;" style-hover="background:var(--color-accent-600);">
               <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"><path d="M18 6L6 18M6 6l12 12"></path></svg>
             </button>
+            </div>
           </div>
           <div style="padding:24px 20px; overflow-y:auto; flex:1;">
             <span style="display:flex; align-items:center; justify-content:center; width:48px; height:48px; border-radius:12px; background:var(--color-accent); color:var(--color-bg); margin-bottom:16px;">
@@ -739,10 +938,6 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
                 </div>
               </sc-for>
             </div>
-          </div>
-          <div style="display:flex; gap:10px; padding:16px 20px; border-top:2px solid var(--color-divider);">
-            <button type="button" onClick="{{ groupPrev }}" class="btn btn-secondary" style="flex:1; cursor:pointer;">ก่อนหน้า</button>
-            <button type="button" onClick="{{ groupNext }}" class="btn btn-secondary" style="flex:1; cursor:pointer;">ถัดไป</button>
           </div>
         </div>
       </sc-if>
@@ -839,14 +1034,14 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
     <div style="background:var(--color-text); border-radius:24px; padding:clamp(16px,2.5vw,28px); margin-bottom:40px;">
       <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:clamp(14px,2vw,24px);">
         <sc-for list="{{ newsList }}" as="n" hint-placeholder-count="6">
-          <a href="https://www.facebook.com/profile.php?id=100058599200322" target="_blank" rel="noopener" style="position:relative; display:block; overflow:hidden; border-radius:16px; aspect-ratio:16/10; text-decoration:none; opacity:{{ n.reveal.opacity }}; transform:{{ n.reveal.transform }}; transition:opacity .6s ease, transform .6s ease; transition-delay:{{ n.reveal.delay }};">
+          <a data-news-tile="" href="https://www.facebook.com/profile.php?id=100058599200322" target="_blank" rel="noopener" style="position:relative; display:block; overflow:hidden; border-radius:16px; aspect-ratio:16/10; text-decoration:none; opacity:{{ n.reveal.opacity }}; transform:{{ n.reveal.transform }}; transition:opacity .6s ease, transform .6s ease; transition-delay:{{ n.reveal.delay }};">
             <figure class="{{ photoClass }}" style="margin:0; position:absolute; inset:0; border-radius:0;">
               <image-slot id="{{ n.photoId }}" shape="rect" style="width:100%; height:100%; border-radius:0;" placeholder="ภาพกิจกรรม"></image-slot>
             </figure>
-            <span style="position:absolute; top:12px; right:12px; z-index:2; display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:999px; background:var(--color-bg); color:var(--color-text);">
+            <span data-news-arrow="" style="position:absolute; top:12px; right:12px; z-index:2; display:flex; align-items:center; justify-content:center; width:32px; height:32px; border-radius:999px; background:var(--color-bg); color:var(--color-text);">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"></path><path d="M9 7h8v8"></path></svg>
             </span>
-            <div style="position:absolute; left:0; right:0; bottom:0; z-index:1; padding:18px 20px; background:linear-gradient(to top, rgba(32,30,29,.88) 0%, rgba(32,30,29,.45) 60%, transparent 100%);">
+            <div data-news-copy="" style="position:absolute; left:0; right:0; bottom:0; z-index:1; padding:18px 20px; background:linear-gradient(to top, rgba(32,30,29,.88) 0%, rgba(32,30,29,.45) 60%, transparent 100%);">
               <span style="display:block; font-size:11.5px; letter-spacing:.06em; text-transform:uppercase; color:var(--color-accent-200); font-weight:700; margin-bottom:6px;">{{ n.date }}</span>
               <p style="font-family:var(--font-heading); font-weight:800; font-size:19px; line-height:1.2; margin:0 0 4px; color:#fff;">{{ n.title }}</p>
               <p style="font-size:13px; line-height:1.5; margin:0; color:#fff; opacity:.85;">{{ n.excerpt }}</p>
@@ -884,71 +1079,52 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
       </div>
     </div>
 
-    <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">รางวัลเกียรติยศ</h3>
-
-    <div style="position:relative; overflow:hidden; border:2px solid var(--color-divider); border-radius:16px; padding:clamp(20px,3vw,40px); margin:0 0 28px; display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:clamp(24px,4vw,48px); align-items:center;">
-      <div>
+    <div style="position:relative; padding:0; margin:0 0 28px;">
+      <div style="margin-bottom:clamp(22px,3vw,32px);">
         <span class="tag tag-accent">รางวัลเกียรติยศ</span>
         <p style="font-family:var(--font-heading); font-weight:800; font-size:clamp(24px,3.2vw,38px); line-height:1.18; margin:14px 0 14px; max-width:22ch;">ผลงานและรางวัลที่โรงเรียนภาคภูมิใจ</p>
-        <p style="font-size:15.5px; line-height:1.7; margin:0 0 24px; max-width:44ch; color:color-mix(in srgb, var(--color-text) 74%, transparent);">คลิกเหรียญรางวัลที่โคจรรอบตราโรงเรียน เพื่อดูรายละเอียดผลงานแต่ละรางวัล</p>
 
         <div style="display:flex; flex-wrap:wrap; gap:28px;">
           <div>
-            <p style="font-family:var(--font-heading); font-weight:800; font-size:28px; line-height:1; margin:0 0 6px; color:var(--color-accent-700);">7</p>
-            <p style="font-size:13px; line-height:1.4; margin:0; color:color-mix(in srgb, var(--color-text) 66%, transparent);">รางวัลเกียรติยศ</p>
+            <p style="font-size:14px; font-weight:700; line-height:1.4; margin:0; color:var(--color-accent-700);">รางวัลของสถานศึกษา</p>
           </div>
           <div>
-            <p style="font-family:var(--font-heading); font-weight:800; font-size:28px; line-height:1; margin:0 0 6px; color:var(--color-accent-700);">2</p>
-            <p style="font-size:13px; line-height:1.4; margin:0; color:color-mix(in srgb, var(--color-text) 66%, transparent);">เหรียญทอง OBEC Awards</p>
+            <p style="font-size:14px; font-weight:700; line-height:1.4; margin:0; color:var(--color-accent-700);">รางวัลและผลงานของครู</p>
+          </div>
+          <div>
+            <p style="font-size:14px; font-weight:700; line-height:1.4; margin:0; color:var(--color-accent-700);">รางวัลและผลงานของนักเรียน</p>
           </div>
         </div>
       </div>
 
-      <div style="position:relative; width:100%; max-width:480px; margin:0 auto; aspect-ratio:1/1;">
-        <div style="position:absolute; left:50%; top:50%; width:78%; height:78%; transform:translate(-50%,-50%); border-radius:999px; border:2px dashed color-mix(in srgb, var(--color-text) 12%, transparent);"></div>
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:clamp(16px,2.4vw,24px);">
+        <button type="button" data-rail-nav="" onClick="{{ awardPrev }}" aria-label="รางวัลก่อนหน้า">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 18l-6-6 6-6"></path></svg>
+        </button>
+        <button type="button" data-rail-nav="" onClick="{{ awardNext }}" aria-label="รางวัลถัดไป">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+        </button>
+        <span style="margin-left:6px; font-family:var(--font-heading); font-weight:800; font-size:13px; letter-spacing:.06em; color:color-mix(in srgb, var(--color-text) 55%, transparent);">{{ awardCounter }}</span>
+      </div>
 
-        <div data-orbit-anim="" style="position:absolute; left:50%; top:50%; width:52%; aspect-ratio:1/1; transform:translate(-50%,-50%); animation:awardLogoFloat 4.5s ease-in-out infinite alternate;">
-          <div data-orbit-anim="" style="position:absolute; inset:0; border-radius:999px; background:var(--color-accent); opacity:.5; animation:awardRingPulse 2.6s ease-out infinite;"></div>
-          <div style="position:absolute; inset:8%; border-radius:999px; border:2px solid var(--color-text); background:var(--color-surface); overflow:hidden; display:flex; align-items:center; justify-content:center; padding:14%;">
-            <image-slot id="logo-award-orbit" shape="rect" fit="contain" src="assets/logo-crest.png" style="width:100%; height:100%;" placeholder="ตราโรงเรียน"></image-slot>
-          </div>
-        </div>
-
-        <div data-orbit-anim="" onClick="{{ awardOrbitClick }}" style="position:absolute; inset:0; pointer-events:none; animation:awardSpin 26s linear infinite;">
+      <div ref="{{ setAwardDeckRef }}" data-rail="" data-award-rail="" style="touch-action:pan-y;">
+        <div ref="{{ setAwardRailRef }}" data-rail-track="" data-at="{{ awardAt }}">
           <sc-for list="{{ awardOrbit }}" as="a" hint-placeholder-count="7">
-            <div style="position:absolute; left:{{ a.left }}%; top:{{ a.top }}%; width:18%; aspect-ratio:1/1; transform:translate(-50%,-50%);">
-              <div data-orbit-anim="" style="width:100%; height:100%; animation:awardSpinRev 26s linear infinite;">
-                <div data-orbit-anim="" style="width:100%; height:100%; animation:orbFloat {{ a.floatDur }} ease-in-out {{ a.floatDelay }} infinite alternate;">
-                  <button type="button" data-award-i="{{ $index }}" title="{{ a.title }}" aria-label="ดูรายละเอียดรางวัล {{ a.title }}" style="pointer-events:auto; width:100%; height:100%; padding:0; border:2px solid var(--color-accent); border-radius:999px; overflow:hidden; cursor:pointer; background:var(--color-surface); box-shadow:0 8px 20px color-mix(in srgb, var(--color-text) 20%, transparent); transition:transform .25s ease, box-shadow .25s ease;" style-hover="transform:scale(1.1); box-shadow:0 12px 26px color-mix(in srgb, var(--color-text) 30%, transparent);">
-                    <image-slot id="award-photo-{{ $index }}" shape="circle" fit="cover" style="width:100%; height:100%;" placeholder="รางวัล"></image-slot>
-                  </button>
+            <div data-slide="" onClick="{{ a.onClick }}" data-on="{{ a.onStr }}">
+              <div class="card elev-sm" style="position:relative; padding:0; overflow:hidden; display:block; height:100%;">
+                <figure style="margin:0; position:absolute; inset:0;">
+                  <image-slot id="award-photo-{{ $index }}" shape="rect" fit="cover" style="width:100%; height:100%; border-radius:0;" placeholder="ภาพรางวัล"></image-slot>
+                </figure>
+                <div style="position:absolute; left:0; right:0; bottom:0; padding:24px; background:linear-gradient(to top, color-mix(in srgb, var(--color-text) 86%, transparent) 0%, color-mix(in srgb, var(--color-text) 45%, transparent) 62%, transparent 100%);">
+                  <span style="display:block; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--color-accent-200); margin-bottom:8px;">{{ a.year }}</span>
+                  <p style="margin:0; font-family:var(--font-heading); font-size:clamp(18px,2.2vw,24px); font-weight:800; line-height:1.25; color:#fff; max-width:30ch;">{{ a.title }}</p>
                 </div>
               </div>
             </div>
           </sc-for>
         </div>
-
-        <sc-if value="{{ awardOrbitOpen }}" hint-placeholder-val="{{ false }}">
-          <div onClick="{{ closeAwardOrbit }}" style="position:absolute; inset:0; z-index:500; background:color-mix(in srgb, var(--color-text) 45%, transparent);"></div>
-          <div style="position:absolute; top:0; right:0; bottom:0; z-index:501; width:min(100%,340px); background:var(--color-bg); border-left:2px solid var(--color-text); box-shadow:var(--shadow-lg); display:flex; flex-direction:column; text-align:left; animation:orbDrawerIn .32s cubic-bezier(.2,.85,.3,1) both;">
-            <div style="display:flex; align-items:center; justify-content:space-between; padding:16px 20px; border-bottom:2px solid var(--color-divider);">
-              <p style="font-family:var(--font-body); font-size:12px; letter-spacing:.08em; margin:0; color:color-mix(in srgb, var(--color-text) 55%, transparent);">{{ awardOrbitCounter }}</p>
-              <button type="button" onClick="{{ closeAwardOrbit }}" aria-label="ปิด" style="width:34px; height:34px; display:grid; place-items:center; padding:0; border:2px solid var(--color-accent); background:var(--color-accent); cursor:pointer; color:var(--color-bg); transition:background .2s ease;" style-hover="background:var(--color-accent-600);">
-                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="square"><path d="M18 6L6 18M6 6l12 12"></path></svg>
-              </button>
-            </div>
-            <div style="padding:24px 20px; overflow-y:auto; flex:1;">
-              <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="var(--color-accent-700)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom:16px;"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0V4zM7 6H4a3 3 0 0 0 3 5M17 6h3a3 3 0 0 1-3 5"></path></svg>
-              <p style="font-family:var(--font-body); font-size:11.5px; text-transform:uppercase; letter-spacing:.08em; margin:0 0 8px; color:var(--color-accent-700);">{{ awardOrbitActive.year }}</p>
-              <p style="font-family:var(--font-heading); font-weight:800; font-size:19px; line-height:1.4; margin:0;">{{ awardOrbitActive.title }}</p>
-            </div>
-            <div style="display:flex; gap:10px; padding:16px 20px; border-top:2px solid var(--color-divider);">
-              <button type="button" onClick="{{ awardOrbitPrev }}" class="btn btn-secondary" style="flex:1; cursor:pointer;">ก่อนหน้า</button>
-              <button type="button" onClick="{{ awardOrbitNext }}" class="btn btn-secondary" style="flex:1; cursor:pointer;">ถัดไป</button>
-            </div>
-          </div>
-        </sc-if>
       </div>
+
     </div>
 
     <button type="button" onClick="{{ toggleHonorsOpen }}" aria-expanded="{{ honorsOpen }}" style="display:flex; align-items:center; justify-content:space-between; width:100%; gap:16px; padding:16px 0; border:none; border-top:2px solid var(--color-divider); border-bottom:2px solid var(--color-divider); background:none; cursor:pointer; text-align:left;">
@@ -966,23 +1142,7 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
       </div>
     </sc-if>
 
-    <button type="button" onClick="{{ toggleHealthOpen }}" aria-expanded="{{ healthOpen }}" style="display:flex; align-items:center; justify-content:space-between; width:100%; gap:16px; padding:16px 0; border:none; border-bottom:2px solid var(--color-divider); background:none; cursor:pointer; text-align:left; margin-bottom:36px;">
-      <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:var(--color-text); margin:0; font-weight:800;">โครงการส่งเสริมสุขภาวะ</h3>
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transform:{{ healthChevronTransform }}; transition:transform .25s ease; flex:none;"><path d="M6 9l6 6 6-6"></path></svg>
-    </button>
-    <sc-if value="{{ healthOpen }}" hint-placeholder-val="{{ false }}">
-      <div style="display:flex; flex-direction:column; margin:-28px 0 36px;">
-        <sc-for list="{{ healthProjects }}" as="a" hint-placeholder-count="2">
-          <div style="display:flex; justify-content:space-between; gap:16px; padding:16px 0; border-bottom:2px solid var(--color-divider); flex-wrap:wrap;">
-            <p style="margin:0; font-size:15px; max-width:60ch;">{{ a.title }}</p>
-            <span style="font-size:13px; color:color-mix(in srgb, var(--color-text) 60%, transparent); white-space:nowrap;">{{ a.year }}</span>
-          </div>
-        </sc-for>
-      </div>
-    </sc-if>
-
-
-    <button type="button" onClick="{{ toggleDocsOpen }}" aria-expanded="{{ docsOpen }}" style="display:flex; align-items:center; justify-content:space-between; width:100%; gap:16px; padding:16px 0; border:none; border-top:2px solid var(--color-divider); border-bottom:2px solid var(--color-divider); background:none; cursor:pointer; text-align:left;">
+    <button type="button" onClick="{{ toggleDocsOpen }}" aria-expanded="{{ docsOpen }}" style="display:flex; align-items:center; justify-content:space-between; width:100%; gap:16px; padding:16px 0; border:none; border-bottom:2px solid var(--color-divider); background:none; cursor:pointer; text-align:left;">
       <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:var(--color-text); margin:0; font-weight:800;">ดาวน์โหลดเอกสาร</h3>
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transform:{{ docsChevronTransform }}; transition:transform .25s ease; flex:none;"><path d="M6 9l6 6 6-6"></path></svg>
     </button>
@@ -1124,7 +1284,7 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;navStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;floating&quot;,&quot;options&quot;:[&quot;floating&quot;,&quot;classic&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;motionStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;fade&quot;,&quot;options&quot;:[&quot;fade&quot;,&quot;slide&quot;,&quot;instant&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;lightBackdrop&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;glow&quot;,&quot;options&quot;:[&quot;glow&quot;,&quot;panels&quot;,&quot;grid&quot;,&quot;glowgrid&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Light theme&quot;},&quot;photoTreatment&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;grayscale&quot;,&quot;color&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Imagery&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;navStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;floating&quot;,&quot;options&quot;:[&quot;floating&quot;,&quot;classic&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;motionStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;fade&quot;,&quot;options&quot;:[&quot;fade&quot;,&quot;slide&quot;,&quot;instant&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;lightBackdrop&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;glowgrid&quot;,&quot;options&quot;:[&quot;glow&quot;,&quot;panels&quot;,&quot;grid&quot;,&quot;glowgrid&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Light theme&quot;},&quot;photoTreatment&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;grayscale&quot;,&quot;color&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Imagery&quot;}}">
 class Component extends DCLogic {
   static ORG_CHART = [
     { id: 'academic', tag: 'Academic Affairs', label: 'ฝ่ายบริหารงานวิชาการ', icon: 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20 M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15Z', desc: 'วางแผน พัฒนา และกำกับดูแลหลักสูตร การจัดการเรียนรู้ และการวัดประเมินผลของโรงเรียน', tasks: ['จัดทำและพัฒนาหลักสูตรสถานศึกษา', 'นิเทศและติดตามการจัดการเรียนรู้', 'งานวัดและประเมินผลการเรียน', 'งานห้องสมุดและสื่อการเรียนรู้'] },
@@ -1265,6 +1425,7 @@ class Component extends DCLogic {
   ];
   static MEDIA = [
     { tag: 'DLTV', title: 'การจัดการเรียนรู้ทางไกลผ่านดาวเทียม', desc: 'ใช้สื่อการสอนจากมูลนิธิการศึกษาทางไกลผ่านดาวเทียม ในพระบรมราชูปถัมภ์ ทุกระดับชั้น', href: '#' },
+    { tag: 'SGS', title: 'ระบบดูผลการเรียน', desc: 'ผู้ปกครองและนักเรียนตรวจสอบผลการเรียนรายภาคเรียนได้ด้วยรหัสนักเรียน', href: '#' },
   ];
   static MISSIONS = [
     { no: '1', text: 'พัฒนาคุณภาพนักเรียนผ่านการพัฒนาหลักสูตร แผน และการจัดประสบการณ์การเรียนรู้ ที่เน้นการเอื้ออำนวยต่อการพัฒนานักเรียนให้มีคุณลักษณะในศตวรรษที่ 21' },
@@ -1325,6 +1486,8 @@ class Component extends DCLogic {
     bannerIndex: 0,
     staffGroup: 'admin',
     groupOpen: false,
+    aboutOpen: 0,
+    deckIndex: 0,
     theme: (() => {
       try {
         const saved = localStorage.getItem('school-site-theme');
@@ -1334,6 +1497,144 @@ class Component extends DCLogic {
         return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
       } catch (e) { return 'dark'; }
     })(),
+  };
+
+  static DECK_COUNT = 3;
+  deckStep = (d) => this.setState(s => ({ deckIndex: (s.deckIndex + d + Component.DECK_COUNT) % Component.DECK_COUNT }));
+  setDeckRef = (el) => {
+    if (!el || this.deckEl === el) return;
+    this.deckEl = el;
+    let x0 = null, y0 = null;
+    el.addEventListener('pointerdown', (e) => { x0 = e.clientX; y0 = e.clientY; });
+    el.addEventListener('pointerup', (e) => {
+      if (x0 === null) return;
+      const dx = e.clientX - x0, dy = e.clientY - y0;
+      x0 = null;
+      if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy)) this.deckStep(dx < 0 ? 1 : -1);
+    });
+    el.addEventListener('pointercancel', () => { x0 = null; });
+  };
+  setRailRef = (el) => {
+    if (!el || this.railEl === el) return;
+    this.railEl = el;
+    requestAnimationFrame(() => this.applyRail(true));
+    if (!this._railResize) {
+      this._railResize = () => this.applyRail(true);
+      window.addEventListener('resize', this._railResize);
+    }
+  };
+  applyRail = (instant) => {
+    const el = this.railEl;
+    if (!el || !el.children.length) return;
+    const i = Math.min(this.state.deckIndex, el.children.length - 1);
+    const target = -el.children[i].offsetLeft;
+    if (this._railTarget === target) return;
+    this._railTarget = target;
+    const from = typeof this._railX === 'number' ? this._railX : target;
+    if (this._railRaf) cancelAnimationFrame(this._railRaf);
+    if (instant || this.state.reducedMotion || from === target) {
+      this._railX = target;
+      el.style.transform = 'translateX(' + target + 'px)';
+      return;
+    }
+    const t0 = performance.now(), dur = 700;
+    const tick = (now) => {
+      const p = Math.min(1, (now - t0) / dur);
+      const e = 1 - Math.pow(1 - p, 3);
+      this._railX = from + (target - from) * e;
+      el.style.transform = 'translateX(' + this._railX + 'px)';
+      if (p < 1) this._railRaf = requestAnimationFrame(tick);
+      else { this._railX = target; this._railRaf = null; }
+    };
+    this._railRaf = requestAnimationFrame(tick);
+  };
+
+  toggleStudentAcc = () => this.setState(s => ({ studentAccOpen: !s.studentAccOpen }));
+  studentAccFor = () => {
+    const open = !!this.state.studentAccOpen;
+    return {
+      openStr: open ? 'true' : 'false',
+      numColor: open ? 'var(--color-accent)' : 'color-mix(in srgb, var(--color-text) 45%, transparent)',
+      chevron: open ? 'rotate(180deg)' : 'rotate(0deg)',
+      onClick: this.toggleStudentAcc,
+    };
+  };
+
+  awardStep = (d) => this.setState(s => {
+    const n = Component.ACHIEVEMENTS.filter(a => a.group === 'honor').length;
+    return { awardIndex: ((((s.awardIndex || 0) + d) % n) + n) % n };
+  });
+  setAwardDeckRef = (el) => {
+    if (!el || this.awardDeckEl === el) return;
+    this.awardDeckEl = el;
+    let x0 = null, y0 = null;
+    el.addEventListener('pointerdown', (e) => { x0 = e.clientX; y0 = e.clientY; });
+    el.addEventListener('pointerup', (e) => {
+      if (x0 === null) return;
+      const dx = e.clientX - x0, dy = e.clientY - y0;
+      x0 = null;
+      if (Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy)) this.awardStep(dx < 0 ? 1 : -1);
+    });
+    el.addEventListener('pointercancel', () => { x0 = null; });
+  };
+  setAwardRailRef = (el) => {
+    if (!el || this.awardRailEl === el) return;
+    this.awardRailEl = el;
+    requestAnimationFrame(() => this.applyAwardRail(true));
+    if (!this._awardRailResize) {
+      this._awardRailResize = () => this.applyAwardRail(true);
+      window.addEventListener('resize', this._awardRailResize);
+    }
+  };
+  applyAwardRail = (instant) => {
+    const el = this.awardRailEl;
+    if (!el || !el.children.length) return;
+    const i = Math.min(this.state.awardIndex || 0, el.children.length - 1);
+    const target = -el.children[i].offsetLeft;
+    if (this._awardRailTarget === target) return;
+    this._awardRailTarget = target;
+    const from = typeof this._awardRailX === 'number' ? this._awardRailX : target;
+    if (this._awardRailRaf) cancelAnimationFrame(this._awardRailRaf);
+    if (instant || this.state.reducedMotion || from === target) {
+      this._awardRailX = target;
+      el.style.transform = 'translateX(' + target + 'px)';
+      return;
+    }
+    const t0 = performance.now(), dur = 700;
+    const tick = (now) => {
+      const p = Math.min(1, (now - t0) / dur);
+      const e = 1 - Math.pow(1 - p, 3);
+      this._awardRailX = from + (target - from) * e;
+      el.style.transform = 'translateX(' + this._awardRailX + 'px)';
+      if (p < 1) this._awardRailRaf = requestAnimationFrame(tick);
+      else { this._awardRailX = target; this._awardRailRaf = null; }
+    };
+    this._awardRailRaf = requestAnimationFrame(tick);
+  };
+
+  deckFor = (i) => {
+    const n = Component.DECK_COUNT;
+    const active = this.state.deckIndex;
+    const pos = ((i - active + 1 + n) % n) - 1;
+    return {
+      pos: String(pos),
+      onStr: i === active ? 'true' : 'false',
+      onClick: (e) => {
+        if (i === active) return;
+        if (e && e.preventDefault) e.preventDefault();
+        this.setState({ deckIndex: i });
+      },
+    };
+  };
+
+  accFor = (i) => {
+    const open = this.state.aboutOpen === i;
+    return {
+      openStr: open ? 'true' : 'false',
+      rows: open ? '1fr' : '0fr',
+      numColor: open ? 'var(--color-accent)' : 'color-mix(in srgb, var(--color-text) 55%, transparent)',
+      onClick: () => this.setState(s => ({ aboutOpen: s.aboutOpen === i ? -1 : i })),
+    };
   };
 
   applyTheme = () => {
@@ -1563,6 +1864,8 @@ class Component extends DCLogic {
   }
 
   componentDidUpdate() {
+    this.applyRail(false);
+    this.applyAwardRail(false);
     document.documentElement.setAttribute('data-light-bg', this.props.lightBackdrop ?? 'glow');
     this.applyNavChrome();
     this.applyMasthead();
@@ -1685,7 +1988,7 @@ class Component extends DCLogic {
         const size = sc ? (narrow ? 27 : 34) : (narrow ? 38 : 68);
         logo.style.width = size + 'px';
         logo.style.height = size + 'px';
-        logo.style.background = overHero ? 'transparent' : '#F3F1F1';
+        logo.style.background = 'transparent';
       }
       const wm = nav.querySelector('[data-wordmark]');
       if (wm) {
@@ -2053,6 +2356,14 @@ class Component extends DCLogic {
       groupPrev: () => groupStep(-1),
       groupNext: () => groupStep(1),
       closeGroup: () => this.setState({ groupOpen: false }),
+      setDeckRef: this.setDeckRef,
+      setRailRef: this.setRailRef,
+      deck1: this.deckFor(0), deck2: this.deckFor(1), deck3: this.deckFor(2),
+      deckAt: String(s.deckIndex),
+      deckCounter: (s.deckIndex + 1) + ' / ' + Component.DECK_COUNT,
+      deckPrev: () => this.deckStep(-1),
+      deckNext: () => this.deckStep(1),
+      acc1: this.accFor(0), acc2: this.accFor(1), acc3: this.accFor(2), acc4: this.accFor(3), acc5: this.accFor(4),
       setLightTheme: () => this.setTheme('light'),
       setDarkTheme: () => this.setTheme('dark'),
       staffCards: Component.staffRoster().map((p, i) => ({ ...p, photoId: 'staff-photo-' + i, delay: (i * 0.06).toFixed(2) + 's' })),
@@ -2068,6 +2379,7 @@ class Component extends DCLogic {
       orgNext: this.orgNext,
       closeOrg: this.closeOrg,
       studentStats: Component.STUDENT_STATS,
+      studentAcc: this.studentAccFor(),
       newsList,
       grades: Component.GRADES,
       honorAchievements: Component.ACHIEVEMENTS.filter(a => a.group === 'honor'),
@@ -2087,9 +2399,24 @@ class Component extends DCLogic {
             floatDelay: floatDelays[i % floatDelays.length],
           };
         });
+        const active = s.awardIndex || 0;
+        awardOrbit.forEach((a, i) => {
+          a.onStr = i === active ? 'true' : 'false';
+          a.onClick = (e) => {
+            if (i === active) return;
+            if (e && e.preventDefault) e.preventDefault();
+            this.setState({ awardIndex: i });
+          };
+        });
         const awardIdx = typeof s.awardOrbitOpen === 'number' ? s.awardOrbitOpen : -1;
         return {
           awardOrbit,
+          awardAt: String(active),
+          awardCounter: (active + 1) + ' / ' + n,
+          awardPrev: () => this.awardStep(-1),
+          awardNext: () => this.awardStep(1),
+          setAwardDeckRef: this.setAwardDeckRef,
+          setAwardRailRef: this.setAwardRailRef,
           awardOrbitOpen: awardIdx >= 0,
           awardOrbitActive: awardOrbit[awardIdx] || { title: '', year: '' },
           awardOrbitCounter: (awardIdx >= 0 ? awardIdx + 1 : 0) + ' / ' + n,
