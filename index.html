@@ -17,17 +17,200 @@
 <style>
 html { scroll-behavior: auto; }
 body { margin: 0; text-wrap: pretty; }
-a { color: var(--color-accent); }
-a:hover { color: var(--color-accent-600); }
-:root { --radius-md: 14px; }
-#dc-root .card, #dc-root .btn, #dc-root .input, #dc-root .tag, #dc-root .table, #dc-root .dialog { border-radius: 14px; }
-#dc-root .btn { border-radius: 999px; }
-#dc-root .tag { border-radius: 999px; }
-#dc-root section img, #dc-root section iframe, #dc-root figure, #dc-root image-slot { border-radius: 14px; }
+
+/* ── Sci-fi dark skin: token remap ───────────────────────────── */
+:root {
+  color-scheme: dark;
+  --color-bg: #0A0A0C;
+  --color-surface: #121216;
+  --color-text: #EDEDF0;
+  --color-divider: rgba(255,255,255,.10);
+  --color-accent: #FF6A2C;
+  --color-accent-100: #FFF2EA; --color-accent-200: #FFDDC8; --color-accent-300: #FFBE99;
+  --color-accent-400: #FF9A62; --color-accent-500: #FF6A2C; --color-accent-600: #F2551A;
+  --color-accent-700: #FFB184; --color-accent-800: #8A2E0A; --color-accent-900: #431604;
+  --color-accent-2: #4C82FF;
+  --color-accent-2-100: #EDF3FF; --color-accent-2-200: #CFDFFF; --color-accent-2-300: #A6C2FF;
+  --color-accent-2-400: #7BA3FF; --color-accent-2-500: #4C82FF; --color-accent-2-600: #3568EC;
+  --color-accent-2-700: #A9C4FF; --color-accent-2-800: #1B3A8C; --color-accent-2-900: #101F4A;
+  --color-neutral-100: #15151a; --color-neutral-200: #1b1b21; --color-neutral-300: #24242c;
+  --color-neutral-400: #37373f; --color-neutral-500: #6a6a74; --color-neutral-600: #8c8c96;
+  --color-neutral-700: #b2b2bb; --color-neutral-800: #d3d3d9; --color-neutral-900: #EDEDF0;
+  --radius-md: 20px;
+  --shadow-sm: 0 6px 18px -10px rgba(0,0,0,.85);
+  --shadow-md: 0 18px 44px -22px rgba(0,0,0,.9);
+  --shadow-lg: 0 40px 90px -40px rgba(0,0,0,.95);
+}
+body {
+  background-color: #0A0A0C;
+  background-image:
+    radial-gradient(820px 560px at 8% -8%, rgba(255,106,44,.26), transparent 64%),
+    radial-gradient(820px 600px at 94% 6%, rgba(76,130,255,.20), transparent 64%),
+    radial-gradient(1100px 780px at 52% 106%, rgba(255,106,44,.13), transparent 68%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: var(--color-text);
+}
+a { color: var(--color-accent-300); }
+a:hover { color: var(--color-accent-200); }
+::selection { background: rgba(255,106,44,.35); color: #fff; }
+
+/* let the glow field read through the page shell */
+#dc-root [style*="min-height: 100vh"] { background: transparent !important; }
+#dc-root section[style*="background: var(--color-bg)"] { background: transparent !important; }
+#dc-root section[style*="background: var(--color-surface)"] {
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.015)) !important;
+}
+
+/* rounder, softer everything */
+#dc-root .card, #dc-root .input, #dc-root .table, #dc-root .dialog { border-radius: 20px; }
+#dc-root .btn, #dc-root .tag { border-radius: 999px; }
+#dc-root section img, #dc-root section iframe, #dc-root figure, #dc-root image-slot { border-radius: 20px; }
 #dc-root #home > div:first-child figure, #dc-root #home > div:first-child image-slot { border-radius: 0; }
-#dc-root [style*="border:2px solid var(--color-divider)"] { border-radius: 14px; }
-#dc-root [style*="border:2px solid var(--color-accent)"] { border-radius: 14px; }
+#dc-root [style*="2px solid var(--color-divider)"] { border-width: 1px !important; }
+#dc-root [style*="border: 1px solid var(--color-divider)"],
+#dc-root [style*="border: 2px solid var(--color-divider)"] { border-radius: 20px; }
+#dc-root [style*="border: 2px solid var(--color-accent)"] { border-radius: 16px; }
 #dc-root .table { overflow: hidden; }
+#dc-root .hr { background: var(--color-divider); height: 1px; }
+
+/* glass cards */
+#dc-root .card {
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.016));
+  border: 1px solid rgba(255,255,255,.10);
+  box-shadow: 0 24px 60px -34px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.06);
+  color: var(--color-text);
+  transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, border-color .35s ease;
+}
+#dc-root .card:hover, #dc-root [data-hi-card]:hover, #dc-root [style*="rgb(255, 255, 255) 52%"]:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255,106,44,.36) !important;
+  box-shadow: 0 40px 90px -44px rgba(0,0,0,.95), 0 0 40px -8px rgba(255,106,44,.26), inset 0 1px 0 rgba(255,255,255,.08) !important;
+}
+#dc-root .card-kicker { color: var(--color-accent-300); }
+#dc-root .card-body, #dc-root .card-meta { color: rgba(237,237,240,.66); }
+
+/* neon actions */
+#dc-root .btn { transition: transform .28s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease, background .3s ease, border-color .3s ease; }
+#dc-root .btn-primary {
+  background: linear-gradient(180deg, #FFFFFF, #EDE7E2);
+  border-color: transparent; color: #141216;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.45), 0 14px 44px -14px rgba(255,106,44,.7), 0 0 56px -20px rgba(255,106,44,.55);
+}
+#dc-root .btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 1px #ffffff, 0 18px 54px -12px rgba(255,106,44,.95), 0 0 80px -14px rgba(255,124,52,.8);
+}
+#dc-root .btn-primary:active { transform: translateY(0); box-shadow: 0 0 0 1px rgba(255,255,255,.6), 0 8px 26px -12px rgba(255,106,44,.8); }
+#dc-root .btn-secondary {
+  background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.16); color: var(--color-text);
+}
+#dc-root .btn-secondary:hover {
+  background: rgba(76,130,255,.14); border-color: rgba(76,130,255,.55);
+  transform: translateY(-1px); box-shadow: 0 14px 40px -18px rgba(76,130,255,.8);
+}
+#dc-root .btn-ghost { color: var(--color-accent-300); }
+#dc-root .btn-ghost:hover { background: rgba(255,106,44,.14); }
+#dc-root .tag { background: rgba(255,106,44,.14); border: 1px solid rgba(255,106,44,.34); color: var(--color-accent-300); }
+#dc-root .tag-accent-2 { background: rgba(76,130,255,.14); border-color: rgba(76,130,255,.34); color: var(--color-accent-2-300); }
+#dc-root .tag-neutral, #dc-root .tag-outline { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.16); color: rgba(237,237,240,.8); }
+
+/* fields */
+#dc-root .input {
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.14); color: var(--color-text);
+}
+#dc-root .input::placeholder { color: rgba(237,237,240,.36); }
+#dc-root .input:focus { border-color: rgba(255,106,44,.7); box-shadow: 0 0 0 3px rgba(255,106,44,.20); outline: none; }
+#dc-root .field label { color: rgba(237,237,240,.64); }
+#dc-root .table th { color: rgba(237,237,240,.58); border-bottom-color: var(--color-divider); }
+#dc-root .table td { border-bottom-color: rgba(255,255,255,.07); }
+
+/* dark panels that were ink-on-light */
+#dc-root [style*="background: var(--color-text)"] {
+  background: linear-gradient(180deg, #12111a, #0a0910) !important;
+  border: 1px solid rgba(255,255,255,.08);
+}
+#dc-root [style*="color: var(--color-bg)"] { color: #F6F5FB !important; }
+#dc-root [style*="background: var(--color-accent)"] { box-shadow: 0 12px 34px -14px rgba(255,106,44,.75); }
+#dc-root section[style*="background: var(--color-accent)"] {
+  background:
+    radial-gradient(680px 320px at 10% 0%, rgba(255,106,44,.55), transparent 70%),
+    radial-gradient(700px 340px at 92% 100%, rgba(76,130,255,.5), transparent 72%),
+    linear-gradient(180deg, #101014, #09090B) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.10);
+  border-top: 1px solid rgba(255,255,255,.08); border-bottom: 1px solid rgba(255,255,255,.08);
+}
+/* photo scrims and modal backdrops stay dark */
+#dc-root [style*="linear-gradient(to top, color-mix(in srgb, var(--color-text)"] {
+  background: linear-gradient(to top, rgba(5,4,10,.94) 0%, rgba(5,4,10,.6) 55%, rgba(5,4,10,0) 100%) !important;
+}
+#dc-root [style*="background: color-mix(in srgb, var(--color-text) 45%"],
+#dc-root [style*="background: color-mix(in srgb, var(--color-text) 70%"] {
+  background: rgba(4,3,8,.72) !important; backdrop-filter: blur(6px);
+}
+#dc-root [style*="border-left: 2px solid var(--color-text)"] {
+  background: linear-gradient(180deg, #14131d, #0b0a12) !important;
+  border-left: 1px solid rgba(255,106,44,.45) !important;
+  border-radius: 20px 0 0 20px;
+}
+#dc-root [style*="border: 2px solid var(--color-text)"] { border-color: rgba(255,255,255,.16) !important; }
+#dc-root form[style*="background: var(--color-bg)"] {
+  background: linear-gradient(180deg, #14131d, #0b0a12) !important; border-radius: 22px;
+  box-shadow: 0 50px 110px -50px rgba(0,0,0,.95), inset 0 1px 0 rgba(255,255,255,.07);
+}
+/* glass strip cards */
+#dc-root [style*="rgb(255, 255, 255) 52%"] {
+  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.025)) !important;
+  border-color: rgba(255,255,255,.12) !important;
+}
+#dc-root img, #dc-root image-slot img { filter: saturate(1.04) contrast(1.05) brightness(.94); }
+#dc-root .grayscale img { filter: grayscale(1) contrast(1.08) brightness(.92); }
+/* hero light beam */
+#dc-root #home > div:first-child::after {
+  content: ''; position: absolute; inset: -10% 0 0 0; pointer-events: none; z-index: 0; mix-blend-mode: screen;
+  background:
+    radial-gradient(300px 400px at 18% 2%, rgba(255,122,50,.42), transparent 72%),
+    radial-gradient(320px 420px at 84% 8%, rgba(76,130,255,.34), transparent 74%);
+  filter: blur(30px);
+}
+:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+
+/* kill the light-theme halos, glass the floating cards */
+#dc-root [data-hi-card] {
+  background: linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.015)) !important;
+  border: 1px solid rgba(255,255,255,.10) !important;
+  box-shadow: 0 40px 90px -45px rgba(0,0,0,.95), inset 0 1px 0 rgba(255,255,255,.06) !important;
+}
+#dc-root [style*="rgb(255, 255, 255) 52%"] { box-shadow: 0 26px 60px -34px rgba(0,0,0,.9) !important; }
+#dc-root [data-award-i] { transition: box-shadow .3s ease; box-shadow: 0 0 0 1px rgba(255,255,255,.14), 0 16px 40px -18px rgba(255,106,44,.55) !important; }
+#dc-root [data-award-i]:hover { box-shadow: 0 0 0 1px rgba(255,106,44,.75), 0 22px 54px -14px rgba(255,106,44,.9) !important; }
+#dc-root [style*="var(--color-accent) 8%"] {
+  background: linear-gradient(180deg, rgba(255,106,44,.12), rgba(76,130,255,.05)) !important;
+  border-color: rgba(255,106,44,.26) !important;
+}
+#dc-root [style*="var(--color-accent-100)"], #dc-root [style*="var(--color-accent) 9%"] {
+  background: rgba(255,106,44,.14) !important;
+}
+#dc-root [style*="var(--color-neutral-200)"] { background: rgba(255,255,255,.08) !important; }
+
+/* nav keeps its original behaviour — opt it out of the global remaps */
+#dc-root nav [data-nav-inner] > div {
+  background: var(--color-text) !important; border: none !important;
+  box-shadow: 0 6px 18px -8px rgba(0,0,0,.7) !important;
+}
+#dc-root nav a[data-nav-id][style*="color: var(--color-bg)"] { color: #0b0a12 !important; }
+
+/* back-to-top: warm halo pill like the primary action */
+#dc-root [data-backtotop] {
+  border-radius: 999px !important;
+  background: linear-gradient(180deg, #FFFFFF, #EDE7E2) !important;
+  color: #141216 !important; font-weight: 700;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.45), 0 14px 40px -14px rgba(255,106,44,.75), 0 0 52px -18px rgba(255,106,44,.6) !important;
+  transition: transform .28s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease, opacity .3s ease !important;
+}
+#dc-root [data-backtotop]:hover {
+  box-shadow: 0 0 0 1px #ffffff, 0 18px 52px -12px rgba(255,106,44,.95), 0 0 76px -14px rgba(255,124,52,.85) !important;
+}
 @keyframes orbitSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes orbitCounter { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
 @keyframes orbFloat { from { transform: translateY(-7px); } to { transform: translateY(7px); } }
@@ -42,6 +225,9 @@ a:hover { color: var(--color-accent-600); }
 @keyframes orgTrunkGrow { from { transform: scaleY(0); opacity: 0; } to { transform: scaleY(1); opacity: 1; } }
 @keyframes orgBarGrow { from { transform: scaleX(0); opacity: 0; } to { transform: scaleX(1); opacity: 1; } }
 @keyframes orgBoxIn { from { opacity: 0; transform: translateY(16px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes staffCardIn { from { opacity: 0; transform: translateY(-18px); } to { opacity: 1; transform: translateY(0); } }
+#dc-root [data-staff-strip] { scrollbar-width: none; }
+#dc-root [data-staff-strip]::-webkit-scrollbar { display: none; }
 @media (prefers-reduced-motion: reduce) { #dc-root [data-orbit-anim] { animation: none !important; } }
 </style>
 <template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#ec3013"></rect><text x="30" y="115" font-family="Arial" font-size="72" font-weight="800" fill="#f3f2f2">รร</text></svg></template>
@@ -53,7 +239,7 @@ a:hover { color: var(--color-accent-600); }
   <a href="#home" onClick="{{ navClick }}" style="display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--color-text); margin-right:auto; flex:none; min-width:0;">
     <image-slot id="logo-nav" data-logo="" shape="rect" fit="contain" src="assets/logo-transparent.png" style="width:68px;height:68px;flex:none;background:transparent;border-radius:0;transition:width .3s ease,height .3s ease,background .3s ease;"></image-slot>
     <sc-if value="{{ showWordmark }}" hint-placeholder-val="{{ true }}">
-      <span data-wordmark="" style="display:inline-block; font-family:var(--font-heading); font-weight:800; font-size:14px; line-height:1.2; letter-spacing:-0.01em; white-space:nowrap; color:#ffffff; text-shadow:0 1px 3px rgba(0,0,0,.55);">โรงเรียนบ้านหนองสระพังโนนสะอาด<br><span data-wordmark-sub="" style="display: block; width: 100%; white-space: normal; text-align: justify; text-align-last: justify; font-weight: 400; font-size: 10px; color: rgba(255,255,255,.75); letter-spacing: 0">BANNONGSAPUNGNONSA-ARD SCHOOL</span></span>
+      <span data-wordmark="" style="display:inline-block; font-family:var(--font-heading); font-weight:800; font-size:14px; line-height:1.2; letter-spacing:-0.01em; white-space:nowrap; color:#ffffff; text-shadow:0 1px 3px rgba(0,0,0,.55);"><span data-wordmark-thai="" style="display:block; opacity:0;">โรงเรียนบ้านหนองสระพังโนนสะอาด</span><span data-wordmark-sub="" style="display: block; width: 100%; white-space: normal; text-align: justify; text-align-last: justify; font-weight: 400; font-size: 10px; color: rgba(255,255,255,.75); letter-spacing: 0; opacity: 0">BANNONGSAPUNGNONSA-ARD SCHOOL</span></span>
     </sc-if>
   </a>
   <div ref="{{ setNavInnerRef }}" data-nav-inner="" style="position:relative; display:flex; align-items:center; gap:2px; overflow-x:auto; scrollbar-width:thin; border-radius:{{ navRadius }}px; border:{{ navInnerBorder }}; padding:4px; transition:padding .3s ease; -webkit-mask-image:linear-gradient(90deg, transparent 0, black 14px, black calc(100% - 14px), transparent 100%); mask-image:linear-gradient(90deg, transparent 0, black 14px, black calc(100% - 14px), transparent 100%);">
@@ -62,6 +248,9 @@ a:hover { color: var(--color-accent-600); }
       <a href="{{ item.href }}" ref="{{ setNavRef }}" data-nav-id="{{ item.id }}" onClick="{{ navClick }}" style="position:relative; z-index:1; white-space:nowrap; padding:8px 14px; font-size:13px; font-weight:700; text-decoration:none; color:#ffffff; text-shadow:0 1px 3px rgba(0,0,0,.55); transition:color .12s ease .12s, padding .3s ease, font-size .3s ease; display:flex; flex-direction:column; align-items:center; gap:1px; line-height:1.2;"><span>{{ item.label }}</span><span data-en="" style="font-size:9px; font-weight:600; letter-spacing:.03em; opacity:.6;">{{ item.en }}</span></a>
     </sc-for>
   </div>
+  <a href="https://www.facebook.com/profile.php?id=100058599200322" target="_blank" rel="noopener" aria-label="Facebook แฟนเพจโรงเรียน" title="Facebook" style="flex:none; display:flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:999px; border:2px solid rgba(255,255,255,.45); color:#ffffff; margin-left:8px; transition:background .2s ease, border-color .2s ease;" style-hover="background:rgba(255,255,255,.15); border-color:#ffffff;">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H8v3h2v7h3v-7h2.5l.5-3H13v-2c0-.6.4-1 1-1z"></path></svg>
+  </a>
 </nav>
 <div style="height:{{ navSpacerHeight }};" aria-hidden="true"></div>
 
@@ -70,14 +259,18 @@ a:hover { color: var(--color-accent-600); }
     <figure class="{{ photoClass }}" style="margin:0; position:absolute; inset:0; z-index:0;">
       <image-slot id="hero-photo" shape="rect" style="width:100%; height:100%;" placeholder="ภาพโรงเรียน / กิจกรรมนักเรียน"></image-slot>
     </figure>
+
     <div style="position:relative; z-index:1; width:100%; padding:clamp(40px,7vw,80px) 0; background:linear-gradient(to top, color-mix(in srgb, var(--color-text) 84%, transparent) 0%, color-mix(in srgb, var(--color-text) 58%, transparent) 60%, color-mix(in srgb, var(--color-text) 28%, transparent) 100%);">
       <div style="max-width:1200px; margin:0 auto; padding:0 clamp(20px,5vw,72px);">
         <span style="display:block; font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:#fff; font-weight:700; margin-bottom:16px;">สำนักงานเขตพื้นที่การศึกษาประถมศึกษามหาสารคาม เขต 3</span>
-        <h1 style="font-family:var(--font-heading); font-weight:800; font-size:clamp(32px,5vw,52px); line-height:1.1; letter-spacing:-0.02em; margin:0 0 20px; color:#fff;">โรงเรียนบ้านหนองสระพังโนนสะอาด</h1>
+        <div data-hero-mast="" style="display:inline-block; margin:0 0 20px; transform-origin:left top; will-change:transform,opacity;">
+          <h1 data-hero-thai="" style="font-family:var(--font-heading); font-weight:800; font-size:clamp(32px,5vw,52px); line-height:1.1; letter-spacing:-0.02em; margin:0 0 4px; color:#fff;">โรงเรียนบ้านหนองสระพังโนนสะอาด</h1>
+          <p data-hero-en="" style="display:block; margin:0; padding-left:0.9em; font-family:var(--font-heading); font-weight:400; font-size:19px; line-height:1.2; letter-spacing:0; text-align:left; white-space:nowrap; color:rgba(255,255,255,.78);">BANNONGSAPUNGNONSA-ARD SCHOOL</p>
+        </div>
         <p style="font-size:17px; line-height:1.65; max-width:56ch; color:#fff; opacity:.92; margin:0 0 28px;">“เรียนดี มีวินัย ใฝ่คุณธรรม” สถานศึกษาขนาดเล็กที่มุ่งพัฒนาเด็กทุกคนให้เติบโตอย่างมีคุณภาพ เปิดสอนตั้งแต่ระดับปฐมวัย (อนุบาล 2–3) ถึงระดับประถมศึกษา (ป.1–6)</p>
         <div style="display:flex; gap:12px; flex-wrap:wrap;">
           <a href="#news" onClick="{{ navClick }}" class="btn btn-primary">ข่าวประชาสัมพันธ์</a>
-          <a href="#contact" onClick="{{ navClick }}" class="btn btn-secondary">ติดต่อเรา</a>
+          <a href="#contact" onClick="{{ navClick }}" class="btn btn-secondary" style="color:#ffffff; border-color:rgba(255,255,255,.7); background:transparent;" style-hover="background:rgba(255,255,255,.16); border-color:#ffffff;">ติดต่อเรา</a>
         </div>
       </div>
     </div>
@@ -95,23 +288,19 @@ a:hover { color: var(--color-accent-600); }
     <!-- banner slider -->
     <div style="position:relative; border-top:2px solid var(--color-divider); padding:32px 0 40px;">
       <span class="tag tag-accent" style="margin-bottom:16px;">ไฮไลต์</span>
-      <div style="position:relative; width:100%; aspect-ratio:21/9; margin-top:14px; overflow:hidden;">
-        <sc-for list="{{ bannerSlides }}" as="b" hint-placeholder-count="4">
-          <figure class="{{ photoClass }}" style="position:absolute; inset:0; margin:0; opacity:{{ b.opacity }}; transition:opacity .7s ease;">
-            <image-slot id="{{ b.photoId }}" shape="rect" style="width:100%; height:100%;" placeholder="ภาพประชาสัมพันธ์"></image-slot>
-          </figure>
-          <div style="position:absolute; left:0; right:0; bottom:0; padding:20px clamp(16px,3vw,32px); background:color-mix(in srgb, var(--color-text) 55%, transparent); opacity:{{ b.opacity }}; transition:opacity .7s ease;">
-            <p style="margin:0 0 4px; font-size:12px; font-weight:700; letter-spacing:.04em; color:var(--color-accent-200);">{{ b.date }}</p>
-            <p style="margin:0; font-size:16px; font-weight:700; color:#fff;">{{ b.caption }}</p>
-            <p style="margin:4px 0 0; font-size:13px; color:#fff; opacity:.85;">{{ b.sub }}</p>
-          </div>
-        </sc-for>
-        <button type="button" onClick="{{ prevBanner }}" style="position:absolute; left:12px; top:50%; transform:translateY(-50%); width:36px; height:36px; border:none; background:color-mix(in srgb, var(--color-text) 55%, transparent); color:#fff; cursor:pointer; font-size:16px;">←</button>
-        <button type="button" onClick="{{ nextBanner }}" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); width:36px; height:36px; border:none; background:color-mix(in srgb, var(--color-text) 55%, transparent); color:#fff; cursor:pointer; font-size:16px;">→</button>
-      </div>
-      <div style="display:flex; align-items:center; justify-content:center; gap:16px; margin-top:12px;">
-        <sc-for list="{{ bannerDots }}" as="d" hint-placeholder-count="4">
-          <button type="button" onClick="{{ d.onClick }}" style="width:24px; height:3px; border:none; padding:0; cursor:pointer; background:{{ d.color }};"></button>
+      <h2 style="font-family:var(--font-heading); font-weight:800; font-size:clamp(28px,4vw,48px); line-height:1.1; margin:14px 0 4px; max-width:18ch;">ภาพความเคลื่อนไหว<br>จากรั้วโรงเรียนของเรา</h2>
+      <div ref="{{ setHiWrapRef }}" style="perspective:1500px; perspective-origin:50% 45%; display:flex; flex-direction:column; align-items:center; gap:clamp(36px,6vw,88px); padding:clamp(28px,6vw,80px) 0 clamp(20px,4vw,56px);">
+        <sc-for list="{{ highlightCards }}" as="h" hint-placeholder-count="4">
+          <article data-hi-card="" style="transform-style:preserve-3d; will-change:transform, opacity; align-self:{{ h.align }}; width:min(800px,100%); display:flex; flex-wrap:wrap; flex-direction:{{ h.dir }}; gap:clamp(14px,2vw,24px); padding:clamp(14px,2vw,20px); border:2px solid var(--color-divider); border-radius:22px; background:{{ h.bg }}; box-shadow:0 30px 60px -40px color-mix(in srgb, var(--color-text) 70%, transparent);">
+            <figure class="{{ photoClass }}" style="margin:0; flex:1 1 300px; min-width:240px; border-radius:16px; overflow:hidden;">
+              <image-slot data-hi-img="" id="{{ h.photoId }}" shape="rect" style="width:100%; height:clamp(200px,24vw,290px); border-radius:0; will-change:transform;" placeholder="ภาพประชาสัมพันธ์"></image-slot>
+            </figure>
+            <div style="flex:1 1 260px; min-width:220px; display:flex; flex-direction:column; justify-content:center; gap:8px; padding:clamp(6px,1.4vw,16px);">
+              <span data-hi-line="" style="font-size:11.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--color-accent-700);">{{ h.date }}</span>
+              <p data-hi-line="" style="margin:0; font-family:var(--font-heading); font-weight:800; font-size:clamp(19px,2.2vw,26px); line-height:1.2; text-wrap:pretty;">{{ h.caption }}</p>
+              <p data-hi-line="" style="margin:0; font-size:14px; line-height:1.6; color:color-mix(in srgb, var(--color-text) 68%, transparent); text-wrap:pretty;">{{ h.sub }}</p>
+            </div>
+          </article>
         </sc-for>
       </div>
       <p style="text-align:center; margin:14px 0 0; font-size:13px; color:var(--color-neutral-700);">
@@ -236,7 +425,7 @@ a:hover { color: var(--color-accent-600); }
         <span class="card-kicker">สีประจำโรงเรียน</span>
         <div style="display:flex; gap:16px; margin-top:6px;">
           <div style="display:flex; align-items:center; gap:8px;"><span style="width:22px;height:22px;background:#ffffff;border:1px solid var(--color-divider);"></span><span style="font-size:13px;">ขาว</span></div>
-          <div style="display:flex; align-items:center; gap:8px;"><span style="width:22px;height:22px;background:var(--color-accent);"></span><span style="font-size:13px;">แดง</span></div>
+          <div style="display:flex; align-items:center; gap:8px;"><span style="width:22px;height:22px;background:#ec3013;"></span><span style="font-size:13px;">แดง</span></div>
         </div>
       </div>
       <div class="card">
@@ -255,50 +444,59 @@ a:hover { color: var(--color-accent-600); }
     <h2 style="font-size:clamp(26px,3.2vw,38px); margin:14px 0 28px;">โครงสร้างผู้บริหารและทำเนียบครู</h2>
 
     <div style="position:relative; overflow:hidden; border:2px solid var(--color-divider); border-radius:16px; padding:clamp(20px,3vw,40px); margin:0 0 8px; display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:clamp(24px,4vw,48px); align-items:center;">
-      <div>
-        <span class="tag tag-accent">โครงสร้างองค์กร</span>
+      <div style="position:relative; width:100%; max-width:520px; margin:0 auto; display:flex; flex-direction:column; gap:20px;">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; padding:6px; border-radius:999px; background:color-mix(in srgb, var(--color-text) 6%, transparent);">
+          <sc-for list="{{ staffTabs }}" as="g" hint-placeholder-count="2">
+            <button type="button" onClick="{{ g.onClick }}" aria-label="ดูกลุ่ม {{ g.label }}" style="display:flex; align-items:center; justify-content:center; gap:8px; cursor:pointer; font-family:var(--font-body); font-size:13.5px; font-weight:800; padding:11px 10px; border-radius:999px; border:none; background:{{ g.tabBg }}; color:{{ g.tabColor }}; transition:background .2s ease, color .2s ease;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ g.icon }}"></path></svg>
+              {{ g.label }}
+            </button>
+          </sc-for>
+        </div>
 
-        <div style="display:flex; flex-wrap:wrap; gap:28px; margin-top:18px;">
-          <div>
-            <p style="font-family:var(--font-heading); font-weight:800; font-size:28px; line-height:1; margin:0 0 6px; color:var(--color-accent-700);">15</p>
-            <p style="font-size:13px; line-height:1.4; margin:0; color:color-mix(in srgb, var(--color-text) 66%, transparent);">ครูและบุคลากร</p>
-          </div>
-          <div>
-            <p style="font-family:var(--font-heading); font-weight:800; font-size:28px; line-height:1; margin:0 0 6px; color:var(--color-accent-700);">4</p>
-            <p style="font-size:13px; line-height:1.4; margin:0; color:color-mix(in srgb, var(--color-text) 66%, transparent);">ฝ่ายบริหารงาน</p>
-          </div>
-          <div>
-            <p style="font-family:var(--font-heading); font-weight:800; font-size:28px; line-height:1; margin:0 0 6px; color:var(--color-accent-700);">8</p>
-            <p style="font-size:13px; line-height:1.4; margin:0; color:color-mix(in srgb, var(--color-text) 66%, transparent);">กลุ่มสาระการเรียนรู้</p>
-          </div>
+        <div style="display:flex; align-items:flex-start; gap:16px;">
+          <span style="flex:none; font-family:var(--font-heading); font-weight:800; font-size:56px; line-height:.9; color:var(--color-accent);">{{ activeTopInfo.num }}</span>
+          <span style="flex:1; min-width:0;">
+            <span style="display:block; font-size:11.5px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--color-accent-700); margin-bottom:6px;">{{ activeTopInfo.tag }}</span>
+            <span style="display:block; font-size:13.5px; line-height:1.6; color:color-mix(in srgb, var(--color-text) 70%, transparent);">{{ activeTopInfo.desc }}</span>
+          </span>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:2px; border-top:2px solid var(--color-divider); padding-top:6px;">
+          <sc-for list="{{ staffSubRows }}" as="r" hint-placeholder-count="6">
+            <button type="button" onClick="{{ r.onClick }}" style="display:flex; align-items:center; justify-content:space-between; gap:10px; width:100%; text-align:left; cursor:pointer; font-family:var(--font-body); color:var(--color-text); border:none; border-radius:10px; padding:9px 10px; background:{{ r.bg }}; transition:background .2s ease;" style-hover="background:color-mix(in srgb, var(--color-accent) 8%, transparent);">
+              <span style="display:flex; align-items:center; gap:9px; font-size:13.5px; font-weight:700; min-width:0;">
+                <span style="width:6px; height:6px; border-radius:999px; flex:none; background:{{ r.dot }};"></span>
+                <span style="min-width:0;">{{ r.label }}</span>
+              </span>
+              <span style="flex:none; font-size:12.5px; opacity:.62;">{{ r.count }}</span>
+            </button>
+          </sc-for>
         </div>
       </div>
 
-      <div style="position:relative; width:100%; max-width:520px; margin:0 auto; display:flex; flex-direction:column; align-items:center;">
-        <div style="display:inline-flex; align-items:center; gap:10px; border:2px solid var(--color-accent); border-radius:14px; padding:12px 20px; background:var(--color-surface); box-shadow:0 8px 20px color-mix(in srgb, var(--color-text) 18%, transparent); animation:orgNodeIn .5s ease both;">
-          <span style="flex:none; display:flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:10px; background:var(--color-accent); color:var(--color-bg);">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-          </span>
-          <span>
-            <p style="font-family:var(--font-heading); font-weight:800; font-size:14.5px; margin:0; line-height:1.2; white-space:nowrap;">ผู้อำนวยการโรงเรียน</p>
-            <p style="font-size:12px; margin:2px 0 0; color:var(--color-accent-700);">นายกิจภูมิ บุญอบ</p>
-          </span>
+      <div style="min-width:0;">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:14px;">
+          <span class="tag tag-accent">ทำเนียบผู้บริหารและครู</span>
+          <div style="display:flex; gap:8px;">
+            <button type="button" onClick="{{ staffStripPrev }}" aria-label="คนก่อนหน้า" style="width:34px; height:34px; display:grid; place-items:center; padding:0; cursor:pointer; border:2px solid var(--color-divider); border-radius:999px; background:transparent; color:var(--color-text); transition:border-color .2s ease, background .2s ease;" style-hover="border-color:var(--color-accent); background:color-mix(in srgb, var(--color-accent) 10%, transparent);">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg>
+            </button>
+            <button type="button" onClick="{{ staffStripNext }}" aria-label="คนถัดไป" style="width:34px; height:34px; display:grid; place-items:center; padding:0; cursor:pointer; border:2px solid var(--color-divider); border-radius:999px; background:transparent; color:var(--color-text); transition:border-color .2s ease, background .2s ease;" style-hover="border-color:var(--color-accent); background:color-mix(in srgb, var(--color-accent) 10%, transparent);">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"></path></svg>
+            </button>
+          </div>
         </div>
-
-        <div style="width:2px; height:26px; background:color-mix(in srgb, var(--color-text) 22%, transparent); transform-origin:top; animation:orgTrunkGrow .35s ease .4s both;"></div>
-        <div style="width:100%; max-width:420px; height:2px; background:color-mix(in srgb, var(--color-text) 22%, transparent); transform-origin:center; animation:orgBarGrow .4s ease .6s both;"></div>
-
-        <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px; width:100%;">
-          <sc-for list="{{ orgChart }}" as="o" hint-placeholder-count="4">
-            <div style="display:flex; flex-direction:column; align-items:center;">
-              <div style="width:2px; height:20px; background:color-mix(in srgb, var(--color-text) 18%, transparent); transform-origin:top; animation:orgTrunkGrow .3s ease {{ o.delay }} both;"></div>
-              <button type="button" data-org-i="{{ $index }}" onClick="{{ orgClick }}" aria-label="ดูรายละเอียด {{ o.label }}" style="width:100%; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center; border:2px solid var(--color-divider); border-radius:14px; background:var(--color-surface); padding:16px 10px; font-family:var(--font-body); color:var(--color-text); transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease; animation:orgBoxIn .4s ease {{ o.delay }} both;" style-hover="transform:translateY(-4px); border-color:var(--color-accent); box-shadow:0 10px 22px color-mix(in srgb, var(--color-text) 16%, transparent);">
-                <span style="display:flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:10px; background:color-mix(in srgb, var(--color-accent) 12%, var(--color-surface)); color:var(--color-accent-700);">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ o.icon }}"></path></svg>
-                </span>
-                <span style="font-size:12.5px; font-weight:800; line-height:1.3;">{{ o.label }}</span>
-              </button>
-            </div>
+        <div ref="{{ setStaffStripRef }}" data-staff-strip="" style="display:flex; gap:14px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth; padding:6px 2px 14px;">
+          <sc-for list="{{ staffCards }}" as="sp" hint-placeholder-count="4">
+            <article style="flex:none; width:min(258px,82%); scroll-snap-align:start; border-radius:18px; border:1px solid rgba(255,255,255,.7); background:color-mix(in srgb, #ffffff 52%, transparent); backdrop-filter:blur(16px) saturate(150%); -webkit-backdrop-filter:blur(16px) saturate(150%); box-shadow:0 18px 38px -22px color-mix(in srgb, var(--color-text) 60%, transparent); padding:14px; animation:staffCardIn .55s cubic-bezier(.2,.85,.3,1) {{ sp.delay }} both;">
+              <figure class="{{ photoClass }}" style="margin:0 0 12px; border-radius:12px; overflow:hidden;">
+                <image-slot id="{{ sp.photoId }}" shape="rect" style="width:100%; height:190px; border-radius:0;" placeholder="ภาพบุคลากร"></image-slot>
+              </figure>
+              <span style="display:block; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--color-accent-700); margin-bottom:6px;">{{ sp.role }}</span>
+              <p style="font-family:var(--font-heading); font-weight:800; font-size:16.5px; line-height:1.25; margin:0 0 6px;">{{ sp.name }}</p>
+              <p style="font-size:12.5px; line-height:1.5; margin:0; color:color-mix(in srgb, var(--color-text) 70%, transparent);">{{ sp.note }}</p>
+            </article>
           </sc-for>
         </div>
       </div>
@@ -338,32 +536,7 @@ a:hover { color: var(--color-accent-600); }
     </div>
 
 
-    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:12px; margin-bottom:12px;">
-      <sc-for list="{{ staffTopGroups }}" as="g" hint-placeholder-count="2">
-        <button type="button" onClick="{{ g.onClick }}" style="display:flex; align-items:center; gap:12px; text-align:left; cursor:pointer; font-family:var(--font-body); padding:16px; border-radius:14px; background:{{ g.bg }}; border:2px solid {{ g.border }}; color:var(--color-text); transition:background .2s ease, border-color .2s ease;">
-          <span style="flex:none; display:flex; align-items:center; justify-content:center; width:38px; height:38px; border-radius:10px; background:{{ g.iconBg }}; color:{{ g.iconColor }};">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ g.icon }}"></path></svg>
-          </span>
-          <span style="flex:1; min-width:0; font-size:14.5px; font-weight:800; line-height:1.3;">{{ g.label }}</span>
-          <span style="flex:none; font-size:12.5px; opacity:.7; white-space:nowrap;">{{ g.count }}</span>
-        </button>
-      </sc-for>
-    </div>
-    <sc-if value="{{ showSubGroups }}" hint-placeholder-val="{{ false }}">
-      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(215px,1fr)); gap:10px; margin-bottom:24px; border-left:2px solid var(--color-divider); padding-left:16px;">
-        <sc-for list="{{ staffSubGroups }}" as="g" hint-placeholder-count="9">
-          <button type="button" onClick="{{ g.onClick }}" style="display:flex; align-items:center; gap:10px; text-align:left; cursor:pointer; font-family:var(--font-body); padding:11px 13px; border-radius:12px; background:{{ g.bg }}; border:2px solid {{ g.border }}; color:var(--color-text); transition:background .2s ease, border-color .2s ease;">
-            <span style="flex:none; display:flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:8px; background:{{ g.iconBg }}; color:{{ g.iconColor }};">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ g.icon }}"></path></svg>
-            </span>
-            <span style="flex:1; min-width:0; font-size:12.5px; font-weight:700; line-height:1.3;">{{ g.label }}</span>
-            <span style="flex:none; font-size:12px; opacity:.7; white-space:nowrap;">{{ g.count }}</span>
-          </button>
-        </sc-for>
-      </div>
-    </sc-if>
-
-    <div style="border:2px solid var(--color-divider); border-radius:16px; padding:clamp(20px,3vw,32px); margin-bottom:40px;">
+    <div style="border:2px solid var(--color-divider); border-radius:16px; margin-top:24px; padding:clamp(20px,3vw,32px); margin-bottom:40px;">
       <div style="display:flex; align-items:flex-start; gap:16px; flex-wrap:wrap; border-bottom:2px solid var(--color-divider); padding-bottom:20px; margin-bottom:24px;">
         <span style="flex:none; display:flex; align-items:center; justify-content:center; width:52px; height:52px; border-radius:12px; background:var(--color-accent); color:var(--color-bg);">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ activeGroup.icon }}"></path></svg>
@@ -550,7 +723,7 @@ a:hover { color: var(--color-accent-600); }
       <div style="position:relative; width:100%; max-width:480px; margin:0 auto; aspect-ratio:1/1;">
         <div style="position:absolute; left:50%; top:50%; width:78%; height:78%; transform:translate(-50%,-50%); border-radius:999px; border:2px dashed color-mix(in srgb, var(--color-text) 12%, transparent);"></div>
 
-        <div data-orbit-anim="" style="position:absolute; left:50%; top:50%; width:30%; aspect-ratio:1/1; transform:translate(-50%,-50%); animation:awardLogoFloat 4.5s ease-in-out infinite alternate;">
+        <div data-orbit-anim="" style="position:absolute; left:50%; top:50%; width:52%; aspect-ratio:1/1; transform:translate(-50%,-50%); animation:awardLogoFloat 4.5s ease-in-out infinite alternate;">
           <div data-orbit-anim="" style="position:absolute; inset:0; border-radius:999px; background:var(--color-accent); opacity:.5; animation:awardRingPulse 2.6s ease-out infinite;"></div>
           <div style="position:absolute; inset:8%; border-radius:999px; border:2px solid var(--color-text); background:var(--color-surface); overflow:hidden; display:flex; align-items:center; justify-content:center; padding:14%;">
             <image-slot id="logo-award-orbit" shape="rect" fit="contain" src="assets/logo-transparent.png" style="width:100%; height:100%;" placeholder="ตราโรงเรียน"></image-slot>
@@ -594,35 +767,51 @@ a:hover { color: var(--color-accent-600); }
       </div>
     </div>
 
-    <div style="display:flex; flex-direction:column; margin-bottom:36px;">
-      <sc-for list="{{ honorAchievements }}" as="a" hint-placeholder-count="6">
-        <div style="display:flex; justify-content:space-between; gap:16px; padding:16px 0; border-top:2px solid var(--color-divider); flex-wrap:wrap;">
-          <p style="margin:0; font-size:15px; max-width:60ch;">{{ a.title }}</p>
-          <span style="font-size:13px; color:color-mix(in srgb, var(--color-text) 60%, transparent); white-space:nowrap;">{{ a.year }}</span>
-        </div>
-      </sc-for>
-    </div>
-
-    <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">โครงการส่งเสริมสุขภาวะ</h3>
-    <div style="display:flex; flex-direction:column;">
-      <sc-for list="{{ healthProjects }}" as="a" hint-placeholder-count="2">
-        <div style="display:flex; justify-content:space-between; gap:16px; padding:16px 0; border-top:2px solid var(--color-divider); flex-wrap:wrap;">
-          <p style="margin:0; font-size:15px; max-width:60ch;">{{ a.title }}</p>
-          <span style="font-size:13px; color:color-mix(in srgb, var(--color-text) 60%, transparent); white-space:nowrap;">{{ a.year }}</span>
-        </div>
-      </sc-for>
-    </div>
-
-
-    <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">ดาวน์โหลดเอกสาร</h3>
-    <table class="table">
-      <thead><tr><th>เอกสาร</th><th>หมวด</th><th>ปรับปรุงล่าสุด</th><th></th></tr></thead>
-      <tbody>
-        <sc-for list="{{ allDocs }}" as="d" hint-placeholder-count="8">
-          <tr><td>{{ d.name }}</td><td>{{ d.category }}</td><td>{{ d.date }}</td><td><a href="#" class="btn btn-ghost" style="padding:4px 10px;">ดาวน์โหลด</a></td></tr>
+    <button type="button" onClick="{{ toggleHonorsOpen }}" aria-expanded="{{ honorsOpen }}" style="display:flex; align-items:center; justify-content:space-between; width:100%; gap:16px; padding:16px 0; border:none; border-top:2px solid var(--color-divider); border-bottom:2px solid var(--color-divider); background:none; cursor:pointer; text-align:left;">
+      <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:var(--color-text); margin:0; font-weight:800;">รายการรางวัลทั้งหมด</h3>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transform:{{ honorsChevronTransform }}; transition:transform .25s ease; flex:none;"><path d="M6 9l6 6 6-6"></path></svg>
+    </button>
+    <sc-if value="{{ honorsOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex; flex-direction:column; margin-bottom:8px;">
+        <sc-for list="{{ honorAchievements }}" as="a" hint-placeholder-count="6">
+          <div style="display:flex; justify-content:space-between; gap:16px; padding:16px 0; border-bottom:2px solid var(--color-divider); flex-wrap:wrap;">
+            <p style="margin:0; font-size:15px; max-width:60ch;">{{ a.title }}</p>
+            <span style="font-size:13px; color:color-mix(in srgb, var(--color-text) 60%, transparent); white-space:nowrap;">{{ a.year }}</span>
+          </div>
         </sc-for>
-      </tbody>
-    </table>
+      </div>
+    </sc-if>
+
+    <button type="button" onClick="{{ toggleHealthOpen }}" aria-expanded="{{ healthOpen }}" style="display:flex; align-items:center; justify-content:space-between; width:100%; gap:16px; padding:16px 0; border:none; border-bottom:2px solid var(--color-divider); background:none; cursor:pointer; text-align:left; margin-bottom:36px;">
+      <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:var(--color-text); margin:0; font-weight:800;">โครงการส่งเสริมสุขภาวะ</h3>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transform:{{ healthChevronTransform }}; transition:transform .25s ease; flex:none;"><path d="M6 9l6 6 6-6"></path></svg>
+    </button>
+    <sc-if value="{{ healthOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex; flex-direction:column; margin:-28px 0 36px;">
+        <sc-for list="{{ healthProjects }}" as="a" hint-placeholder-count="2">
+          <div style="display:flex; justify-content:space-between; gap:16px; padding:16px 0; border-bottom:2px solid var(--color-divider); flex-wrap:wrap;">
+            <p style="margin:0; font-size:15px; max-width:60ch;">{{ a.title }}</p>
+            <span style="font-size:13px; color:color-mix(in srgb, var(--color-text) 60%, transparent); white-space:nowrap;">{{ a.year }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+
+    <button type="button" onClick="{{ toggleDocsOpen }}" aria-expanded="{{ docsOpen }}" style="display:flex; align-items:center; justify-content:space-between; width:100%; gap:16px; padding:16px 0; border:none; border-top:2px solid var(--color-divider); border-bottom:2px solid var(--color-divider); background:none; cursor:pointer; text-align:left;">
+      <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:var(--color-text); margin:0; font-weight:800;">ดาวน์โหลดเอกสาร</h3>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transform:{{ docsChevronTransform }}; transition:transform .25s ease; flex:none;"><path d="M6 9l6 6 6-6"></path></svg>
+    </button>
+    <sc-if value="{{ docsOpen }}" hint-placeholder-val="{{ false }}">
+      <table class="table" style="margin-top:20px;">
+        <thead><tr><th>เอกสาร</th><th>หมวด</th><th>ปรับปรุงล่าสุด</th><th></th></tr></thead>
+        <tbody>
+          <sc-for list="{{ allDocs }}" as="d" hint-placeholder-count="8">
+            <tr><td>{{ d.name }}</td><td>{{ d.category }}</td><td>{{ d.date }}</td><td><a href="#" class="btn btn-ghost" style="padding:4px 10px;">ดาวน์โหลด</a></td></tr>
+          </sc-for>
+        </tbody>
+      </table>
+    </sc-if>
   </div>
 </section>
 
@@ -939,6 +1128,9 @@ class Component extends DCLogic {
     activeSection: 'home',
     scrolled: false,
     narrow: false,
+    docsOpen: false,
+    honorsOpen: false,
+    healthOpen: false,
     visible: { home: true, about: true, staff: true, academics: true, news: true, contact: true },
     indicator: { left: 0, width: 0 },
     statsProgress: 1,
@@ -978,11 +1170,14 @@ class Component extends DCLogic {
       this.activeId = current;
       this.applyNavChrome();
       this.applyTextReveal();
+      this.applyMasthead();
+      this.applyHighlightMotion();
     };
     this.onScroll();
     window.addEventListener('scroll', this.onScroll, { passive: true });
     this.onResize = () => {
       this.applyNavChrome();
+      this.applyMasthead();
     };
     this.onResize();
     window.addEventListener('resize', this.onResize, { passive: true });
@@ -1000,6 +1195,136 @@ class Component extends DCLogic {
     }
   }
 
+  setHiWrapRef = (el) => {
+    this.hiWrap = el;
+    if (!el) return;
+    this.ensureHiSetup();
+    this.startHiLoop();
+  };
+
+  ensureHiSetup() {
+    const el = this.hiWrap;
+    if (!el || this.hiReady) return;
+    this.hiReady = true;
+    this.hiHover = new Map();
+    this.hiVel = 0;
+    this.hiVelSmooth = 0;
+    this.hiLastY = window.scrollY || 0;
+    if (this.state.reducedMotion) { this.flattenHighlights(); return; }
+    el.querySelectorAll('[data-hi-line]').forEach(line => {
+      line.style.opacity = '0';
+      line.style.transform = 'translateY(16px)';
+      line.style.transition = 'opacity .5s ease, transform .6s cubic-bezier(.2,.85,.3,1)';
+    });
+    el.addEventListener('pointermove', this.onHiPointer);
+    el.addEventListener('pointerleave', this.onHiLeave);
+  }
+
+  onHiPointer = (e) => {
+    if (!this.hiHover) return;
+    const card = e.target.closest ? e.target.closest('[data-hi-card]') : null;
+    this.hiHover.forEach((h, el) => { if (el !== card) { h.tx = 0; h.ty = 0; } });
+    if (card) {
+      const r = card.getBoundingClientRect();
+      const nx = (e.clientX - r.left) / r.width - 0.5;
+      const ny = (e.clientY - r.top) / r.height - 0.5;
+      const h = this.hiHover.get(card) || { x: 0, y: 0, tx: 0, ty: 0 };
+      h.tx = -ny * 5.5;
+      h.ty = nx * 6.5;
+      this.hiHover.set(card, h);
+    }
+    this.startHiLoop();
+  };
+
+  onHiLeave = () => {
+    if (!this.hiHover) return;
+    this.hiHover.forEach(h => { h.tx = 0; h.ty = 0; });
+    this.startHiLoop();
+  };
+
+  startHiLoop() {
+    if (this.hiRaf || !this.hiWrap || this.state.reducedMotion) return;
+    this.ensureHiSetup();
+    const tick = () => {
+      this.hiRaf = null;
+      if (!this.hiWrap) return;
+      this.hiFrame();
+      this.hiRaf = requestAnimationFrame(tick);
+    };
+    this.hiRaf = requestAnimationFrame(tick);
+  }
+
+  hiFrame() {
+    if (!this.hiHover) this.hiHover = new Map();
+    if (typeof this.hiLastY !== 'number') this.hiLastY = window.scrollY || 0;
+    if (typeof this.hiVelSmooth !== 'number') this.hiVelSmooth = 0;
+    const cards = this.hiWrap.querySelectorAll('[data-hi-card]');
+    if (!cards.length) return;
+    const vh = window.innerHeight || 800;
+    const y = window.scrollY || document.documentElement.scrollTop || 0;
+    this.hiVel = Math.max(-140, Math.min(140, y - this.hiLastY));
+    this.hiLastY = y;
+    this.hiVelSmooth += (this.hiVel - this.hiVelSmooth) * 0.16;
+    if (Math.abs(this.hiVelSmooth) < 0.05) this.hiVelSmooth = 0;
+    const skew = Math.max(-3, Math.min(3, this.hiVelSmooth * 0.045));
+    const squash = 1 + Math.min(0.035, Math.abs(this.hiVelSmooth) * 0.0006);
+
+    cards.forEach((card, i) => {
+      const r = card.getBoundingClientRect();
+      if (r.bottom < -vh * 0.6 || r.top > vh * 1.6) return;
+      const center = r.top + r.height / 2;
+      let p = (center - vh * 0.5) / (vh * 0.72);
+      p = Math.max(-1.15, Math.min(1.15, p));
+      const a = Math.abs(p);
+      const dir = i % 2 ? -1 : 1;
+
+      const h = this.hiHover.get(card) || { x: 0, y: 0, tx: 0, ty: 0 };
+      h.x += ((h.tx || 0) - h.x) * 0.12;
+      h.y += ((h.ty || 0) - h.y) * 0.12;
+      this.hiHover.set(card, h);
+
+      card.style.transform =
+        'translateY(' + (p * 26).toFixed(2) + 'px)' +
+        ' translateZ(' + (-a * 240).toFixed(1) + 'px)' +
+        ' rotateX(' + (-p * 16 + h.x).toFixed(2) + 'deg)' +
+        ' rotateY(' + (p * dir * 9 + h.y).toFixed(2) + 'deg)' +
+        ' rotateZ(' + (p * dir * 4).toFixed(2) + 'deg)' +
+        ' skewY(' + skew.toFixed(2) + 'deg)' +
+        ' scaleY(' + squash.toFixed(4) + ')';
+      card.style.opacity = String(Math.max(0.08, 1 - a * 0.9));
+
+      const img = card.querySelector('[data-hi-img]');
+      if (img) img.style.transform = 'translateY(' + (p * -22).toFixed(1) + 'px) scale(1.12)';
+
+      const show = p < 0.68;
+      card.querySelectorAll('[data-hi-line]').forEach((line, j) => {
+        line.style.transitionDelay = show ? (j * 90) + 'ms' : '0ms';
+        line.style.opacity = show ? '1' : '0';
+        line.style.transform = show ? 'none' : 'translateY(16px)';
+      });
+    });
+  }
+
+  applyHighlightMotion() {
+    if (!this.hiWrap) return;
+    if (this.state.reducedMotion) return this.flattenHighlights();
+    this.startHiLoop();
+  }
+
+  flattenHighlights() {
+    if (!this.hiWrap || this.hiFlat) return;
+    this.hiFlat = true;
+    this.hiWrap.querySelectorAll('[data-hi-card]').forEach(card => {
+      card.style.transform = 'none';
+      card.style.opacity = '1';
+    });
+    this.hiWrap.querySelectorAll('[data-hi-line]').forEach(line => {
+      line.style.opacity = '1';
+      line.style.transform = 'none';
+    });
+    this.hiWrap.querySelectorAll('[data-hi-img]').forEach(img => { img.style.transform = 'none'; });
+  }
+
   componentWillUnmount() {
     if (this.revealObserver) this.revealObserver.disconnect();
     if (this.activeObserver) this.activeObserver.disconnect();
@@ -1008,10 +1333,78 @@ class Component extends DCLogic {
     if (this.roContainer) this.roContainer.disconnect();
     if (this.roActiveTab) this.roActiveTab.disconnect();
     if (this.bannerTimer) clearInterval(this.bannerTimer);
+    if (this.hiRaf) cancelAnimationFrame(this.hiRaf);
+    if (this.hiIO) this.hiIO.disconnect();
+    if (this.hiWrap) {
+      this.hiWrap.removeEventListener('pointermove', this.onHiPointer);
+      this.hiWrap.removeEventListener('pointerleave', this.onHiLeave);
+    }
   }
 
   componentDidUpdate() {
     this.applyNavChrome();
+    this.applyMasthead();
+  }
+
+  fitHeroEn() {
+    if (this.enFitVW === window.innerWidth) return;
+    const h1 = document.querySelector('[data-hero-thai]');
+    const en = document.querySelector('[data-hero-en]');
+    if (!h1 || !en) return;
+    const hr = document.createRange();
+    hr.selectNodeContents(h1);
+    const thaiW = hr.getBoundingClientRect().width;
+    en.style.fontSize = '20px';
+    const er = document.createRange();
+    er.selectNodeContents(en);
+    const base = er.getBoundingClientRect().width;
+    if (!thaiW || !base) return;
+    const padEm = (parseFloat(getComputedStyle(en).paddingLeft) || 0) / 20;
+    const k = base / 20;
+    const size = Math.max(10, Math.min(48, (thaiW * 0.985) / (k + padEm)));
+    en.style.fontSize = size.toFixed(2) + 'px';
+    this.enFitVW = window.innerWidth;
+    this.heroHome = null;
+  }
+
+  applyMasthead() {
+    const mast = document.querySelector('[data-hero-mast]');
+    const wm = document.querySelector('[data-wordmark]');
+    const wmThai = document.querySelector('[data-wordmark-thai]');
+    const wmSub = document.querySelector('[data-wordmark-sub]');
+    const y = window.scrollY;
+    const p = Math.max(0, Math.min(1, y / 340));
+    const narrow = window.innerWidth < 1080;
+    const reduced = this.state.reducedMotion;
+    const fade = p < 0.72 ? 0 : (p - 0.72) / 0.28;
+    const wmOp = (reduced || narrow) ? (p > 0.3 ? '1' : '0') : String(fade);
+    if (wmThai) { wmThai.style.transition = 'opacity .15s linear'; wmThai.style.opacity = wmOp; }
+    if (wmSub) { wmSub.style.transition = 'opacity .15s linear'; wmSub.style.opacity = wmOp; }
+    if (!mast) return;
+    this.fitHeroEn();
+    if (reduced || narrow || !wm || !wm.offsetParent) {
+      mast.style.transform = ''; mast.style.opacity = ''; mast.style.visibility = '';
+      return;
+    }
+    if (!this.heroHome || this.heroHomeVW !== window.innerWidth) {
+      const prev = mast.style.transform;
+      mast.style.transform = 'none';
+      const r = mast.getBoundingClientRect();
+      this.heroHome = { x: r.left, y: r.top + y, w: r.width };
+      this.heroHomeVW = window.innerWidth;
+      mast.style.transform = prev;
+    }
+    const t = wm.getBoundingClientRect();
+    if (!t.width) return;
+    const src = this.heroHome;
+    const sTarget = Math.min(1, t.width / src.w);
+    const dx = (t.left - src.x) * p;
+    const dy = (t.top - (src.y - y)) * p;
+    const sc = 1 + (sTarget - 1) * p;
+    mast.style.transition = 'none';
+    mast.style.transform = `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px) scale(${sc.toFixed(4)})`;
+    mast.style.opacity = String(1 - fade);
+    mast.style.visibility = p >= 1 ? 'hidden' : 'visible';
   }
 
   applyTextReveal() {
@@ -1053,11 +1446,15 @@ class Component extends DCLogic {
     const narrow = window.innerWidth < 1080;
     if (nav) {
       if (floating) {
-        nav.style.background = sc ? 'color-mix(in srgb, var(--color-bg) 72%, transparent)' : 'color-mix(in srgb, #ffffff 12%, transparent)';
-        const blur = `blur(${sc ? 16 : 6}px) saturate(140%)`;
+        nav.style.background = sc ? 'color-mix(in srgb, var(--color-bg) 45%, transparent)' : 'transparent';
+        const blur = sc ? 'blur(16px) saturate(140%)' : 'none';
         nav.style.backdropFilter = blur;
         nav.style.webkitBackdropFilter = blur;
-        nav.style.boxShadow = sc ? '0 12px 40px -12px color-mix(in srgb, var(--color-text) 30%, transparent)' : '0 8px 30px -14px rgba(0,0,0,.5)';
+        nav.style.boxShadow = sc ? '0 18px 50px -18px rgba(0,0,0,.9), 0 0 0 1px rgba(255,255,255,.06)' : 'none';
+        nav.style.top = sc ? '16px' : '0px';
+        nav.style.width = sc ? 'calc(100% - 32px)' : '100%';
+        nav.style.maxWidth = sc ? '1400px' : 'none';
+        nav.style.borderRadius = sc ? '999px' : '0px';
       }
       nav.style.paddingTop = sc ? '10px' : '18px';
       nav.style.paddingBottom = sc ? '10px' : '18px';
@@ -1119,7 +1516,7 @@ class Component extends DCLogic {
       const tab = this.navRefs[key];
       if (!tab) return;
       const overHero = (this.props.navStyle ?? 'floating') === 'floating' && !this.isScrolled;
-      if (key === active) tab.style.color = overHero ? 'var(--color-text)' : 'var(--color-bg)';
+      if (key === active) tab.style.color = '#0b0a12';
       else tab.style.color = overHero ? '#ffffff' : 'var(--color-text)';
     });
     if (left < container.scrollLeft) container.scrollLeft = Math.max(0, left - 8);
@@ -1243,8 +1640,39 @@ class Component extends DCLogic {
   awardOrbitPrev = () => this.awardOrbitStep(-1);
   awardOrbitNext = () => this.awardOrbitStep(1);
 
+  static staffRoster() {
+    if (Component._roster) return Component._roster;
+    const seen = new Set();
+    const out = [];
+    Component.STAFF_GROUPS.forEach(g => {
+      (g.members || []).forEach(m => {
+        if (seen.has(m.name)) return;
+        seen.add(m.name);
+        out.push(m);
+      });
+    });
+    Component._roster = out;
+    return out;
+  }
+
+  setStaffStripRef = (el) => { this.staffStripEl = el; };
+  scrollStaffStrip = (dir) => {
+    const el = this.staffStripEl;
+    if (!el) return;
+    const card = el.querySelector('article');
+    const step = card ? card.getBoundingClientRect().width + 14 : el.clientWidth * 0.8;
+    el.scrollBy({ left: dir * step, behavior: 'smooth' });
+  };
+  staffStripPrev = () => this.scrollStaffStrip(-1);
+  staffStripNext = () => this.scrollStaffStrip(1);
+
+  toggleDocsOpen = () => this.setState(s => ({ docsOpen: !s.docsOpen }));
+  toggleHonorsOpen = () => this.setState(s => ({ honorsOpen: !s.honorsOpen }));
+  toggleHealthOpen = () => this.setState(s => ({ healthOpen: !s.healthOpen }));
+
   renderVals() {
     const s = this.state;
+    const docsChevronTransform = s.docsOpen ? 'rotate(180deg)' : 'rotate(0deg)';
     const orgIdx = typeof s.orgOpen === 'number' ? s.orgOpen : -1;
     const orgActive = Component.ORG_CHART[orgIdx] || { label: '', tag: '', desc: '', tasks: [] };
     const navStyle = this.props.navStyle ?? 'floating';
@@ -1253,10 +1681,10 @@ class Component extends DCLogic {
     const navRadius = isFloating ? 999 : 0;
     const overHero = isFloating;
     const navBg = isFloating
-      ? (overHero ? 'color-mix(in srgb, #ffffff 12%, transparent)' : 'color-mix(in srgb, var(--color-bg) 72%, transparent)')
+      ? (overHero ? 'transparent' : 'color-mix(in srgb, var(--color-bg) 72%, transparent)')
       : 'var(--color-bg)';
     const navShellStyle = isFloating
-      ? `position:fixed; top:16px; left:50%; transform:translateX(-50%); width:calc(100% - 32px); max-width:1400px; z-index:50; display:flex; align-items:center; gap:20px; background:${navBg}; backdrop-filter:blur(6px) saturate(140%); -webkit-backdrop-filter:blur(6px) saturate(140%); border-radius:999px; box-shadow:0 8px 30px -14px rgba(0,0,0,.5); padding:18px clamp(16px,4vw,36px); transition:padding .3s ease, background .3s ease;`
+      ? `position:fixed; top:0px; left:50%; transform:translateX(-50%); width:100%; max-width:none; z-index:50; display:flex; align-items:center; gap:20px; background:${navBg}; backdrop-filter:none; -webkit-backdrop-filter:none; border-radius:0px; box-shadow:none; padding:18px clamp(16px,4vw,36px); transition:padding .3s ease, background .35s ease, backdrop-filter .35s ease, box-shadow .35s ease, top .35s cubic-bezier(.4,0,.2,1), width .35s cubic-bezier(.4,0,.2,1), max-width .35s cubic-bezier(.4,0,.2,1), border-radius .35s ease;`
       : `position:sticky; top:0; left:0; transform:none; width:100%; max-width:none; z-index:50; display:flex; align-items:center; gap:20px; background:${navBg}; border-radius:0; border-bottom:2px solid var(--color-divider); box-shadow:none; padding:18px clamp(16px,5vw,48px); transition:padding .3s ease;`;
     const wordmarkColor = overHero ? '#ffffff' : 'var(--color-text)';
     const wordmarkSubColor = overHero ? 'rgba(255,255,255,.75)' : 'color-mix(in srgb, var(--color-text) 60%, transparent)';
@@ -1308,6 +1736,27 @@ class Component extends DCLogic {
       ...chipStyle(g.id === activeGroup.id),
       onClick: () => this.setState({ staffGroup: g.id }),
     }));
+    const staffTabs = tops.map(g => {
+      const on = g.id === activeTop.id;
+      return { label: g.label, icon: g.icon,
+        tabBg: on ? 'var(--color-accent)' : 'transparent',
+        tabColor: on ? 'var(--color-bg)' : 'color-mix(in srgb, var(--color-text) 65%, transparent)',
+        onClick: () => this.setState({ staffGroup: g.id }) };
+    });
+    const activeTopInfo = { num: String(activeTop.count || '').replace(/\D/g, '') || '—', tag: activeTop.tag, desc: activeTop.desc };
+    const staffSubRows = (activeTop.children && activeTop.children.length)
+      ? activeTop.children.map(g => {
+          const on = g.id === activeGroup.id;
+          return { label: g.label, count: g.count,
+            bg: on ? 'color-mix(in srgb, var(--color-accent) 9%, transparent)' : 'transparent',
+            dot: on ? 'var(--color-accent)' : 'color-mix(in srgb, var(--color-text) 28%, transparent)',
+            onClick: () => this.setState({ staffGroup: g.id }) };
+        })
+      : Component.ORG_CHART.map((o, i) => ({
+          label: o.label, count: 'ดูภาระงาน',
+          bg: 'transparent', dot: 'color-mix(in srgb, var(--color-text) 28%, transparent)',
+          onClick: () => this.setState({ orgOpen: i }),
+        }));
     const staffList = Component.STAFF.map((t, i) => ({
       ...t,
       reveal: this.cardReveal('staff', i),
@@ -1322,6 +1771,13 @@ class Component extends DCLogic {
     const bannerSlides = Component.BANNER.map((b, i) => ({
       ...b,
       opacity: i === s.bannerIndex ? 1 : 0,
+    }));
+
+    const highlightCards = Component.BANNER.slice(0, 6).map((b, i) => ({
+      ...b,
+      dir: i % 2 ? 'row-reverse' : 'row',
+      align: i % 2 ? 'flex-end' : 'flex-start',
+      bg: i % 3 === 1 ? 'color-mix(in srgb, var(--color-accent) 8%, var(--color-surface))' : 'var(--color-surface)',
     }));
 
     const bannerDots = Component.BANNER.map((b, i) => ({
@@ -1353,14 +1809,20 @@ class Component extends DCLogic {
       statItems,
       bannerSlides,
       bannerDots,
+      highlightCards,
+      setHiWrapRef: this.setHiWrapRef,
       prevBanner: this.prevBanner,
       nextBanner: this.nextBanner,
       staffList,
-      staffTopGroups: topChips,
-      staffSubGroups: subChips,
-      showSubGroups: subChips.length > 0,
+      staffTabs,
+      activeTopInfo,
+      staffSubRows,
       activeGroup: activeGroup,
       activeMembers: activeGroup.members,
+      staffCards: Component.staffRoster().map((p, i) => ({ ...p, photoId: 'staff-photo-' + i, delay: (i * 0.06).toFixed(2) + 's' })),
+      setStaffStripRef: this.setStaffStripRef,
+      staffStripPrev: this.staffStripPrev,
+      staffStripNext: this.staffStripNext,
       orgChart: Component.ORG_CHART.map((o, i) => ({ ...o, delay: (0.55 + i * 0.12).toFixed(2) + 's' })),
       orgOpen: orgIdx >= 0,
       orgActive,
@@ -1409,6 +1871,15 @@ class Component extends DCLogic {
       strategies: Component.STRATEGIES,
       assessments: Component.ASSESSMENTS,
       allDocs: Component.ALL_DOCS,
+      docsOpen: s.docsOpen,
+      docsChevronTransform: docsChevronTransform,
+      toggleDocsOpen: this.toggleDocsOpen,
+      honorsOpen: s.honorsOpen,
+      honorsChevronTransform: s.honorsOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+      toggleHonorsOpen: this.toggleHonorsOpen,
+      healthOpen: s.healthOpen,
+      healthChevronTransform: s.healthOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+      toggleHealthOpen: this.toggleHealthOpen,
       formSent: s.formSent,
       formNotSent: !s.formSent,
       adminOpen: s.adminOpen,
