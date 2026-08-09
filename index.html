@@ -1834,7 +1834,8 @@ class Component extends DCLogic {
   assessmentsSrc() { return this.withLink(this.cmsList('assessments') || Component.ASSESSMENTS); }
   static AWARD_GROUPS = { school: 'ของโรงเรียน', teacher: 'ของครู', student: 'ของนักเรียน' };
   awardsSrc() { return this.srcOf('awards', Component.ACHIEVEMENTS.map(a => ({ ...a, group: 'school', groupLabel: Component.AWARD_GROUPS.school, photo: '', photoPos: '50% 50%', link: '', slide: true })), (a) => ({ group: Component.AWARD_GROUPS[a.group] ? a.group : 'school', groupLabel: Component.AWARD_GROUPS[a.group] || Component.AWARD_GROUPS.school, title: a.title || '', year: a.year || '', photo: this.pickImg(a.photo, a.photoSm), photoTiny: a.photoTiny || '', photoPos: a.photoPos || '50% 50%', photoZoom: a.photoZoom, photoFit: a.photoFit, link: a.link || '', slide: a.slide !== false })); }
-  pickImg(full, sm) {
+  pickImg(full, sm, prefer) {
+    if (sm && prefer !== 'full') return sm;
     try { if (sm && window.innerWidth <= 820) return sm; } catch (e) {}
     return full || '';
   }
@@ -2918,8 +2919,8 @@ class Component extends DCLogic {
       orgNext: this.orgNext,
       closeOrg: this.closeOrg,
       studentStats: this.academicsSrc(),
-      heroPhoto: this.pickImg(this.cmsGet('hero.photo'), this.cmsGet('hero.photoSm')),
-      heroPhotoStyle: Component.bgStyle(this.pickImg(this.cmsGet('hero.photo'), this.cmsGet('hero.photoSm')), this.cmsGet('hero.photoPos'), { width:'100%', height:'100%' }, this.cmsNum('hero.photoZoom'), this.cmsGet('hero.photoFit'), this.cmsGet('hero.photoTiny')),
+      heroPhoto: this.pickImg(this.cmsGet('hero.photo'), this.cmsGet('hero.photoSm'), 'full'),
+      heroPhotoStyle: Component.bgStyle(this.pickImg(this.cmsGet('hero.photo'), this.cmsGet('hero.photoSm'), 'full'), this.cmsGet('hero.photoPos'), { width:'100%', height:'100%' }, this.cmsNum('hero.photoZoom'), this.cmsGet('hero.photoFit'), this.cmsGet('hero.photoTiny')),
       directorPhotoStyle: Component.bgStyle(this.cmsGet('about.directorPhoto'), this.cmsGet('about.directorPhotoPos') || 'center bottom', { position:'absolute', inset:0 }, this.cmsNum('about.directorPhotoZoom'), this.cmsGet('about.directorPhotoFit') || 'contain', this.cmsGet('about.directorPhotoTiny')),
       heroHasPhoto: !!this.cmsGet('hero.photo'),
       heroNoPhoto: !this.cmsGet('hero.photo'),

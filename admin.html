@@ -908,7 +908,13 @@ class Component extends DCLogic {
       Object.keys(obj).forEach(k => {
         const v = obj[k];
         if (typeof v === 'string') {
-          if (/^data:image\//.test(v) && !/Tiny$/.test(k)) jobs.push({ obj, key: k, folder: path || 'media' });
+          if (/Tiny$|Sm$/.test(k)) return;
+          const isData = /^data:image\//.test(v);
+          const isUrl = /^https?:\/\/.+\.(jpe?g|png|webp|gif)(\?|$)/i.test(v);
+          if (!isData && !isUrl) return;
+          const needsSm = !obj[k + 'Sm'] && !/logo|director/i.test(k);
+          const needsTiny = !obj[k + 'Tiny'] && !/logo|director/i.test(k);
+          if (isData || needsSm || needsTiny) jobs.push({ obj, key: k, folder: path || 'media', isData });
         } else walk(v, Array.isArray(obj) ? path : k);
       });
     };
@@ -920,13 +926,15 @@ class Component extends DCLogic {
       this.setState({ migrateMsg: 'กำลังย้ายรูป ' + (done + 1) + ' / ' + jobs.length + '…' });
       try {
         const raw = job.obj[job.key];
-        const blob = await (await fetch(raw)).blob();
+        const blob = await (await fetch(raw, { mode: 'cors' })).blob();
         const file = new File([blob], 'photo.jpg', { type: blob.type || 'image/jpeg' });
-        const big = await Component.shrinkImage(file, job.key);
-        const up = await window.SB.upload(this.cfg(), bucket, new File([big.blob], big.name, { type: big.blob.type }), job.folder);
-        if (!up.ok) continue;
-        saved += Math.max(0, raw.length * 0.75 - big.blob.size);
-        job.obj[job.key] = up.url;
+        if (job.isData) {
+          const big = await Component.shrinkImage(file, job.key);
+          const up = await window.SB.upload(this.cfg(), bucket, new File([big.blob], big.name, { type: big.blob.type }), job.folder);
+          if (!up.ok) continue;
+          saved += Math.max(0, raw.length * 0.75 - big.blob.size);
+          job.obj[job.key] = up.url;
+        }
         if (!job.obj[job.key + 'Tiny']) {
           const t = await Component.tinyPreview(file);
           if (t) job.obj[job.key + 'Tiny'] = t;
