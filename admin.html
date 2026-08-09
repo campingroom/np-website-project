@@ -362,11 +362,15 @@ a:hover { color:var(--color-accent); text-decoration:underline; }
               <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
                 <button type="button" class="btn btn-primary" onClick="{{ onTestConnection }}">ทดสอบการเชื่อมต่อ</button>
                 <button type="button" class="btn btn-secondary" onClick="{{ onPullRemote }}">ดึงข้อมูลล่าสุดจากฐานข้อมูล</button>
+                <button type="button" class="btn btn-primary" onClick="{{ onMigrateImages }}">ย้ายรูปที่ฝังในข้อมูลขึ้น Storage</button>
                 <button type="button" class="btn btn-secondary" onClick="{{ onExport }}">ส่งออกข้อมูลเป็น JSON</button>
                 <label class="btn btn-secondary" style="cursor:pointer; margin:0;">นำเข้าข้อมูลสำรอง
                   <input type="file" accept="application/json,.json" onChange="{{ onImport }}" style="display:none;">
                 </label>
               </div>
+              <sc-if value="{{ migrateMsg }}" hint-placeholder-val="{{ false }}">
+                <p style="font-size:13px; font-weight:700; margin:16px 0 0; padding:12px 14px; background:var(--color-accent-100); border-left:3px solid var(--color-accent);">{{ migrateMsg }}</p>
+              </sc-if>
               <sc-if value="{{ connMsg }}" hint-placeholder-val="{{ false }}">
                 <p style="font-size:13px; font-weight:600; margin:16px 0 0; padding:12px 14px; background:var(--color-surface); border-left:3px solid {{ connColor }};">{{ connMsg }}</p>
               </sc-if>
@@ -857,7 +861,7 @@ class Component extends DCLogic {
   state = {
     authed: false, user: null, loginUser: '', loginPass: '', loginError: false,
     section: 'dashboard', data: Component.normalise(JSON.parse(JSON.stringify(Component.DEFAULT_DATA))),
-    dirty: false, toast: '', connMsg: '', connOk: false, savedAt: '', syncing: false, remoteAt: '', authMode: 'local',
+    dirty: false, toast: '', connMsg: '', connOk: false, savedAt: '', syncing: false, migrateMsg: '', remoteAt: '', authMode: 'local',
     activity: [
       { time:'วันนี้ 09:14', text:'อัปเดตข่าว "ฟุตบอลหนองสระพังโนนสะอาด คัพ"', by:'ผู้ดูแลระบบ' },
       { time:'เมื่อวาน', text:'เพิ่มรูปกิจกรรมวันแม่ 6 ภาพ', by:'ครูธุรการ' },
@@ -894,6 +898,50 @@ class Component extends DCLogic {
   section() { return Component.SECTIONS.find(s => s.id === this.state.section) || Component.SECTIONS[0]; }
 
   cfg() { return (this.state.data && this.state.data.connect) || {}; }
+
+  async migrateImages() {
+    if (!this.online()) { this.flash('ยังไม่ได้เชื่อมต่อฐานข้อมูล — ตรวจการเชื่อมต่อก่อน'); return; }
+    const data = JSON.parse(JSON.stringify(this.state.data));
+    const jobs = [];
+    const walk = (obj, path) => {
+      if (!obj || typeof obj !== 'object') return;
+      Object.keys(obj).forEach(k => {
+        const v = obj[k];
+        if (typeof v === 'string') {
+          if (/^data:image\//.test(v) && !/Tiny$/.test(k)) jobs.push({ obj, key: k, folder: path || 'media' });
+        } else walk(v, Array.isArray(obj) ? path : k);
+      });
+    };
+    walk(data, '');
+    if (!jobs.length) { this.flash('ไม่พบรูปที่ฝังอยู่ในข้อมูล — รูปทั้งหมดอยู่บน Storage แล้ว'); return; }
+    const bucket = (data.connect || {}).bucket || 'school-media';
+    let done = 0, saved = 0;
+    for (const job of jobs) {
+      this.setState({ migrateMsg: 'กำลังย้ายรูป ' + (done + 1) + ' / ' + jobs.length + '…' });
+      try {
+        const raw = job.obj[job.key];
+        const blob = await (await fetch(raw)).blob();
+        const file = new File([blob], 'photo.jpg', { type: blob.type || 'image/jpeg' });
+        const big = await Component.shrinkImage(file, job.key);
+        const up = await window.SB.upload(this.cfg(), bucket, new File([big.blob], big.name, { type: big.blob.type }), job.folder);
+        if (!up.ok) continue;
+        saved += Math.max(0, raw.length * 0.75 - big.blob.size);
+        job.obj[job.key] = up.url;
+        if (!job.obj[job.key + 'Tiny']) {
+          const t = await Component.tinyPreview(file);
+          if (t) job.obj[job.key + 'Tiny'] = t;
+        }
+        if (!job.obj[job.key + 'Sm'] && !/logo|director/i.test(job.key)) {
+          const sm = await Component.shrinkImage(file, job.key, 800);
+          const upSm = await window.SB.upload(this.cfg(), bucket, new File([sm.blob], sm.name.replace(/(\.[^.]+)$/, '-sm$1'), { type: sm.blob.type }), job.folder);
+          if (upSm.ok) job.obj[job.key + 'Sm'] = upSm.url;
+        }
+        done += 1;
+      } catch (e) {}
+    }
+    this.setState({ data, dirty: true, migrateMsg: '' });
+    this.flash('ย้ายรูปขึ้น Storage แล้ว ' + done + ' รูป (เล็กลงราว ' + Math.round(saved / 1024 / 1024 * 10) / 10 + ' MB) — กดบันทึกเพื่อยืนยัน');
+  }
 
   static tinyPreview(file) {
     return new Promise(resolve => {
@@ -1294,6 +1342,8 @@ class Component extends DCLogic {
           else this.setState({ connMsg: 'เชื่อมต่อไม่สำเร็จ: ' + res.error + ' (ตรวจว่ารันสคริปต์ SQL แล้วหรือยัง)', connOk: false });
         });
       },
+      migrateMsg: st.migrateMsg || '',
+      onMigrateImages: () => this.migrateImages(),
       onPullRemote: () => { if (!this.online()) { this.flash('ยังไม่ได้เชื่อมต่อฐานข้อมูล'); return; } this.pullRemote(false); },
       syncState: st.syncing ? 'กำลังซิงก์…' : (this.online() ? 'เชื่อมต่อฐานข้อมูลแล้ว' : 'โหมดเก็บในเครื่อง'),
       syncColor: this.online() ? 'var(--color-text)' : 'color-mix(in srgb, var(--color-text) 55%, transparent)',
