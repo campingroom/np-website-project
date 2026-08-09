@@ -568,7 +568,7 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
       <span class="tag tag-accent" style="margin-bottom:16px;">ไฮไลต์</span>
       <div ref="{{ setHiWrapRef }}" style="perspective:1500px; perspective-origin:50% 45%; display:flex; flex-direction:column; align-items:center; gap:clamp(36px,6vw,88px); padding:clamp(28px,6vw,80px) 0 clamp(20px,4vw,56px);">
         <sc-for list="{{ highlightCards }}" as="h" hint-placeholder-count="4">
-          <article data-hi-card="" style="transform-style:preserve-3d; will-change:transform, opacity; align-self:{{ h.align }}; width:min(800px,100%); display:flex; flex-wrap:wrap; flex-direction:{{ h.dir }}; gap:clamp(14px,2vw,24px); padding:clamp(14px,2vw,20px); border:2px solid var(--color-divider); border-radius:22px; background:{{ h.bg }}; box-shadow:0 30px 60px -40px color-mix(in srgb, var(--color-text) 70%, transparent);">
+          <article data-hi-card="" onClick="{{ h.onOpen }}" style="cursor:{{ h.cursor }}; transform-style:preserve-3d; will-change:transform, opacity; align-self:{{ h.align }}; width:min(800px,100%); display:flex; flex-wrap:wrap; flex-direction:{{ h.dir }}; gap:clamp(14px,2vw,24px); padding:clamp(14px,2vw,20px); border:2px solid var(--color-divider); border-radius:22px; background:{{ h.bg }}; box-shadow:0 30px 60px -40px color-mix(in srgb, var(--color-text) 70%, transparent);">
             <figure class="{{ photoClass }}" style="margin:0; flex:1 1 300px; min-width:240px; border-radius:16px; overflow:hidden;">
               <sc-if value="{{ h.hasPhoto }}" hint-placeholder-val="{{ false }}">
                 <div data-hi-img="" style="{{ h.photoStyle }}"></div>
@@ -769,7 +769,7 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
       </div>
       <div class="card">
         <span class="card-kicker">เพลงมาร์ชประจำโรงเรียน</span>
-        <span data-cms="site.marchTitle" class="card-title" style="font-size:15px;">วิดีโอคาราโอเกะเพลงมาร์ช</span>
+        <span data-cms="site.marchTitle" class="card-title" style="font-size:15px;">มาร์ชโรงเรียนบ้านหนองสระพังโนนสะอาด</span>
         <a data-cms-href="marchLink" href="https://www.youtube.com/@%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B9%80%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%99%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%AB%E0%B8%99%E0%B8%AD%E0%B8%87%E0%B8%AA%E0%B8%A3%E0%B8%B0%E0%B8%9E%E0%B8%B1%E0%B8%87%E0%B9%82%E0%B8%99%E0%B8%99%E0%B8%AA%E0%B8%B0%E0%B8%AD%E0%B8%B2%E0%B8%94/videos" target="_blank" rel="noopener" class="btn btn-ghost" style="align-self:flex-start;">รับชมบน YouTube</a>
       </div>
     </div>
@@ -1000,7 +1000,7 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
       </sc-for>
     </div>
 
-    <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">การประกันคุณภาพการศึกษา (IQA)</h3>
+    <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">การประกันคุณภาพฯ</h3>
     <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px; max-width:820px;">
       <sc-for list="{{ iqaItems }}" as="q" hint-placeholder-count="1">
         <div class="card" onClick="{{ q.onOpen }}" style="cursor:{{ q.cursor }};">
@@ -1075,7 +1075,7 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
 
     <div style="position:relative; padding:0; margin:0 0 28px;">
       <div style="margin-bottom:clamp(22px,3vw,32px);">
-        <span class="tag tag-accent">รางวัลเกียรติยศ</span>
+        <span class="tag tag-accent">รางวัลและผลงาน</span>
         <p style="font-family:var(--font-heading); font-weight:800; font-size:clamp(24px,3.2vw,38px); line-height:1.18; margin:14px 0 14px; max-width:22ch;">ผลงานและรางวัลที่โรงเรียนภาคภูมิใจ</p>
       </div>
 
@@ -1103,7 +1103,7 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
                   </sc-if>
                 </figure>
                 <div style="position:absolute; left:0; right:0; bottom:0; padding:24px; background:linear-gradient(to top, color-mix(in srgb, var(--color-text) 86%, transparent) 0%, color-mix(in srgb, var(--color-text) 45%, transparent) 62%, transparent 100%);">
-                  <span style="display:block; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--color-accent-200); margin-bottom:8px;">{{ a.year }}</span>
+                  <span style="display:block; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--color-accent-200); margin-bottom:8px;">{{ a.groupLabel }} · {{ a.year }}</span>
                   <p style="margin:0; font-family:var(--font-heading); font-size:clamp(18px,2.2vw,24px); font-weight:800; line-height:1.25; color:#fff; max-width:30ch;">{{ a.title }}</p>
                   <sc-if value="{{ a.hasLink }}" hint-placeholder-val="{{ false }}">
                     <a href="{{ a.link }}" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:8px; margin-top:14px; padding:8px 14px; border:2px solid #fff; color:#fff; font-family:var(--font-heading); font-weight:800; font-size:12px; letter-spacing:.08em; text-transform:uppercase; text-decoration:none;" style-hover="background:#fff; color:var(--color-text);">ดูรายละเอียด
@@ -1127,7 +1127,10 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
       <div style="display:flex; flex-direction:column; margin-bottom:8px;">
         <sc-for list="{{ honorAchievements }}" as="a" hint-placeholder-count="6">
           <div style="display:flex; justify-content:space-between; gap:16px; padding:16px 0; border-bottom:2px solid var(--color-divider); flex-wrap:wrap;">
-            <p style="margin:0; font-size:15px; max-width:60ch;">{{ a.title }}</p>
+            <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; max-width:64ch;">
+              <span style="font-size:11px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--color-accent-700); white-space:nowrap;">{{ a.groupLabel }}</span>
+              <p style="margin:0; font-size:15px;">{{ a.title }}</p>
+            </div>
             <div style="display:flex; align-items:center; gap:14px;">
               <sc-if value="{{ a.hasLink }}" hint-placeholder-val="{{ false }}">
                 <a href="{{ a.link }}" target="_blank" rel="noopener" style="font-size:12px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--color-accent-700); text-decoration:none; border-bottom:2px solid var(--color-accent); white-space:nowrap;">รายละเอียด</a>
@@ -1174,7 +1177,9 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
         </div>
       </div>
     </div>
-    <a href="#contact" data-cms="marquee.ctaLabel" data-cms-href="marquee.ctaUrl" onClick="{{ navClick }}" class="btn btn-ghost" style="flex:none; color:var(--color-bg); border-color:var(--color-bg);">ติดต่อสอบถาม</a>
+    <sc-if value="{{ marqueeCtaShow }}" hint-placeholder-val="{{ true }}">
+      <a href="#contact" data-cms="marquee.ctaLabel" data-cms-href="marquee.ctaUrl" onClick="{{ navClick }}" class="btn btn-ghost" style="flex:none; color:var(--color-bg); border-color:var(--color-bg);">ติดต่อสอบถาม</a>
+    </sc-if>
   </div>
 </section>
 
@@ -1820,7 +1825,8 @@ class Component extends DCLogic {
   }
   gamesSrc() { return this.withLink(this.cmsList('games') || Component.GAMES); }
   assessmentsSrc() { return this.withLink(this.cmsList('assessments') || Component.ASSESSMENTS); }
-  awardsSrc() { return this.srcOf('awards', Component.ACHIEVEMENTS, (a) => ({ group: a.group === 'health' ? 'health' : 'honor', title: a.title || '', year: a.year || '', photo: a.photo || '', photoPos: a.photoPos || '50% 50%', photoZoom: a.photoZoom, photoFit: a.photoFit, link: a.link || '', slide: a.slide !== false })); }
+  static AWARD_GROUPS = { school: 'ของโรงเรียน', teacher: 'ของครู', student: 'ของนักเรียน' };
+  awardsSrc() { return this.srcOf('awards', Component.ACHIEVEMENTS, (a) => ({ group: Component.AWARD_GROUPS[a.group] ? a.group : 'school', groupLabel: Component.AWARD_GROUPS[a.group] || Component.AWARD_GROUPS.school, title: a.title || '', year: a.year || '', photo: a.photo || '', photoPos: a.photoPos || '50% 50%', photoZoom: a.photoZoom, photoFit: a.photoFit, link: a.link || '', slide: a.slide !== false })); }
   static bgStyle(src, pos, extra, zoom, fit) {
     const p = pos || '50% 50%';
     const z = Math.max(100, Math.min(300, +zoom || 100));
@@ -1834,11 +1840,13 @@ class Component extends DCLogic {
     if (z !== 100) base.transform = 'scale(' + (z / 100) + ')';
     return Object.assign(base, extra || {});
   }
-  slideAwards() { return this.awardsSrc().filter(a => a.group === 'honor' && a.slide !== false); }
+  slideAwards() { return this.awardsSrc().filter(a => a.slide !== false); }
 
   bannerSrc() {
     const c = this.cmsList('banner');
-    return c ? c.map((b, i) => ({ date: b.date || '', caption: b.caption || '', sub: b.sub || '', photo: b.photo || '', photoPos: b.photoPos || '50% 50%', photoZoom: b.photoZoom, photoFit: b.photoFit, photoId: 'banner-photo-' + i })) : Component.BANNER;
+    if (!c) return Component.BANNER;
+    const rows = c.map((b, i) => ({ ...b, _i: i })).filter(b => b.show !== false && b.show !== 'no');
+    return rows.map((b) => ({ date: b.date || '', caption: b.caption || '', sub: b.sub || '', link: b.link || '', photo: b.photo || '', photoPos: b.photoPos || '50% 50%', photoZoom: b.photoZoom, photoFit: b.photoFit, photoId: 'banner-photo-' + b._i }));
   };
   newsSrc() {
     const c = this.cmsList('news');
@@ -2699,6 +2707,8 @@ class Component extends DCLogic {
       ...b,
       hasPhoto: !!b.photo,
       noPhoto: !b.photo,
+      cursor: b.link ? 'pointer' : 'default',
+      onOpen: b.link ? () => window.open(b.link, '_blank', 'noopener') : undefined,
       photoStyle: Component.bgStyle(b.photo, b.photoPos, { width:'100%', height:'clamp(200px,24vw,290px)', willChange:'transform' }, b.photoZoom, b.photoFit),
       dir: i % 2 ? 'row-reverse' : 'row',
       align: i % 2 ? 'flex-end' : 'flex-start',
@@ -2783,7 +2793,7 @@ class Component extends DCLogic {
       studentAcc: this.studentAccFor(),
       newsList,
       grades: this.gradesSrc(),
-      honorAchievements: this.awardsSrc().filter(a => a.group === 'honor').map(a => ({ ...a, hasLink: !!a.link, link: a.link || '#' })),
+      honorAchievements: this.awardsSrc().map(a => ({ ...a, hasLink: !!a.link, link: a.link || '#' })),
       ...(() => {
         const honors = this.slideAwards();
         const n = honors.length;
@@ -2832,7 +2842,6 @@ class Component extends DCLogic {
           awardOrbitNext: this.awardOrbitNext,
         };
       })(),
-      healthProjects: this.awardsSrc().filter(a => a.group === 'health'),
       mediaItems: this.mediaSrc(),
       iqaItems: this.iqaSrc(),
       innovations: this.innovationsSrc(),
@@ -2850,6 +2859,7 @@ class Component extends DCLogic {
       healthOpen: s.healthOpen,
       healthChevronTransform: s.healthOpen ? 'rotate(180deg)' : 'rotate(0deg)',
       toggleHealthOpen: this.toggleHealthOpen,
+      marqueeCtaShow: !(this.state.cms && this.state.cms.marquee && this.state.cms.marquee.ctaShow === false),
       formSent: s.formSent,
       messengerHref: this._lastMessengerHref || this.messengerHref(''),
       resetForm: this.resetForm,
