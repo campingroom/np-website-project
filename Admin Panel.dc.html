@@ -10,6 +10,8 @@
 <helmet>
 <link rel="stylesheet" href="_ds/modernist-e418e37c-5b91-498b-bea5-a9b107ada9e7/styles.css">
 <script src="_ds/modernist-e418e37c-5b91-498b-bea5-a9b107ada9e7/_ds_bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="supabase-sync.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -30,7 +32,7 @@ a:hover { color:var(--color-accent); text-decoration:underline; }
   <div style="min-height:100vh; display:grid; grid-template-columns:1.05fr .95fr;">
     <div style="background:var(--color-text); color:var(--color-bg); padding:clamp(32px,5vw,72px); display:flex; flex-direction:column; justify-content:space-between; min-height:100vh;">
       <div style="display:flex; align-items:center; gap:12px;">
-        <div style="width:38px; height:38px; background:var(--color-accent);"></div>
+        <div style="{{ brandLogoStyleLg }}"></div>
         <span style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:rgba(243,242,242,.7);">School CMS</span>
       </div>
       <div>
@@ -72,7 +74,7 @@ a:hover { color:var(--color-accent); text-decoration:underline; }
 
     <aside style="background:var(--color-text); color:var(--color-bg); display:flex; flex-direction:column; position:sticky; top:0; height:100vh; overflow:auto;">
       <div style="padding:22px 20px; border-bottom:2px solid rgba(243,242,242,.18); display:flex; align-items:center; gap:10px;">
-        <div style="width:30px; height:30px; background:var(--color-accent); flex:none;"></div>
+        <div style="{{ brandLogoStyle }}"></div>
         <div style="min-width:0;">
           <p style="font-size:13px; font-weight:800; margin:0; color:var(--color-bg); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">หนองสระพังโนนสะอาด</p>
           <p style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; margin:2px 0 0; color:rgba(243,242,242,.55);">Content Manager</p>
@@ -117,6 +119,7 @@ a:hover { color:var(--color-accent); text-decoration:underline; }
           <span style="display:flex; align-items:center; gap:7px; font-size:12.5px; font-weight:600; color:{{ statusColor }};">
             <span style="width:8px; height:8px; background:{{ statusColor }}; display:inline-block;"></span>{{ statusText }}
           </span>
+          <span style="font-size:12px; font-weight:600; color:{{ syncColor }};">· {{ syncState }}</span>
           <a href="School Website sci-fi worldwide.dc.html" target="_blank" rel="noopener" class="btn btn-secondary" style="text-decoration:none;">ดูหน้าเว็บ</a>
           <button type="button" class="btn btn-primary" onClick="{{ onSave }}">บันทึกการเปลี่ยนแปลง</button>
         </div>
@@ -357,6 +360,7 @@ a:hover { color:var(--color-accent); text-decoration:underline; }
               </div>
               <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
                 <button type="button" class="btn btn-primary" onClick="{{ onTestConnection }}">ทดสอบการเชื่อมต่อ</button>
+                <button type="button" class="btn btn-secondary" onClick="{{ onPullRemote }}">ดึงข้อมูลล่าสุดจากฐานข้อมูล</button>
                 <button type="button" class="btn btn-secondary" onClick="{{ onExport }}">ส่งออกข้อมูลเป็น JSON</button>
                 <label class="btn btn-secondary" style="cursor:pointer; margin:0;">นำเข้าข้อมูลสำรอง
                   <input type="file" accept="application/json,.json" onChange="{{ onImport }}" style="display:none;">
@@ -368,13 +372,14 @@ a:hover { color:var(--color-accent); text-decoration:underline; }
 
               <h2 style="font-size:16px; font-weight:800; margin:34px 0 14px; padding-bottom:10px; border-bottom:2px solid var(--color-divider);">2 · ขั้นตอนติดตั้งจริง</h2>
               <ol style="margin:0; padding-left:20px; font-size:13.5px; line-height:1.85;">
-                <li>สมัคร supabase.com (ฟรี) แล้วสร้าง Project ใหม่ เลือก region Singapore</li>
-                <li>ไป SQL Editor วางสคริปต์ตารางด้านขวา แล้วกด Run</li>
-                <li>ไป Storage สร้าง bucket ชื่อ <strong>school-media</strong> ตั้งเป็น Public</li>
-                <li>ไป Authentication → Users เพิ่มอีเมลผู้ดูแล 1 บัญชี (ตามที่ตั้งไว้ในเมนู “บัญชีผู้ดูแล”)</li>
-                <li>คัดลอก Project URL และ anon key จากหน้า Settings → API มาใส่ช่องด้านบน</li>
-                <li>อัปโหลดโฟลเดอร์เว็บขึ้น <strong>Netlify</strong> (ลากไฟล์วางที่ app.netlify.com/drop ได้เลย) หรือ Vercel / GitHub Pages</li>
-                <li>ผูกโดเมนของโรงเรียนที่หน้า Domain settings แล้วเปิด HTTPS อัตโนมัติ</li>
+                <li>เข้า supabase.com → เปิดโปรเจกต์ของโรงเรียน</li>
+                <li>เมนู <strong>SQL Editor</strong> → New query → วางสคริปต์ด้านขวาทั้งหมด → กด Run (รันครั้งเดียวพอ)</li>
+                <li>เมนู <strong>Storage</strong> → New bucket → ตั้งชื่อ <strong>school-media</strong> → ติ๊ก Public bucket</li>
+                <li>เมนู <strong>Authentication → Users</strong> → Add user → ใส่อีเมลและรหัสผ่านของผู้ดูแล (ติ๊ก Auto Confirm User)</li>
+                <li>เมนู <strong>Project Settings → API</strong> → คัดลอก <strong>Project URL</strong> และ <strong>anon public key</strong> มาวางในช่องด้านซ้าย แล้วกด “ทดสอบการเชื่อมต่อ”</li>
+                <li>กด <strong>บันทึกการเปลี่ยนแปลง</strong> หนึ่งครั้ง เพื่ออัปโหลดเนื้อหาปัจจุบันขึ้นฐานข้อมูลเป็นครั้งแรก</li>
+                <li>ออกจากระบบแล้วเข้าใหม่ด้วย <strong>อีเมล + รหัสผ่านจากขั้นตอนที่ 4</strong> (ระบบจะเปลี่ยนไปใช้บัญชี Supabase อัตโนมัติ)</li>
+                <li>อัปโหลดเว็บขึ้น <strong>Vercel</strong> แล้วเปิด <em>Tweaks</em> ของหน้าเว็บ กรอก Project URL / anon key ชุดเดียวกัน เพื่อให้ผู้เข้าชมทุกคนเห็นข้อมูลจากฐานข้อมูล</li>
               </ol>
               <p style="font-size:12.5px; line-height:1.7; margin:14px 0 0; padding:12px 14px; background:var(--color-surface); border-left:3px solid var(--color-text);">ทั้ง Netlify, Vercel และ GitHub Pages เป็นโฮสต์ไฟล์แบบ static ที่ใช้ฟรีได้ ระบบล็อกอินและฐานข้อมูลอยู่ฝั่ง Supabase จึงไม่ต้องเช่าเซิร์ฟเวอร์เพิ่ม</p>
               <p style="font-size:12.5px; line-height:1.7; margin:16px 0 0; padding:12px 14px; background:var(--color-accent-100); border-left:3px solid var(--color-accent);">ตอนนี้ระบบบันทึกข้อมูลไว้ในเครื่องของคุณ (บันทึกได้ ใช้งานได้จริง แต่ยังไม่แชร์ข้ามเครื่อง) เมื่อกรอกค่าเชื่อมต่อครบและอัปโหลดขึ้นโฮสต์แล้ว ข้อมูลจะย้ายไปอยู่บนฐานข้อมูลกลางทันที</p>
@@ -382,88 +387,57 @@ a:hover { color:var(--color-accent); text-decoration:underline; }
 
             <section>
               <h2 style="font-size:16px; font-weight:800; margin:0 0 14px; padding-bottom:10px; border-bottom:2px solid var(--color-divider);">สคริปต์สร้างตาราง (SQL)</h2>
-              <pre style="margin:0 0 26px; padding:18px; background:var(--color-text); color:#e8e6e4; font-family:'Space Mono',monospace; font-size:11.5px; line-height:1.75; overflow:auto; max-height:420px;">-- ข้อมูลรายส่วนของหน้าเว็บ (key/value แบบยืดหยุ่น)
-create table site_content (
-  key         text primary key,     -- 'hero', 'about', 'contact'
-  data        jsonb not null,
-  updated_at  timestamptz default now(),
-  updated_by  uuid references auth.users
+              <pre style="margin:0 0 26px; padding:18px; background:var(--color-text); color:#e8e6e4; font-family:'Space Mono',monospace; font-size:11.5px; line-height:1.75; overflow:auto; max-height:460px;">-- 1) ตารางเก็บเนื้อหาทั้งเว็บ (คีย์เดียว: 'cms')
+create table if not exists site_content (
+  key        text primary key,
+  data       jsonb not null,
+  updated_at timestamptz default now()
 );
 
--- รายการที่มีหลายแถว: ข่าว แบนเนอร์ บุคลากร
-create table entries (
-  id          uuid primary key default gen_random_uuid(),
-  collection  text not null,        -- 'news' | 'banner' | 'staff'
-  position    int  not null default 0,
-  published   boolean default true,
-  data        jsonb not null,
-  created_at  timestamptz default now()
-);
-create index on entries (collection, position);
-
--- ไฟล์รูป/วิดีโอที่อัปโหลด
-create table media (
-  id         uuid primary key default gen_random_uuid(),
-  path       text not null,
-  kind       text not null,         -- 'image' | 'video' | 'file'
-  title      text,
-  created_at timestamptz default now()
-);
-
--- สิทธิ์ผู้ดูแล
-create table profiles (
-  id    uuid primary key references auth.users on delete cascade,
-  name  text,
-  role  text not null default 'editor'  -- 'admin' | 'editor'
-);
-
--- ทุกคนอ่านได้ เฉพาะผู้ล็อกอินแก้ไขได้
 alter table site_content enable row level security;
-alter table entries      enable row level security;
-alter table media        enable row level security;
 
-create policy "public read" on site_content for select using (true);
-create policy "public read" on entries      for select using (true);
-create policy "public read" on media        for select using (true);
+-- ผู้เข้าชมเว็บ: อ่านได้อย่างเดียว
+create policy "public read"  on site_content for select using (true);
+-- ผู้ดูแลที่ล็อกอินแล้ว: เพิ่ม/แก้ได้
+create policy "admin insert" on site_content for insert to authenticated with check (true);
+create policy "admin update" on site_content for update to authenticated using (true);
 
-create policy "admin write" on site_content for all
-  using (auth.role() = 'authenticated')
-  with check (auth.role() = 'authenticated');
-create policy "admin write" on entries for all
-  using (auth.role() = 'authenticated')
-  with check (auth.role() = 'authenticated');
-create policy "admin write" on media for all
-  using (auth.role() = 'authenticated')
-  with check (auth.role() = 'authenticated');</pre>
+-- 2) สิทธิ์ของ Storage bucket ชื่อ school-media
+create policy "media public read" on storage.objects
+  for select using (bucket_id = 'school-media');
+create policy "media admin write" on storage.objects
+  for insert to authenticated with check (bucket_id = 'school-media');
+create policy "media admin update" on storage.objects
+  for update to authenticated using (bucket_id = 'school-media');
+create policy "media admin delete" on storage.objects
+  for delete to authenticated using (bucket_id = 'school-media');</pre>
 
-              <h2 style="font-size:16px; font-weight:800; margin:0 0 14px; padding-bottom:10px; border-bottom:2px solid var(--color-divider);">โค้ดเชื่อมหน้าเว็บกับฐานข้อมูล</h2>
-              <pre style="margin:0; padding:18px; background:var(--color-text); color:#e8e6e4; font-family:'Space Mono',monospace; font-size:11.5px; line-height:1.75; overflow:auto; max-height:340px;">import { createClient } from '@supabase/supabase-js'
+              <h2 style="font-size:16px; font-weight:800; margin:0 0 14px; padding-bottom:10px; border-bottom:2px solid var(--color-divider);">โครงสร้างข้อมูลที่ระบบใช้จริง</h2>
+              <p style="font-size:12.5px; line-height:1.7; margin:0 0 14px; color:color-mix(in srgb, var(--color-text) 70%, transparent);">เนื้อหาทั้งเว็บถูกเก็บเป็นข้อมูลก้อนเดียวในแถวที่ key = 'cms' ของตาราง site_content ส่วนรูปภาพเก็บเป็นไฟล์ใน Storage bucket ชื่อ school-media โค้ดด้านล่างคือสิ่งที่ระบบทำให้อัตโนมัติ ไม่ต้องเขียนเพิ่ม</p>
+              <pre style="margin:0; padding:18px; background:var(--color-text); color:#e8e6e4; font-family:'Space Mono',monospace; font-size:11.5px; line-height:1.75; overflow:auto; max-height:340px;">const db = createClient(PROJECT_URL, ANON_KEY)
 
-const db = createClient(PROJECT_URL, ANON_KEY)
-
-// อ่านเนื้อหามาแสดงบนหน้าเว็บ
+// หน้าเว็บ: อ่านเนื้อหาทั้งหมด (แถวเดียว)
 const { data } = await db
   .from('site_content')
-  .select('key, data')
+  .select('data, updated_at')
+  .eq('key', 'cms')
+  .maybeSingle()
 
-// อ่านข่าวเรียงตามลำดับ
-const { data: news } = await db
-  .from('entries')
-  .select('*')
-  .eq('collection', 'news')
-  .eq('published', true)
-  .order('position')
-
-// ล็อกอินผู้ดูแล
+// Admin: ล็อกอินผู้ดูแล
 await db.auth.signInWithPassword({ email, password })
 
-// บันทึกจากหน้า Admin
-await db.from('site_content')
-  .upsert({ key: 'hero', data: heroValues })
+// Admin: กดบันทึก = เขียนทับแถวเดิม
+await db.from('site_content').upsert(
+  { key: 'cms', data: allContent, updated_at: new Date().toISOString() },
+  { onConflict: 'key' }
+)
 
-// อัปโหลดรูป
-await db.storage.from('school-media')
-  .upload(`news/${file.name}`, file)</pre>
+// Admin: อัปโหลดรูปเข้า Storage แล้วเก็บเฉพาะ URL
+const { data: up } = await db.storage
+  .from('school-media')
+  .upload(path, file)
+const url = db.storage.from('school-media')
+  .getPublicUrl(up.path).data.publicUrl</pre>
             </section>
           </div>
         </sc-if>
@@ -487,6 +461,8 @@ class Component extends DCLogic {
   static BANNER_LIMIT = 6;
 
   static normalise(data) {
+    const okGroups = { school:1, teacher:1, student:1 };
+    (data.awards || []).forEach(x => { if (!okGroups[x.group]) x.group = 'school'; });
     let n = 0;
     (data.banner || []).forEach(b => {
       if (b.show === false || b.show === 'no') return;
@@ -724,12 +700,12 @@ class Component extends DCLogic {
   static TITLE_KEY = { banner:'caption', staff:'name', academics:'level', news:'title', video:'title', docs:'title', menu:'label', iqa:'title', stats:'label', missions:'text', strategies:'text', org:'label', grades:'name', media:'title', innovations:'title', games:'title', assessments:'title', awards:'title' };
 
   static DEFAULT_DATA = {
-    site: { name:'โรงเรียนบ้านหนองสระพังโนนสะอาด', nameEn:'BANNONGSAPUNGNONSA-ARD SCHOOL', affiliation:'สพป.มหาสารคาม เขต 3', motto:'ได้เรียน เรียนดี มีความสุข', logo:'', color1Name:'ขาว', color1Hex:'#ffffff', color2Name:'แดง', color2Hex:'#ec3013', marchTitle:'มาร์ชโรงเรียนบ้านหนองสระพังโนนสะอาด', marchUrl:'', footerNote:'© 2569 โรงเรียนบ้านหนองสระพังโนนสะอาด · สพป.มหาสารคาม เขต 3' },
+    site: { name:'โรงเรียนบ้านหนองสระพังโนนสะอาด', nameEn:'BANNONGSAPUNGNONSA-ARD SCHOOL', affiliation:'สพป.มหาสารคาม เขต 3', motto:'ได้เรียน เรียนดี มีความสุข', logo:'assets/logo-crest.png', color1Name:'ขาว', color1Hex:'#ffffff', color2Name:'แดง', color2Hex:'#ec3013', marchTitle:'มาร์ชโรงเรียนบ้านหนองสระพังโนนสะอาด', marchUrl:'', footerNote:'© 2569 โรงเรียนบ้านหนองสระพังโนนสะอาด · สพป.มหาสารคาม เขต 3' },
     hero: { kicker:'สำนักงานเขตพื้นที่การศึกษาประถมศึกษามหาสารคาม เขต 3', title:'ได้เรียน เรียนดี มีความสุข', sub:'“เรียนดี มีวินัย ใฝ่พัฒนา รักษาสิ่งแวดล้อม เพียบพร้อมคุณธรรม ร่วมกิจกรรมชุมชน” สถานศึกษาที่มุ่งพัฒนาเด็กทุกคนให้เติบโตอย่างมีคุณภาพ เปิดสอนตั้งแต่ระดับปฐมวัย (อนุบาล 2–3) ถึงระดับประถมศึกษา (ป.1–6)', photo:'', ctaLabel:'ข่าวประชาสัมพันธ์', ctaLabel2:'ติดต่อเรา', ctaUrl:'#news', videoUrl:'https://www.youtube.com/embed/ImgFAc5CpHQ' },
     about: { title:'ประวัติและข้อมูลทั่วไป', lead:'โรงเรียนมีหมู่บ้านหลักในเขตบริการ 3 หมู่ ได้แก่ หมู่ที่ 1 บ้านหนองสระพัง หมู่ที่ 3 บ้านโนนสะอาด และหมู่ที่ 15 บ้านหนองสระพัง โดยโรงเรียนตั้งอยู่หมู่ที่ 15 บ้านหนองสระพัง ตำบลเขวาไร่ อำเภอโกสุมพิสัย จังหวัดมหาสารคาม 44140 เป็นโรงเรียนในสังกัดศูนย์พัฒนาคุณภาพการศึกษาวังยาวเขวาไร่ดอนกลาง สำนักงานเขตพื้นที่การศึกษาประถมศึกษามหาสารคาม เขต 3 สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน', history:'โรงเรียนบ้านหนองสระพังโนนสะอาด ก่อตั้งขึ้นเมื่อวันที่ 19 ตุลาคม พ.ศ. 2474 โดยใช้ศาลาการเปรียญวัดหนองสระพังจัดการเรียนการสอน ต่อมาในปี พ.ศ. 2482 ชาวบ้านได้จับจองหักร้างถางพงที่ดินแปลงใหม่เพื่อเป็นที่ตั้งโรงเรียนที่เป็นเอกเทศ บนเนื้อที่ 10 ไร่ 9 ตารางวา และได้ย้ายโรงเรียนมาสร้างในที่ดินแปลงใหม่จนถึงปัจจุบัน เพื่อความภาคภูมิใจในความเป็นเจ้าของร่วมกันของหมู่บ้านในเขตพื้นที่บริการ โรงเรียนได้รับอนุมัติให้เปลี่ยนชื่อใหม่เป็น “โรงเรียนบ้านหนองสระพังโนนสะอาด” อายุการก่อตั้งนับถึงสิ้นปีการศึกษา 2563 รวม 91 ปี', vision:'สู่คุณภาพและมาตรฐานการศึกษาด้วยวิธีการเรียนรู้ สอน และบริหาร ที่หลากหลาย', philosophy:'สุวิชาโน ภวังโหติ — ผู้รู้ดี คือผู้เจริญ', motto:'เรียนดี มีวินัย ใฝ่พัฒนา รักษาสิ่งแวดล้อม เพียบพร้อมคุณธรรม ร่วมกิจกรรมชุมชน', mission:'', directorName:'นายกิจภูมิ บุญอบ', directorRole:'ผู้อำนวยการโรงเรียน', directorPhoto:'assets/director-cutout-bg.png', directorMsg:'', students:'110 คน', teachers:'15 คน' },
     contact: { address:'หมู่ที่ 15 บ้านหนองสระพัง ตำบลเขวาไร่ อำเภอโกสุมพิสัย จังหวัดมหาสารคาม 44140', phone:'062-601-7885', email:'jokitboo@hotmail.com', facebook:'https://www.facebook.com/profile.php?id=100058599200322', mapUrl:'https://maps.app.goo.gl/aRgQZ7Y1n2Ty9Qhn7', lat:'16.30382', lng:'102.90105', hours:'จันทร์–ศุกร์ 08:00–15:30 น.', addressShort:'หมู่ที่ 15 ต.เขวาไร่ อ.โกสุมพิสัย จ.มหาสารคาม 44140', messenger:'', youtube:'https://www.youtube.com/@โรงเรียนบ้านหนองสระพังโนนสะอาด/videos' },
     marquee: { text1:'พร้อมให้บุตรหลานของท่านเป็นส่วนหนึ่งของครอบครัวเรา', text2:'ได้เรียน เรียนดี มีความสุข', ctaLabel:'ติดต่อสอบถาม', ctaUrl:'#contact', ctaShow:true },
-    connect: { url:'', key:'', bucket:'school-media' },
+    connect: { url:'https://ormxmxkptzsflwqinnkp.supabase.co', key:'sb_publishable_SzYlmkl3w-otgeuz9v3n8Q_C4O5f-Zg', bucket:'school-media' },
     banner: [
       { date:'5 ตุลาคม 2568', caption:'ฟุตบอล "หนองสระพังโนนสะอาด คัพ" ครั้งที่ 2', sub:'ผอ.สพป.มหาสารคาม เขต 3 เป็นประธานพิธีเปิด ณ สนามโรงเรียน', photo:'' },
       { date:'ปีการศึกษา 2567', caption:'การเลือกตั้งประธานนักเรียน', sub:'ส่งเสริมวิถีประชาธิปไตยในสถานศึกษา', photo:'' },
@@ -880,7 +856,7 @@ class Component extends DCLogic {
   state = {
     authed: false, user: null, loginUser: '', loginPass: '', loginError: false,
     section: 'dashboard', data: Component.normalise(JSON.parse(JSON.stringify(Component.DEFAULT_DATA))),
-    dirty: false, toast: '', connMsg: '', connOk: false, savedAt: '',
+    dirty: false, toast: '', connMsg: '', connOk: false, savedAt: '', syncing: false, remoteAt: '', authMode: 'local',
     activity: [
       { time:'วันนี้ 09:14', text:'อัปเดตข่าว "ฟุตบอลหนองสระพังโนนสะอาด คัพ"', by:'ผู้ดูแลระบบ' },
       { time:'เมื่อวาน', text:'เพิ่มรูปกิจกรรมวันแม่ 6 ภาพ', by:'ครูธุรการ' },
@@ -904,10 +880,35 @@ class Component extends DCLogic {
       if (raw) this.setState({ data: Component.normalise({ ...JSON.parse(JSON.stringify(Component.DEFAULT_DATA)), ...JSON.parse(raw) }) });
       const sess = localStorage.getItem(Component.SESSION_KEY);
       if (sess) this.setState({ authed: true, user: JSON.parse(sess) });
+      setTimeout(() => {
+        if (!this.online()) return;
+        window.SB.session(this.cfg()).then(s => {
+          if (s.ok && s.user) this.setState({ authed: true, user: { name: s.user.email, role: 'ผู้ดูแลเว็บไซต์' } });
+        });
+        this.pullRemote(true);
+      }, 400);
     } catch (e) {}
   }
 
   section() { return Component.SECTIONS.find(s => s.id === this.state.section) || Component.SECTIONS[0]; }
+
+  cfg() { return (this.state.data && this.state.data.connect) || {}; }
+  online() { return !!(window.SB && window.SB.ready() && window.SB.configured(this.cfg())); }
+
+  pullRemote(silent) {
+    if (!this.online()) return Promise.resolve(false);
+    this.setState({ syncing: true });
+    return window.SB.load(this.cfg()).then(res => {
+      this.setState({ syncing: false });
+      if (!res.ok) { if (!silent) this.flash('ดึงข้อมูลไม่สำเร็จ: ' + res.error); return false; }
+      if (!res.data) { if (!silent) this.flash('ยังไม่มีข้อมูลบนฐานข้อมูล — กดบันทึกเพื่ออัปโหลดครั้งแรก'); return false; }
+      const merged = Component.normalise({ ...JSON.parse(JSON.stringify(Component.DEFAULT_DATA)), ...res.data, connect: this.cfg() });
+      this.setState({ data: merged, dirty: false, remoteAt: res.updatedAt || '' });
+      try { localStorage.setItem(Component.STORE_KEY, JSON.stringify(merged)); } catch (e) {}
+      if (!silent) this.flash('ดึงข้อมูลล่าสุดจากฐานข้อมูลแล้ว');
+      return true;
+    });
+  }
 
   flash(msg) {
     clearTimeout(this._t);
@@ -986,6 +987,17 @@ class Component extends DCLogic {
       onLoginPass: e => this.setState({ loginPass: e.target.value, loginError: false }),
       onLogin: e => {
         e.preventDefault();
+        if (this.online()) {
+          this.setState({ loginError: false });
+          window.SB.signIn(this.cfg(), st.loginUser, st.loginPass).then(res => {
+            if (!res.ok) { this.setState({ loginError: true }); this.flash('เข้าสู่ระบบไม่สำเร็จ: ' + res.error); return; }
+            const user = { name: res.user.email, role: 'ผู้ดูแลเว็บไซต์' };
+            try { localStorage.setItem(Component.SESSION_KEY, JSON.stringify(user)); } catch (err) {}
+            this.setState({ authed: true, user, loginPass: '', loginError: false });
+            this.pullRemote(true);
+          });
+          return;
+        }
         const acc = Component.ACCOUNTS[st.loginUser.trim().toLowerCase()];
         if (acc && acc.pass === st.loginPass) {
           const user = { name: acc.name, role: acc.role };
@@ -993,7 +1005,7 @@ class Component extends DCLogic {
           this.setState({ authed: true, user, loginPass: '', loginError: false });
         } else this.setState({ loginError: true });
       },
-      onLogout: () => { try { localStorage.removeItem(Component.SESSION_KEY); } catch (e) {} this.setState({ authed: false, loginUser: '', loginPass: '' }); },
+      onLogout: () => { if (this.online()) window.SB.signOut(this.cfg()); try { localStorage.removeItem(Component.SESSION_KEY); } catch (e) {} this.setState({ authed: false, loginUser: '', loginPass: '' }); },
 
       navGroups: groups,
       userName: st.user ? st.user.name : 'ผู้ดูแลระบบ',
@@ -1001,6 +1013,12 @@ class Component extends DCLogic {
       userInitial: (st.user ? st.user.name : 'ผ').slice(0, 1),
       onNav: e => this.setState({ section: e.currentTarget.dataset.id, connMsg: '' }),
 
+      brandLogoStyle: (D.site && D.site.logo)
+        ? { width:'30px', height:'30px', flex:'none', backgroundImage:'url("' + D.site.logo + '")', backgroundSize:'contain', backgroundPosition:'center', backgroundRepeat:'no-repeat' }
+        : { width:'30px', height:'30px', flex:'none', background:'var(--color-accent)' },
+      brandLogoStyleLg: (D.site && D.site.logo)
+        ? { width:'38px', height:'38px', flex:'none', backgroundImage:'url("' + D.site.logo + '")', backgroundSize:'contain', backgroundPosition:'center', backgroundRepeat:'no-repeat' }
+        : { width:'38px', height:'38px', flex:'none', background:'var(--color-accent)' },
       sectionTitle: sec.label, sectionKicker: sec.kicker, sectionDesc: sec.desc,
       isDashboard: sec.type === 'dashboard', isObject: sec.type === 'object',
       isList: sec.type === 'list', isConnect: sec.type === 'connect',
@@ -1135,11 +1153,24 @@ class Component extends DCLogic {
       onPickImage: e => {
         const el = e.target, ds = { ...el.dataset }, file = el.files && el.files[0];
         if (!file) return;
-        const rd = new FileReader();
-        rd.onload = () => this.mutate(d => {
-          if (ds.list) d[ds.list][+ds.idx][ds.key] = rd.result;
-          else d[ds.group][ds.key] = rd.result;
+        const put = (val) => this.mutate(d => {
+          if (ds.list) d[ds.list][+ds.idx][ds.key] = val;
+          else d[ds.group][ds.key] = val;
         });
+        if (this.online()) {
+          this.flash('กำลังอัปโหลดรูปขึ้นฐานข้อมูล…');
+          window.SB.upload(this.cfg(), (st.data.connect || {}).bucket || 'school-media', file, ds.list || ds.group).then(res => {
+            if (res.ok) { put(res.url); this.flash('อัปโหลดรูปขึ้น Storage แล้ว — อย่าลืมกดบันทึก'); return; }
+            const rd2 = new FileReader();
+            rd2.onload = () => put(rd2.result);
+            rd2.readAsDataURL(file);
+            this.flash('อัปขึ้น Storage ไม่สำเร็จ (' + res.error + ') — เก็บไว้ในเครื่องแทน');
+          });
+          e.target.value = '';
+          return;
+        }
+        const rd = new FileReader();
+        rd.onload = () => put(rd.result);
         rd.readAsDataURL(file);
         this.flash('อัปโหลดรูปแล้ว — อย่าลืมกดบันทึก');
       },
@@ -1171,17 +1202,34 @@ class Component extends DCLogic {
         try { localStorage.setItem(Component.STORE_KEY, JSON.stringify(st.data)); } catch (e) {}
         const now = new Date().toLocaleTimeString('th-TH', { hour:'2-digit', minute:'2-digit' }) + ' น.';
         this.setState({ dirty: false, savedAt: now });
-        this.flash('บันทึกเรียบร้อย — หน้าเว็บอัปเดตแล้ว');
+        if (this.online()) {
+          this.setState({ syncing: true });
+          window.SB.save(this.cfg(), st.data).then(res => {
+            this.setState({ syncing: false });
+            this.flash(res.ok ? 'บันทึกขึ้นฐานข้อมูลแล้ว — หน้าเว็บอัปเดตทุกเครื่อง' : 'บันทึกในเครื่องแล้ว แต่ขึ้นฐานข้อมูลไม่สำเร็จ: ' + res.error);
+          });
+          return;
+        }
+        this.flash('บันทึกเรียบร้อย — หน้าเว็บอัปเดตแล้ว (เก็บในเครื่องนี้)');
       },
 
       sbUrl: D.connect.url, sbKey: D.connect.key, sbBucket: D.connect.bucket,
       connMsg: st.connMsg, connColor: st.connOk ? 'var(--color-text)' : 'var(--color-accent)',
       onTestConnection: () => {
         const c = D.connect;
-        if (!c.url || !c.key) this.setState({ connMsg: 'ยังไม่ได้กรอก Project URL และ anon key — ตอนนี้ระบบยังบันทึกลงเครื่องนี้เท่านั้น', connOk: false });
-        else if (!/^https:\/\/.+\.supabase\.co\/?$/.test(c.url.trim())) this.setState({ connMsg: 'รูปแบบ Project URL ไม่ถูกต้อง ควรเป็น https://xxxxxxxx.supabase.co', connOk: false });
-        else this.setState({ connMsg: 'รูปแบบค่าเชื่อมต่อถูกต้อง — ขั้นต่อไปคือรันสคริปต์ SQL และอัปโหลดเว็บขึ้นโฮสต์', connOk: true });
+        if (!c.url || !c.key) { this.setState({ connMsg: 'ยังไม่ได้กรอก Project URL และ anon key — ตอนนี้ระบบยังบันทึกลงเครื่องนี้อย่างเดียว', connOk: false }); return; }
+        if (!window.SB || !window.SB.ready()) { this.setState({ connMsg: 'ยังโหลดไลบรารี Supabase ไม่สำเร็จ — ตรวจสอบอินเทอร์เน็ตแล้วลองใหม่', connOk: false }); return; }
+        if (!window.SB.configured(c)) { this.setState({ connMsg: 'รูปแบบ Project URL ไม่ถูกต้อง ต้องเป็น https://xxxx.supabase.co', connOk: false }); return; }
+        this.setState({ connMsg: 'กำลังทดสอบการเชื่อมต่อ…', connOk: true, syncing: true });
+        window.SB.ping(c).then(res => {
+          this.setState({ syncing: false });
+          if (res.ok) this.setState({ connMsg: 'เชื่อมต่อสำเร็จ — พบตาราง site_content พร้อมใช้งาน', connOk: true });
+          else this.setState({ connMsg: 'เชื่อมต่อไม่สำเร็จ: ' + res.error + ' (ตรวจว่ารันสคริปต์ SQL แล้วหรือยัง)', connOk: false });
+        });
       },
+      onPullRemote: () => { if (!this.online()) { this.flash('ยังไม่ได้เชื่อมต่อฐานข้อมูล'); return; } this.pullRemote(false); },
+      syncState: st.syncing ? 'กำลังซิงก์…' : (this.online() ? 'เชื่อมต่อฐานข้อมูลแล้ว' : 'โหมดเก็บในเครื่อง'),
+      syncColor: this.online() ? 'var(--color-text)' : 'color-mix(in srgb, var(--color-text) 55%, transparent)',
       onExport: () => {
         const blob = new Blob([JSON.stringify(st.data, null, 2)], { type:'application/json' });
         const a = document.createElement('a');

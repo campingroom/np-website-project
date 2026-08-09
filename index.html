@@ -15,6 +15,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
 <script src="_ds/modernist-e418e37c-5b91-498b-bea5-a9b107ada9e7/_ds_bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="supabase-sync.js"></script>
 <script src="image-slot.js"></script>
 <script src="https://unpkg.com/three@0.150.1/build/three.min.js"></script>
 <script src="globe-engine.js"></script>
@@ -1299,15 +1301,15 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
       </div>
       <p style="font-size:13.5px; line-height:1.6; margin:0 0 24px; color:color-mix(in srgb, var(--color-text) 70%, transparent);">สำหรับครูและเจ้าหน้าที่ที่ได้รับสิทธิ์จัดการเว็บไซต์เท่านั้น</p>
       <div class="field" style="margin-bottom:16px;">
-        <label for="admin-user">ชื่อผู้ใช้</label>
-        <input class="input" id="admin-user" name="user" type="text" autocomplete="username" placeholder="admin">
+        <label for="admin-user">อีเมลผู้ดูแล</label>
+        <input class="input" id="admin-user" name="user" type="email" autocomplete="username" placeholder="name@example.com">
       </div>
       <div class="field" style="margin-bottom:24px;">
         <label for="admin-pass">รหัสผ่าน</label>
         <input class="input" id="admin-pass" name="pass" type="password" autocomplete="current-password" placeholder="••••••••">
       </div>
       <sc-if value="{{ adminError }}" hint-placeholder-val="{{ false }}">
-        <p style="font-size:13px; font-weight:700; color:var(--color-accent-700); margin:0 0 16px;">กรุณากรอกชื่อผู้ใช้และรหัสผ่านให้ครบถ้วน</p>
+        <p style="font-size:13px; font-weight:700; color:var(--color-accent-700); margin:0 0 16px;">{{ adminMsg }}</p>
       </sc-if>
       <div style="display:flex; gap:12px; flex-wrap:wrap;">
         <button type="submit" class="btn btn-primary">เข้าสู่ระบบ</button>
@@ -1323,7 +1325,7 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;navStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;floating&quot;,&quot;options&quot;:[&quot;floating&quot;,&quot;classic&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;motionStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;fade&quot;,&quot;options&quot;:[&quot;fade&quot;,&quot;slide&quot;,&quot;instant&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;lightBackdrop&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;glowgrid&quot;,&quot;options&quot;:[&quot;glow&quot;,&quot;panels&quot;,&quot;grid&quot;,&quot;glowgrid&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Light theme&quot;},&quot;photoTreatment&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;grayscale&quot;,&quot;color&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Imagery&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;navStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;floating&quot;,&quot;options&quot;:[&quot;floating&quot;,&quot;classic&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;motionStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;fade&quot;,&quot;options&quot;:[&quot;fade&quot;,&quot;slide&quot;,&quot;instant&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;lightBackdrop&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;glowgrid&quot;,&quot;options&quot;:[&quot;glow&quot;,&quot;panels&quot;,&quot;grid&quot;,&quot;glowgrid&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Light theme&quot;},&quot;photoTreatment&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;grayscale&quot;,&quot;color&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Imagery&quot;},&quot;supabaseUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://ormxmxkptzsflwqinnkp.supabase.co&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;ฐานข้อมูล Supabase&quot;},&quot;supabaseKey&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;sb_publishable_SzYlmkl3w-otgeuz9v3n8Q_C4O5f-Zg&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;ฐานข้อมูล Supabase&quot;}}">
 class Component extends DCLogic {
   static ORG_CHART = [
     { id: 'academic', tag: 'Academic Affairs', label: 'ฝ่ายบริหารงานวิชาการ', icon: 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20 M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15Z', desc: 'วางแผน พัฒนา และกำกับดูแลหลักสูตร การจัดการเรียนรู้ และการวัดประเมินผลของโรงเรียน', tasks: ['จัดทำและพัฒนาหลักสูตรสถานศึกษา', 'นิเทศและติดตามการจัดการเรียนรู้', 'งานวัดและประเมินผลการเรียน', 'งานห้องสมุดและสื่อการเรียนรู้'] },
@@ -1522,6 +1524,7 @@ class Component extends DCLogic {
     formSent: false,
     adminOpen: false,
     adminError: false,
+    adminMsg: '',
     reducedMotion: false,
     bannerIndex: 0,
     staffGroup: 'admin',
@@ -1826,7 +1829,7 @@ class Component extends DCLogic {
   gamesSrc() { return this.withLink(this.cmsList('games') || Component.GAMES); }
   assessmentsSrc() { return this.withLink(this.cmsList('assessments') || Component.ASSESSMENTS); }
   static AWARD_GROUPS = { school: 'ของโรงเรียน', teacher: 'ของครู', student: 'ของนักเรียน' };
-  awardsSrc() { return this.srcOf('awards', Component.ACHIEVEMENTS, (a) => ({ group: Component.AWARD_GROUPS[a.group] ? a.group : 'school', groupLabel: Component.AWARD_GROUPS[a.group] || Component.AWARD_GROUPS.school, title: a.title || '', year: a.year || '', photo: a.photo || '', photoPos: a.photoPos || '50% 50%', photoZoom: a.photoZoom, photoFit: a.photoFit, link: a.link || '', slide: a.slide !== false })); }
+  awardsSrc() { return this.srcOf('awards', Component.ACHIEVEMENTS.map(a => ({ ...a, group: 'school', groupLabel: Component.AWARD_GROUPS.school, photo: '', photoPos: '50% 50%', link: '', slide: true })), (a) => ({ group: Component.AWARD_GROUPS[a.group] ? a.group : 'school', groupLabel: Component.AWARD_GROUPS[a.group] || Component.AWARD_GROUPS.school, title: a.title || '', year: a.year || '', photo: a.photo || '', photoPos: a.photoPos || '50% 50%', photoZoom: a.photoZoom, photoFit: a.photoFit, link: a.link || '', slide: a.slide !== false })); }
   static bgStyle(src, pos, extra, zoom, fit) {
     const p = pos || '50% 50%';
     const z = Math.max(100, Math.min(300, +zoom || 100));
@@ -1910,10 +1913,33 @@ class Component extends DCLogic {
     this.setState({ cms }, this.applyCms);
   };
 
+  static SB_URL = 'https://ormxmxkptzsflwqinnkp.supabase.co';
+  static SB_KEY = 'sb_publishable_SzYlmkl3w-otgeuz9v3n8Q_C4O5f-Zg';
+
+  sbConfig() {
+    const url = (this.props.supabaseUrl || Component.SB_URL || '').trim();
+    const key = (this.props.supabaseKey || Component.SB_KEY || '').trim();
+    if (url && key) return { url, key };
+    const local = this.readCms();
+    if (local && local.connect && local.connect.url && local.connect.key) return { url: local.connect.url, key: local.connect.key };
+    return null;
+  }
+
+  syncRemote = () => {
+    const cfg = this.sbConfig();
+    if (!cfg || !window.SB || !window.SB.ready() || !window.SB.configured(cfg)) return;
+    window.SB.load(cfg).then(res => {
+      if (!res.ok || !res.data) return;
+      this.setState({ cms: res.data }, this.applyCms);
+      try { localStorage.setItem(Component.CMS_KEY, JSON.stringify(res.data)); } catch (e) {}
+    });
+  };
+
   componentDidUpdate() { if (this.state.cms) this.scheduleCms(); }
 
   componentDidMount() {
     this.syncCms();
+    setTimeout(this.syncRemote, 300);
     this._onCmsStorage = (e) => { if (!e.key || e.key === Component.CMS_KEY) this.syncCms(); };
     window.addEventListener('storage', this._onCmsStorage);
     this._onCmsFocus = () => this.syncCms();
@@ -2486,7 +2512,7 @@ class Component extends DCLogic {
 
   resetForm = () => this.setState({ formSent: false });
 
-  openAdmin = () => { this.setState({ adminOpen: true, adminError: false }); };
+  openAdmin = () => { this.setState({ adminOpen: true, adminError: false, adminMsg: '' }); };
   closeAdmin = () => { this.setState({ adminOpen: false, adminError: false }); };
   stopPropagation = (e) => { e.stopPropagation(); };
   onAdminSubmit = (e) => {
@@ -2494,8 +2520,19 @@ class Component extends DCLogic {
     const form = e.currentTarget;
     const user = form.user && form.user.value.trim();
     const pass = form.pass && form.pass.value.trim();
-    if (!user || !pass) { this.setState({ adminError: true }); return; }
-    this.setState({ adminOpen: false, adminError: false });
+    if (!user || !pass) { this.setState({ adminError: true, adminMsg: 'กรุณากรอกอีเมลและรหัสผ่านให้ครบ' }); return; }
+    const go = () => { window.location.href = 'Admin Panel.dc.html'; };
+    const cfg = this.sbConfig();
+    if (cfg && window.SB && window.SB.ready() && window.SB.configured(cfg)) {
+      this.setState({ adminMsg: 'กำลังตรวจสอบสิทธิ์…', adminError: false });
+      window.SB.signIn(cfg, user, pass).then(res => {
+        if (res.ok) { this.setState({ adminOpen: false, adminError: false, adminMsg: '' }); go(); }
+        else this.setState({ adminError: true, adminMsg: 'อีเมลหรือรหัสผ่านไม่ถูกต้อง' });
+      });
+      return;
+    }
+    this.setState({ adminOpen: false, adminError: false, adminMsg: '' });
+    go();
   };
 
   prevBanner = () => {
@@ -2866,6 +2903,7 @@ class Component extends DCLogic {
       formNotSent: !s.formSent,
       adminOpen: s.adminOpen,
       adminError: s.adminError,
+      adminMsg: s.adminMsg || 'อีเมลหรือรหัสผ่านไม่ถูกต้อง',
       backToTop: {
         opacity: 0,
         pointerEvents: 'none',
