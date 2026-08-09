@@ -121,7 +121,7 @@ a:hover { color:var(--color-accent); text-decoration:underline; }
             <span style="width:8px; height:8px; background:{{ statusColor }}; display:inline-block;"></span>{{ statusText }}
           </span>
           <span style="font-size:12px; font-weight:600; color:{{ syncColor }};">· {{ syncState }}</span>
-          <a href="School Website sci-fi worldwide.dc.html" target="_blank" rel="noopener" class="btn btn-secondary" style="text-decoration:none;">ดูหน้าเว็บ</a>
+          <a href="{{ siteHref }}" target="_blank" rel="noopener" class="btn btn-secondary" style="text-decoration:none;">ดูหน้าเว็บ</a>
           <button type="button" class="btn btn-primary" onClick="{{ onSave }}">บันทึกการเปลี่ยนแปลง</button>
         </div>
       </header>
@@ -1020,6 +1020,13 @@ class Component extends DCLogic {
       brandLogoStyleLg: (D.site && D.site.logo)
         ? { width:'38px', height:'38px', flex:'none', backgroundImage:'url("' + D.site.logo + '")', backgroundSize:'contain', backgroundPosition:'center', backgroundRepeat:'no-repeat' }
         : { width:'38px', height:'38px', flex:'none', background:'var(--color-accent)' },
+      siteHref: (() => {
+        try {
+          const p = decodeURIComponent(window.location.pathname);
+          if (/\.dc\.html$/.test(p)) return 'School Website sci-fi worldwide.dc.html';
+        } catch (e) {}
+        return './';
+      })(),
       sectionTitle: sec.label, sectionKicker: sec.kicker, sectionDesc: sec.desc,
       isDashboard: sec.type === 'dashboard', isObject: sec.type === 'object',
       isList: sec.type === 'list', isConnect: sec.type === 'connect',
