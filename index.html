@@ -20,10 +20,12 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="supabase-sync.js"></script>
 <script src="image-slot.js"></script>
-<script src="https://unpkg.com/three@0.150.1/build/three.min.js"></script>
-<script src="globe-engine.js"></script>
+<link rel="preconnect" href="https://ormxmxkptzsflwqinnkp.supabase.co" crossorigin="">
 <style>
 html { scroll-behavior: auto; }
+@media (max-width: 720px) {
+  #dc-root [style*="backdrop-filter"] { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+}
 body { margin: 0; text-wrap: pretty; }
 
 /* ── Sci-fi dark skin: token remap ───────────────────────────── */
@@ -575,7 +577,7 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
           <article data-hi-card="" onClick="{{ h.onOpen }}" style="cursor:{{ h.cursor }}; transform-style:preserve-3d; will-change:transform, opacity; align-self:{{ h.align }}; width:min(800px,100%); display:flex; flex-wrap:wrap; flex-direction:{{ h.dir }}; gap:clamp(14px,2vw,24px); padding:clamp(14px,2vw,20px); border:2px solid var(--color-divider); border-radius:22px; background:{{ h.bg }}; box-shadow:0 30px 60px -40px color-mix(in srgb, var(--color-text) 70%, transparent);">
             <figure class="{{ photoClass }}" style="margin:0; flex:1 1 300px; min-width:240px; border-radius:16px; overflow:hidden;">
               <sc-if value="{{ h.hasPhoto }}" hint-placeholder-val="{{ false }}">
-                <div data-hi-img="" style="{{ h.photoStyle }}"></div>
+                <div data-hi-img="" data-lazy="{{ h.photo }}" style="{{ h.photoStyle }}"></div>
               </sc-if>
               <sc-if value="{{ h.noPhoto }}" hint-placeholder-val="{{ true }}">
                 <image-slot data-hi-img="" id="{{ h.photoId }}" shape="rect" style="width:100%; height:clamp(200px,24vw,290px); border-radius:0; will-change:transform;" placeholder="ภาพประชาสัมพันธ์"></image-slot>
@@ -835,7 +837,7 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
             <article style="flex:none; width:min(310px,86%); min-height:360px; scroll-snap-align:start; border-radius:18px; border:1px solid rgba(255,255,255,.7); background:color-mix(in srgb, #ffffff 52%, transparent); backdrop-filter:blur(16px) saturate(150%); -webkit-backdrop-filter:blur(16px) saturate(150%); box-shadow:0 18px 38px -22px color-mix(in srgb, var(--color-text) 60%, transparent); padding:14px; animation:staffCardIn .55s cubic-bezier(.2,.85,.3,1) {{ sp.delay }} both;">
               <figure class="{{ photoClass }}" style="margin:0 0 12px; border-radius:12px; overflow:hidden;">
                 <sc-if value="{{ sp.hasPhoto }}" hint-placeholder-val="{{ false }}">
-                  <div style="{{ sp.photoStyle }}"></div>
+                  <div data-lazy="{{ sp.photo }}" style="{{ sp.photoStyle }}"></div>
                 </sc-if>
                 <sc-if value="{{ sp.noPhoto }}" hint-placeholder-val="{{ true }}">
                   <image-slot id="{{ sp.photoId }}" shape="rect" style="width:100%; aspect-ratio:1/1; height:auto; border-radius:0;" placeholder="ภาพบุคลากร"></image-slot>
@@ -916,7 +918,7 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
                 <div style="display:flex; gap:14px; border:2px solid var(--color-divider); border-radius:14px; padding:14px;">
                   <figure class="{{ photoClass }}" style="margin:0; flex:none; width:84px; height:106px; overflow:hidden;">
                     <sc-if value="{{ m.hasPhoto }}" hint-placeholder-val="{{ false }}">
-                      <div style="{{ m.photoStyle }}"></div>
+                      <div data-lazy="{{ m.photo }}" style="{{ m.photoStyle }}"></div>
                     </sc-if>
                     <sc-if value="{{ m.noPhoto }}" hint-placeholder-val="{{ true }}">
                       <image-slot id="{{ m.photoId }}" shape="rect" style="width:84px; height:106px;" placeholder="ภาพบุคลากร"></image-slot>
@@ -1030,7 +1032,7 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
           <a data-news-tile="" href="{{ n.href }}" target="_blank" rel="noopener" style="position:relative; display:block; overflow:hidden; border-radius:16px; aspect-ratio:16/10; text-decoration:none; opacity:{{ n.reveal.opacity }}; transform:{{ n.reveal.transform }}; transition:opacity .6s ease, transform .6s ease; transition-delay:{{ n.reveal.delay }};">
             <figure class="{{ photoClass }}" style="margin:0; position:absolute; inset:0; border-radius:0;">
               <sc-if value="{{ n.hasPhoto }}" hint-placeholder-val="{{ false }}">
-                <div style="{{ n.photoStyle }}"></div>
+                <div data-lazy="{{ n.photo }}" style="{{ n.photoStyle }}"></div>
               </sc-if>
               <sc-if value="{{ n.noPhoto }}" hint-placeholder-val="{{ true }}">
                 <image-slot id="{{ n.photoId }}" shape="rect" style="width:100%; height:100%; border-radius:0;" placeholder="ภาพกิจกรรม"></image-slot>
@@ -1057,7 +1059,7 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
           <span class="card-title" style="font-size:16px;">แฟนเพจโรงเรียน</span>
         </div>
         <div style="position:relative; width:100%; height:420px; overflow:hidden; border-top:2px solid var(--color-divider);">
-          <iframe data-cms="facebookEmbed" data-cms-attr="src" src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100058599200322&amp;tabs=timeline&amp;width=500&amp;height=420&amp;small_header=true&amp;adapt_container_width=true&amp;hide_cover=false&amp;show_facepile=false" width="100%" height="420" style="border:none; display:block; overflow:hidden;" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" title="Facebook แฟนเพจโรงเรียนบ้านหนองสระพังโนนสะอาด"></iframe>
+          <iframe data-cms="facebookEmbed" data-cms-attr="data-src" data-src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100058599200322&amp;tabs=timeline&amp;width=500&amp;height=420&amp;small_header=true&amp;adapt_container_width=true&amp;hide_cover=false&amp;show_facepile=false" width="100%" height="420" style="border:none; display:block; overflow:hidden;" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" title="Facebook แฟนเพจโรงเรียนบ้านหนองสระพังโนนสะอาด"></iframe>
         </div>
         <div style="padding:14px 16px;">
           <a data-cms="contact.facebook" data-cms-attr="href" href="https://www.facebook.com/profile.php?id=100058599200322" target="_blank" rel="noopener" class="btn btn-ghost" style="align-self:flex-start;">เปิดแฟนเพจ</a>
@@ -1069,7 +1071,7 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
           <span class="card-title" style="font-size:16px;">คลิปวิดีโอกิจกรรมโรงเรียน</span>
         </div>
         <div style="position:relative; width:100%; aspect-ratio:16/9; overflow:hidden; border-top:2px solid var(--color-divider); border-bottom:2px solid var(--color-divider);">
-          <iframe data-cms="videoEmbed" data-cms-attr="src" src="https://www.youtube.com/embed/ImgFAc5CpHQ" width="100%" height="100%" style="border:0; display:block;" title="วิดีโอโรงเรียนบ้านหนองสระพังโนนสะอาด" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
+          <iframe data-cms="videoEmbed" data-cms-attr="data-src" data-src="https://www.youtube.com/embed/ImgFAc5CpHQ" width="100%" height="100%" style="border:0; display:block;" title="วิดีโอโรงเรียนบ้านหนองสระพังโนนสะอาด" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen=""></iframe>
         </div>
         <div style="padding:14px 16px;">
           <a data-cms="contact.youtube" data-cms-attr="href" href="https://www.youtube.com/results?search_query=%E0%B9%82%E0%B8%A3%E0%B8%87%E0%B9%80%E0%B8%A3%E0%B8%B5%E0%B8%A2%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%AB%E0%B8%99%E0%B8%AD%E0%B8%87%E0%B8%AA%E0%B8%A3%E0%B8%B0%E0%B8%9E%E0%B8%B1%E0%B8%87%E0%B9%82%E0%B8%99%E0%B8%99%E0%B8%AA%E0%B8%B0%E0%B8%AD%E0%B8%B2%E0%B8%94" target="_blank" rel="noopener" class="btn btn-ghost" style="align-self:flex-start;">ดูทั้งหมดบน YouTube</a>
@@ -1100,7 +1102,7 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
               <div class="card elev-sm" style="position:relative; padding:0; overflow:hidden; display:block; height:100%;">
                 <figure style="margin:0; position:absolute; inset:0;">
                   <sc-if value="{{ a.hasPhoto }}" hint-placeholder-val="{{ false }}">
-                    <div style="{{ a.photoStyle }}"></div>
+                    <div data-lazy="{{ a.photo }}" style="{{ a.photoStyle }}"></div>
                   </sc-if>
                   <sc-if value="{{ a.noPhoto }}" hint-placeholder-val="{{ true }}">
                     <image-slot id="award-photo-{{ $index }}" shape="rect" fit="cover" style="width:100%; height:100%; border-radius:0;" placeholder="ภาพรางวัล"></image-slot>
@@ -1217,7 +1219,7 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
         <p style="font-size:15px; line-height:1.7; margin:0 0 24px;"><strong>อีเมล:</strong> <span data-cms="contact.email">jokitboo@hotmail.com</span></p>
         <a href="https://maps.app.goo.gl/aRgQZ7Y1n2Ty9Qhn7" data-cms="contact.mapUrl" data-cms-attr="href" target="_blank" rel="noopener" class="btn btn-secondary" style="margin-bottom:16px;">เปิดใน Google Maps</a>
         <div style="width:100%; aspect-ratio:16/9; overflow:hidden;">
-          <iframe data-cms="mapEmbed" data-cms-attr="src" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1042.107820259591!2d102.90049966957717!3d16.303911699025637!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x312285e0fa96eac1%3A0x7b897f0b9500f9bb!2sBan%20Nong%20Saphang%20Non%20Sa-At%20School!5e1!3m2!1sen!2sth!4v1785747069550!5m2!1sen!2sth" width="100%" height="100%" style="border:0; display:block;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+          <iframe data-cms="mapEmbed" data-cms-attr="data-src" data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1042.107820259591!2d102.90049966957717!3d16.303911699025637!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x312285e0fa96eac1%3A0x7b897f0b9500f9bb!2sBan%20Nong%20Saphang%20Non%20Sa-At%20School!5e1!3m2!1sen!2sth!4v1785747069550!5m2!1sen!2sth" width="100%" height="100%" style="border:0; display:block;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
         </div>
       </div>
       <div>
@@ -1783,7 +1785,7 @@ class Component extends DCLogic {
       return {
         ...m,
         role: s.role || m.role || '', note: s.note || m.note || '',
-        photo: s.photo || '', photoPos: s.photoPos || '50% 50%', photoZoom: s.photoZoom, photoFit: s.photoFit,
+        photo: this.pickImg(s.photo, s.photoSm), photoTiny: s.photoTiny || '', photoPos: s.photoPos || '50% 50%', photoZoom: s.photoZoom, photoFit: s.photoFit,
         photoId: m.photoId || byName[m.name] || fallbackId,
       };
     };
@@ -1795,7 +1797,7 @@ class Component extends DCLogic {
     return Component.STAFF_GROUPS.map(g => {
       const rows = c.filter(m => (m.group || Component.STAFF_GROUPS[1].label) === g.label);
       const members = rows.length
-        ? rows.map((m, i) => ({ name: m.name || '', role: m.role || '', note: m.note || '', photo: m.photo || '', photoPos: m.photoPos || '50% 50%', photoZoom: m.photoZoom, photoFit: m.photoFit, photoId: byName[m.name] || (g.id + '-cms-' + i) }))
+        ? rows.map((m, i) => ({ name: m.name || '', role: m.role || '', note: m.note || '', photo: this.pickImg(m.photo, m.photoSm), photoTiny: m.photoTiny || '', photoPos: m.photoPos || '50% 50%', photoZoom: m.photoZoom, photoFit: m.photoFit, photoId: byName[m.name] || (g.id + '-cms-' + i) }))
         : (g.members || []).map((m, i) => merge(m, g.id + '-cms-' + i));
       return { ...mapNode(g), members, count: members.length + ' คน' };
     });
@@ -1831,15 +1833,83 @@ class Component extends DCLogic {
   gamesSrc() { return this.withLink(this.cmsList('games') || Component.GAMES); }
   assessmentsSrc() { return this.withLink(this.cmsList('assessments') || Component.ASSESSMENTS); }
   static AWARD_GROUPS = { school: 'ของโรงเรียน', teacher: 'ของครู', student: 'ของนักเรียน' };
-  awardsSrc() { return this.srcOf('awards', Component.ACHIEVEMENTS.map(a => ({ ...a, group: 'school', groupLabel: Component.AWARD_GROUPS.school, photo: '', photoPos: '50% 50%', link: '', slide: true })), (a) => ({ group: Component.AWARD_GROUPS[a.group] ? a.group : 'school', groupLabel: Component.AWARD_GROUPS[a.group] || Component.AWARD_GROUPS.school, title: a.title || '', year: a.year || '', photo: a.photo || '', photoPos: a.photoPos || '50% 50%', photoZoom: a.photoZoom, photoFit: a.photoFit, link: a.link || '', slide: a.slide !== false })); }
-  static bgStyle(src, pos, extra, zoom, fit) {
+  awardsSrc() { return this.srcOf('awards', Component.ACHIEVEMENTS.map(a => ({ ...a, group: 'school', groupLabel: Component.AWARD_GROUPS.school, photo: '', photoPos: '50% 50%', link: '', slide: true })), (a) => ({ group: Component.AWARD_GROUPS[a.group] ? a.group : 'school', groupLabel: Component.AWARD_GROUPS[a.group] || Component.AWARD_GROUPS.school, title: a.title || '', year: a.year || '', photo: this.pickImg(a.photo, a.photoSm), photoTiny: a.photoTiny || '', photoPos: a.photoPos || '50% 50%', photoZoom: a.photoZoom, photoFit: a.photoFit, link: a.link || '', slide: a.slide !== false })); }
+  pickImg(full, sm) {
+    try { if (sm && window.innerWidth <= 820) return sm; } catch (e) {}
+    return full || '';
+  }
+
+  bgLazy(src, pos, extra, zoom, fit, tiny) {
+    const use = (!src || this._lazyAll || (this._lazyOn && this._lazyOn[src])) ? src : '';
+    if (!use && tiny) return Component.bgStyle(tiny, pos, Object.assign({ backgroundSize: 'cover' }, extra || {}), zoom, fit, '');
+    if (!use) return Object.assign({ background: 'var(--color-surface)' }, extra || {});
+    return Component.bgStyle(use, pos, extra, zoom, fit, tiny);
+  }
+
+  setupLazyImages() {
+    this._lazyOn = this._lazyOn || {};
+    if (typeof IntersectionObserver !== 'function') { this._lazyAll = true; return; }
+    if (!this._lazyIo) {
+      this._lazyIo = new IntersectionObserver((entries) => {
+        let hit = false;
+        entries.forEach(en => {
+          if (!en.isIntersecting) return;
+          const url = en.target.getAttribute('data-lazy');
+          this._lazyIo.unobserve(en.target);
+          en.target.setAttribute('data-lazy-on', '1');
+          if (url && !this._lazyOn[url]) { this._lazyOn[url] = true; hit = true; }
+        });
+        if (hit && !this._lazyRaf) {
+          this._lazyRaf = requestAnimationFrame(() => { this._lazyRaf = null; this.forceUpdate(); });
+        }
+      }, { rootMargin: '500px 0px' });
+      this._lazyTimer = setTimeout(() => { this._lazyAll = true; this.forceUpdate(); }, 6000);
+    }
+    document.querySelectorAll('#dc-root [data-lazy]:not([data-lazy-on])').forEach(el => this._lazyIo.observe(el));
+  }
+
+  hydrateFrames() {
+    document.querySelectorAll('#dc-root iframe[data-src]').forEach(el => {
+      if (!this._frameIo) return;
+      if (el.getAttribute('data-frame-on') === '1') {
+        const want = el.getAttribute('data-src');
+        if (want && el.getAttribute('src') !== want) el.setAttribute('src', want);
+      } else if (!el.getAttribute('data-frame-seen')) {
+        el.setAttribute('data-frame-seen', '1');
+        this._frameIo.observe(el);
+      }
+    });
+  }
+
+  setupLazyFrames() {
+    if (typeof IntersectionObserver !== 'function') {
+      document.querySelectorAll('#dc-root iframe[data-src]').forEach(el => el.setAttribute('src', el.getAttribute('data-src')));
+      return;
+    }
+    if (!this._frameIo) {
+      this._frameIo = new IntersectionObserver((entries) => {
+        entries.forEach(en => {
+          if (!en.isIntersecting) return;
+          this._frameIo.unobserve(en.target);
+          en.target.setAttribute('data-frame-on', '1');
+          const want = en.target.getAttribute('data-src');
+          if (want) en.target.setAttribute('src', want);
+        });
+      }, { rootMargin: '300px 0px' });
+    }
+    this.hydrateFrames();
+  }
+
+  static bgStyle(src, pos, extra, zoom, fit, tiny) {
     const p = pos || '50% 50%';
     const z = Math.max(100, Math.min(300, +zoom || 100));
+    const size = fit === 'contain' ? 'contain' : 'cover';
+    if (fit === 'contain') tiny = '';
     const base = {
-      backgroundImage: 'url("' + src + '")',
-      backgroundSize: fit === 'contain' ? 'contain' : 'cover',
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: p,
+      backgroundImage: tiny ? 'url("' + src + '"), url("' + tiny + '")' : 'url("' + src + '")',
+      backgroundSize: tiny ? size + ', cover' : size,
+      backgroundRepeat: tiny ? 'no-repeat, no-repeat' : 'no-repeat',
+      backgroundPosition: tiny ? p + ', center' : p,
       transformOrigin: p,
     };
     if (z !== 100) base.transform = 'scale(' + (z / 100) + ')';
@@ -1851,11 +1921,11 @@ class Component extends DCLogic {
     const c = this.cmsList('banner');
     if (!c) return Component.BANNER;
     const rows = c.map((b, i) => ({ ...b, _i: i })).filter(b => b.show !== false && b.show !== 'no');
-    return rows.map((b) => ({ date: b.date || '', caption: b.caption || '', sub: b.sub || '', link: b.link || '', photo: b.photo || '', photoPos: b.photoPos || '50% 50%', photoZoom: b.photoZoom, photoFit: b.photoFit, photoId: 'banner-photo-' + b._i }));
+    return rows.map((b) => ({ date: b.date || '', caption: b.caption || '', sub: b.sub || '', link: b.link || '', photo: this.pickImg(b.photo, b.photoSm), photoTiny: b.photoTiny || '', photoPos: b.photoPos || '50% 50%', photoZoom: b.photoZoom, photoFit: b.photoFit, photoId: 'banner-photo-' + b._i }));
   };
   newsSrc() {
     const c = this.cmsList('news');
-    return c ? c.map(n => ({ date: n.date || '', title: n.title || '', excerpt: n.summary || '', photo: n.photo || '', photoPos: n.photoPos || '50% 50%', photoZoom: n.photoZoom, photoFit: n.photoFit, link: n.link || '' })) : Component.NEWS;
+    return c ? c.map(n => ({ date: n.date || '', title: n.title || '', excerpt: n.summary || '', photo: this.pickImg(n.photo, n.photoSm), photoTiny: n.photoTiny || '', photoPos: n.photoPos || '50% 50%', photoZoom: n.photoZoom, photoFit: n.photoFit, link: n.link || '' })) : Component.NEWS;
   };
   docsSrc() {
     const c = this.cmsList('docs');
@@ -1903,6 +1973,7 @@ class Component extends DCLogic {
       if (attr) { if (el.getAttribute(attr) !== v) el.setAttribute(attr, v); }
       else if (el.textContent !== v) el.textContent = v;
     });
+    this.hydrateFrames();
   };
 
   scheduleCms = () => {
@@ -1912,6 +1983,8 @@ class Component extends DCLogic {
 
   syncCms = () => {
     const cms = this.readCms();
+    if (!cms && this.state.cms) return; // keep what we already have (e.g. loaded from the database)
+    if (this._remoteLoaded) return;     // the database is the source of truth once it answers
     this.setState({ cms }, this.applyCms);
   };
 
@@ -1932,19 +2005,29 @@ class Component extends DCLogic {
     if (!cfg || !window.SB || !window.SB.ready() || !window.SB.configured(cfg)) return;
     window.SB.load(cfg).then(res => {
       if (!res.ok || !res.data) return;
+      this._remoteLoaded = true;
       this.setState({ cms: res.data }, this.applyCms);
       try { localStorage.setItem(Component.CMS_KEY, JSON.stringify(res.data)); } catch (e) {}
     });
   };
 
-  componentDidUpdate() { if (this.state.cms) this.scheduleCms(); }
+  componentDidUpdate() {
+    if (this.state.cms) this.scheduleCms();
+    this.setupLazyImages();
+    this.hydrateFrames();
+  }
 
   componentDidMount() {
     this.syncCms();
     setTimeout(this.syncRemote, 300);
+    this.setupLazyImages();
+    this.setupLazyFrames();
+    if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) {
+      window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(() => {}); });
+    }
     this._onCmsStorage = (e) => { if (!e.key || e.key === Component.CMS_KEY) this.syncCms(); };
     window.addEventListener('storage', this._onCmsStorage);
-    this._onCmsFocus = () => this.syncCms();
+    this._onCmsFocus = () => { this.syncRemote(); this.syncCms(); };
     window.addEventListener('focus', this._onCmsFocus);
     this.applyTheme();
     try {
@@ -2201,6 +2284,14 @@ class Component extends DCLogic {
     return this._gb[id];
   }
 
+  loadGlobeLibs() {
+    if (this._globeLibs) return;
+    this._globeLibs = true;
+    const add = (src) => { const s = document.createElement('script'); s.src = src; s.async = true; document.head.appendChild(s); };
+    if (!window.THREE) add('https://unpkg.com/three@0.150.1/build/three.min.js');
+    if (!window.SchoolGlobe) add('globe-engine.js');
+  }
+
   globeBoot(id) {
     if (this.globeCtl[id]) return;
     const els = this.globeEls[id];
@@ -2225,7 +2316,13 @@ class Component extends DCLogic {
         });
       } catch (e) { /* globe is decorative */ }
     };
-    go();
+    const target = els.wrap || els.canvas;
+    const start = () => { this.loadGlobeLibs(); go(); };
+    if (!target || typeof IntersectionObserver !== 'function') { start(); return; }
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some(en => en.isIntersecting)) { io.disconnect(); start(); }
+    }, { rootMargin: '400px 0px' });
+    io.observe(target);
   }
 
   componentWillUnmount() {
@@ -2732,7 +2829,7 @@ class Component extends DCLogic {
       photoId: 'news-photo-' + i,
       hasPhoto: !!n.photo,
       noPhoto: !n.photo,
-      photoStyle: Component.bgStyle(n.photo, n.photoPos, { width:'100%', height:'100%' }, n.photoZoom, n.photoFit),
+      photoStyle: this.bgLazy(n.photo, n.photoPos, { width:'100%', height:'100%' }, n.photoZoom, n.photoFit, n.photoTiny),
       href: n.link || this.cmsGet('contact.facebook') || 'https://www.facebook.com/profile.php?id=100058599200322',
       reveal: this.cardReveal('news', i),
     }));
@@ -2748,7 +2845,7 @@ class Component extends DCLogic {
       noPhoto: !b.photo,
       cursor: b.link ? 'pointer' : 'default',
       onOpen: b.link ? () => window.open(b.link, '_blank', 'noopener') : undefined,
-      photoStyle: Component.bgStyle(b.photo, b.photoPos, { width:'100%', height:'clamp(200px,24vw,290px)', willChange:'transform' }, b.photoZoom, b.photoFit),
+      photoStyle: this.bgLazy(b.photo, b.photoPos, { width:'100%', height:'clamp(200px,24vw,290px)', willChange:'transform' }, b.photoZoom, b.photoFit, b.photoTiny),
       dir: i % 2 ? 'row-reverse' : 'row',
       align: i % 2 ? 'flex-end' : 'flex-start',
       bg: i % 3 === 1 ? 'color-mix(in srgb, var(--color-accent) 8%, var(--color-surface))' : 'var(--color-surface)',
@@ -2792,7 +2889,7 @@ class Component extends DCLogic {
       activeTopInfo,
       staffSubRows,
       activeGroup: activeGroup,
-      activeMembers: (activeGroup.members || []).map(m => ({ ...m, hasPhoto: !!m.photo, noPhoto: !m.photo, photoStyle: Component.bgStyle(m.photo, m.photoPos, { width:'84px', height:'106px' }, m.photoZoom, m.photoFit) })),
+      activeMembers: (activeGroup.members || []).map(m => ({ ...m, hasPhoto: !!m.photo, noPhoto: !m.photo, photoStyle: this.bgLazy(m.photo, m.photoPos, { width:'84px', height:'106px' }, m.photoZoom, m.photoFit, m.photoTiny) })),
       groupOpen: !!s.groupOpen && !!groupSibs.length,
       groupCounter: (groupIdx + 1) + ' / ' + (groupSibs.length || 1),
       groupPrev: () => groupStep(-1),
@@ -2808,7 +2905,7 @@ class Component extends DCLogic {
       acc1: this.accFor(0), acc2: this.accFor(1), acc3: this.accFor(2), acc4: this.accFor(3), acc5: this.accFor(4),
       setLightTheme: () => this.setTheme('light'),
       setDarkTheme: () => this.setTheme('dark'),
-      staffCards: Component.staffRoster(tops).map((p, i) => ({ ...p, photoId: 'staff-photo-' + i, hasPhoto: !!p.photo, noPhoto: !p.photo, photoStyle: Component.bgStyle(p.photo, p.photoPos, { width:'100%', aspectRatio:'1/1' }, p.photoZoom, p.photoFit), delay: (i * 0.06).toFixed(2) + 's' })),
+      staffCards: Component.staffRoster(tops).map((p, i) => ({ ...p, photoId: 'staff-photo-' + i, hasPhoto: !!p.photo, noPhoto: !p.photo, photoStyle: this.bgLazy(p.photo, p.photoPos, { width:'100%', aspectRatio:'1/1' }, p.photoZoom, p.photoFit, p.photoTiny), delay: (i * 0.06).toFixed(2) + 's' })),
       setStaffStripRef: this.setStaffStripRef,
       staffStripPrev: this.staffStripPrev,
       staffStripNext: this.staffStripNext,
@@ -2821,9 +2918,9 @@ class Component extends DCLogic {
       orgNext: this.orgNext,
       closeOrg: this.closeOrg,
       studentStats: this.academicsSrc(),
-      heroPhoto: this.cmsGet('hero.photo'),
-      heroPhotoStyle: Component.bgStyle(this.cmsGet('hero.photo'), this.cmsGet('hero.photoPos'), { width:'100%', height:'100%' }, this.cmsNum('hero.photoZoom'), this.cmsGet('hero.photoFit')),
-      directorPhotoStyle: Component.bgStyle(this.cmsGet('about.directorPhoto'), this.cmsGet('about.directorPhotoPos') || 'center bottom', { position:'absolute', inset:0 }, this.cmsNum('about.directorPhotoZoom'), this.cmsGet('about.directorPhotoFit') || 'contain'),
+      heroPhoto: this.pickImg(this.cmsGet('hero.photo'), this.cmsGet('hero.photoSm')),
+      heroPhotoStyle: Component.bgStyle(this.pickImg(this.cmsGet('hero.photo'), this.cmsGet('hero.photoSm')), this.cmsGet('hero.photoPos'), { width:'100%', height:'100%' }, this.cmsNum('hero.photoZoom'), this.cmsGet('hero.photoFit'), this.cmsGet('hero.photoTiny')),
+      directorPhotoStyle: Component.bgStyle(this.cmsGet('about.directorPhoto'), this.cmsGet('about.directorPhotoPos') || 'center bottom', { position:'absolute', inset:0 }, this.cmsNum('about.directorPhotoZoom'), this.cmsGet('about.directorPhotoFit') || 'contain', this.cmsGet('about.directorPhotoTiny')),
       heroHasPhoto: !!this.cmsGet('hero.photo'),
       heroNoPhoto: !this.cmsGet('hero.photo'),
       directorPhoto: this.cmsGet('about.directorPhoto'),
@@ -2845,7 +2942,7 @@ class Component extends DCLogic {
             ...a,
             hasPhoto: !!a.photo,
             noPhoto: !a.photo,
-            photoStyle: Component.bgStyle(a.photo, a.photoPos, { position:'absolute', inset:0 }, a.photoZoom, a.photoFit),
+            photoStyle: this.bgLazy(a.photo, a.photoPos, { position:'absolute', inset:0 }, a.photoZoom, a.photoFit, a.photoTiny),
             hasLink: !!a.link,
             link: a.link || '#',
             left: (50 + r * Math.sin(angle)).toFixed(1),
