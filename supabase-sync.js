@@ -81,6 +81,44 @@
     } catch (e) { return { ok: false, error: String(e && e.message || e) }; }
   }
 
+  /* ── สถิติผู้เข้าชม (ผ่าน RPC เท่านั้น ดู sql/analytics.sql) ─────────── */
+  function device() {
+    var w = window.innerWidth || 0;
+    return w < 700 ? 'mobile' : (w < 1100 ? 'tablet' : 'desktop');
+  }
+
+  function visitorId() {
+    try {
+      var v = localStorage.getItem('nspnsa-vid');
+      if (!v) { v = Math.random().toString(36).slice(2) + Date.now().toString(36); localStorage.setItem('nspnsa-vid', v); }
+      return v;
+    } catch (e) { return ''; }
+  }
+
+  async function logView(cfg, path) {
+    var c = client(cfg && cfg.url, cfg && cfg.key);
+    if (!c) return { ok: false };
+    try {
+      var res = await c.rpc('log_view', {
+        p_path: path || location.pathname || '/',
+        p_ref: document.referrer || '',
+        p_device: device(),
+        p_visitor: visitorId()
+      });
+      return res.error ? { ok: false, error: res.error.message } : { ok: true };
+    } catch (e) { return { ok: false, error: String(e && e.message || e) }; }
+  }
+
+  async function viewStats(cfg) {
+    var c = client(cfg && cfg.url, cfg && cfg.key);
+    if (!c) return { ok: false, error: 'ยังไม่ได้เชื่อมต่อฐานข้อมูล' };
+    try {
+      var res = await c.rpc('view_stats');
+      if (res.error) return { ok: false, error: res.error.message };
+      return { ok: true, data: res.data || null };
+    } catch (e) { return { ok: false, error: String(e && e.message || e) }; }
+  }
+
   async function ping(cfg) {
     var c = client(cfg && cfg.url, cfg && cfg.key);
     if (!c) return { ok: false, error: 'ยังไม่ได้เชื่อมต่อฐานข้อมูล' };
@@ -91,5 +129,5 @@
     } catch (e) { return { ok: false, error: String(e && e.message || e) }; }
   }
 
-  window.SB = { ready: ready, configured: configured, load: load, save: save, signIn: signIn, session: session, signOut: signOut, upload: upload, ping: ping };
+  window.SB = { ready: ready, configured: configured, load: load, save: save, signIn: signIn, session: session, signOut: signOut, upload: upload, ping: ping, logView: logView, viewStats: viewStats };
 })();
