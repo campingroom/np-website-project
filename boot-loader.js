@@ -27,7 +27,7 @@
 
   /* match the ground the site will actually open on (same key the site stores) */
   let saved = null;
-  try { saved = localStorage.getItem('school-site-theme'); } catch (e) {}
+  try { saved = localStorage.getItem('school-site-theme-v2'); } catch (e) {}
   const light = saved ? saved === 'light' : matchMedia('(prefers-color-scheme: light)').matches;
   const GROUND = light ? '#F4F3F2' : '#0A0A0C';
   const INK = light ? '#201E1D' : '#EDEDF0';

@@ -1,7 +1,7 @@
 /* Offline cache for the school website (same-origin files only).
    Code and pages are network-first so an update is never one visit behind;
    only static assets (images, fonts, icons) are served cache-first. */
-const CACHE = 'nspnsa-v2';
+const CACHE = 'nspnsa-v20260815e';
 const CORE = ['./', 'index.html', 'support.js', 'image-slot.js', 'globe-engine.js', 'hl-gallery.js', 'supabase-sync.js'];
 
 self.addEventListener('install', (e) => {

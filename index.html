@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<style>html{background:#0A0A0C}html[data-theme="light"]{background:#f3f2f2}body{margin:0;background:inherit}</style>
-<script>(function(){try{var t=localStorage.getItem('school-site-theme');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
-<script src="./support.js"></script>
+<style>html{background:#0A0A0C}html[data-theme="light"]{background:#f3f2f2}body{margin:0;background:transparent}</style>
+<script>(function(){try{var t=localStorage.getItem('school-site-theme-v2');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<script src="./support.js?v=20260815e"></script>
 </head>
 <body>
 <x-dc>
@@ -13,15 +13,15 @@
 <title>โรงเรียนบ้านหนองสระพังโนนสะอาด</title>
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/favicon.png">
-<link rel="stylesheet" href="_ds/modernist-e418e37c-5b91-498b-bea5-a9b107ada9e7/styles.css">
+<link rel="stylesheet" href="_ds/modernist-e418e37c-5b91-498b-bea5-a9b107ada9e7/styles.css?v=20260815e">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
-<script src="_ds/modernist-e418e37c-5b91-498b-bea5-a9b107ada9e7/_ds_bundle.js"></script>
+<script src="_ds/modernist-e418e37c-5b91-498b-bea5-a9b107ada9e7/_ds_bundle.js?v=20260815e"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-<script src="supabase-sync.js"></script>
-<script src="image-slot.js"></script>
-<script src="boot-loader.js"></script>
+<script src="supabase-sync.js?v=20260815e"></script>
+<script src="image-slot.js?v=20260815e"></script>
+<script src="boot-loader.js?v=20260815e"></script>
 <link rel="preconnect" href="https://ormxmxkptzsflwqinnkp.supabase.co" crossorigin="">
 <style>
 html { scroll-behavior: auto; }
@@ -83,14 +83,15 @@ html[data-theme="dark"] {
 }
 
 html[data-theme="dark"] {
+background-color: #0A0A0C;
+background-image:
+  radial-gradient(820px 560px at 8% -8%, rgba(255,106,44,.26), transparent 64%),
+  radial-gradient(820px 600px at 94% 6%, rgba(76,130,255,.20), transparent 64%),
+  radial-gradient(1100px 780px at 52% 106%, rgba(255,106,44,.13), transparent 68%);
+background-attachment: fixed;
+background-repeat: no-repeat;
 body {
-  background-color: #0A0A0C;
-  background-image:
-    radial-gradient(820px 560px at 8% -8%, rgba(255,106,44,.26), transparent 64%),
-    radial-gradient(820px 600px at 94% 6%, rgba(76,130,255,.20), transparent 64%),
-    radial-gradient(1100px 780px at 52% 106%, rgba(255,106,44,.13), transparent 68%);
-  background-attachment: fixed;
-  background-repeat: no-repeat;
+  background: transparent;
   color: var(--color-text);
 }
 a { color: var(--color-accent-300); }
@@ -297,7 +298,8 @@ html[data-theme="light"] #dc-root [style*="linear-gradient(to top, color-mix(in 
 
 /* ── Light backdrops: A glow · B panels · C grid ──────────────── */
 /* A — Aurora paper: diffuse warm/cool light fields, sections float on it */
-html[data-theme="light"][data-light-bg="glow"] body {
+html[data-theme="light"][data-light-bg="glow"] body { background: transparent !important; }
+html[data-theme="light"][data-light-bg="glow"] {
   background-color: #F7F5F3;
   background-image:
     radial-gradient(820px 560px at 8% -8%, rgba(236,48,19,.14), transparent 64%),
@@ -319,7 +321,8 @@ html[data-theme="light"][data-light-bg="glow"] #dc-root [data-hi-card] {
 }
 
 /* B — Stacked panels: depth from surfaces, no glow at all */
-html[data-theme="light"][data-light-bg="panels"] body { background: #E9E7E5; }
+html[data-theme="light"][data-light-bg="panels"] body { background: transparent !important; }
+html[data-theme="light"][data-light-bg="panels"] { background: #E9E7E5; }
 html[data-theme="light"][data-light-bg="panels"] #dc-root [style*="min-height: 100vh"] { background: transparent !important; }
 html[data-theme="light"][data-light-bg="panels"] #dc-root section[style*="background: var(--color-bg)"] { background: #FBFAF9 !important; }
 html[data-theme="light"][data-light-bg="panels"] #dc-root section[style*="background: var(--color-surface)"] { background: #F1EFED !important; }
@@ -331,7 +334,8 @@ html[data-theme="light"][data-light-bg="panels"] #dc-root [data-hi-card] {
 }
 
 /* C — Blueprint grid: the modular grid shows through, soft top light */
-html[data-theme="light"][data-light-bg="grid"] body {
+html[data-theme="light"][data-light-bg="grid"] body { background: transparent !important; }
+html[data-theme="light"][data-light-bg="grid"] {
   background-color: #F4F3F2;
   background-image:
     linear-gradient(rgba(32,30,29,.055) 1px, transparent 1px),
@@ -354,7 +358,8 @@ html[data-theme="light"][data-light-bg="grid"] #dc-root [data-hi-card] {
 }
 
 /* A+C — glow fields over the modular grid */
-html[data-theme="light"][data-light-bg="glowgrid"] body {
+html[data-theme="light"][data-light-bg="glowgrid"] body { background: transparent !important; }
+html[data-theme="light"][data-light-bg="glowgrid"] {
   background-color: #F6F4F2;
   background-image:
     linear-gradient(rgba(32,30,29,.045) 1px, transparent 1px),
@@ -1637,7 +1642,7 @@ class Component extends DCLogic {
     deckIndex: 0,
     theme: (() => {
       try {
-        const saved = localStorage.getItem('school-site-theme');
+        const saved = localStorage.getItem('school-site-theme-v2');
         if (saved === 'light' || saved === 'dark') return saved;
       } catch (e) {}
       try {
@@ -1799,12 +1804,16 @@ class Component extends DCLogic {
       this._themeFadeT = setTimeout(() => root.removeAttribute('data-theme-switching'), 480);
     }
     root.setAttribute('data-theme', this.state.theme);
-    try { localStorage.setItem('school-site-theme', this.state.theme); } catch (e) {}
   };
   applyThemeNoStore = () => {
     document.documentElement.setAttribute('data-theme', this.state.theme);
   };
-  setTheme = (t) => this.setState({ theme: t }, () => { this.applyTheme(); this.applyNavChrome(); });
+  setTheme = (t) => this.setState({ theme: t }, () => {
+    /* only an explicit toggle is remembered — the site otherwise always opens light */
+    try { localStorage.setItem('school-site-theme-v2', t); } catch (e) {}
+    this.applyTheme();
+    this.applyNavChrome();
+  });
 
   static CMS_KEY = 'nspnsa-cms-v3';
 
@@ -2179,7 +2188,7 @@ class Component extends DCLogic {
       this._sysTheme = window.matchMedia('(prefers-color-scheme: light)');
       this._onSysTheme = (e) => {
         let saved = null;
-        try { saved = localStorage.getItem('school-site-theme'); } catch (err) {}
+        try { saved = localStorage.getItem('school-site-theme-v2'); } catch (err) {}
         if (saved) return;
         this.setState({ theme: e.matches ? 'light' : 'dark' }, () => { this.applyThemeNoStore(); this.applyNavChrome(); });
       };
@@ -2483,7 +2492,7 @@ class Component extends DCLogic {
       this._hlLibs = true;
       const add = (src) => { const s = document.createElement('script'); s.src = src; s.async = true; document.head.appendChild(s); };
       if (!window.THREE) add('https://unpkg.com/three@0.150.1/build/three.min.js');
-      if (!window.HLGallery) add('hl-gallery.js');
+      if (!window.HLGallery) add('hl-gallery.js?v=20260815e');
     }
     const go = () => {
       if (this.hlGl || !this.hlRoot) return;
@@ -2584,7 +2593,7 @@ class Component extends DCLogic {
     this._globeLibs = true;
     const add = (src) => { const s = document.createElement('script'); s.src = src; s.async = true; document.head.appendChild(s); };
     if (!window.THREE) add('https://unpkg.com/three@0.150.1/build/three.min.js');
-    if (!window.SchoolGlobe) add('globe-engine.js');
+    if (!window.SchoolGlobe) add('globe-engine.js?v=20260815e');
   }
 
   globeBoot(id) {
