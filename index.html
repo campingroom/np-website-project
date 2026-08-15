@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>html{background:#0A0A0C}html[data-theme="light"]{background:#f3f2f2}body{margin:0;background:transparent}</style>
 <script>(function(){try{var t=localStorage.getItem('school-site-theme-v2');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
-<script src="./support.js?v=20260815e"></script>
+<script src="./support.js?v=20260815x"></script>
 </head>
 <body>
 <x-dc>
@@ -13,15 +13,15 @@
 <title>โรงเรียนบ้านหนองสระพังโนนสะอาด</title>
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/favicon.png">
-<link rel="stylesheet" href="_ds/modernist-e418e37c-5b91-498b-bea5-a9b107ada9e7/styles.css?v=20260815e">
+<link rel="stylesheet" href="_ds/modernist-e418e37c-5b91-498b-bea5-a9b107ada9e7/styles.css?v=20260815x">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
-<script src="_ds/modernist-e418e37c-5b91-498b-bea5-a9b107ada9e7/_ds_bundle.js?v=20260815e"></script>
+<script src="_ds/modernist-e418e37c-5b91-498b-bea5-a9b107ada9e7/_ds_bundle.js?v=20260815x"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
-<script src="supabase-sync.js?v=20260815e"></script>
-<script src="image-slot.js?v=20260815e"></script>
-<script src="boot-loader.js?v=20260815e"></script>
+<script src="supabase-sync.js?v=20260815x"></script>
+<script src="image-slot.js?v=20260815x"></script>
+<script src="boot-loader.js?v=20260815x"></script>
 <link rel="preconnect" href="https://ormxmxkptzsflwqinnkp.supabase.co" crossorigin="">
 <style>
 html { scroll-behavior: auto; }
@@ -535,6 +535,15 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
   #dc-root [data-geo-globe] { position: relative; top: auto; right: auto; transform: none; width: 118%; height: auto; margin: 0 -9% -8%; }
   #dc-root [data-geo-copy] { max-width: none; }
 }
+#dc-root a:not(.btn):not(.tag):not([data-nav-link]) {
+  text-decoration: underline; text-decoration-color: transparent;
+  text-decoration-thickness: 1.5px; text-underline-offset: 4px;
+  transition: color .25s ease-in-out, text-decoration-color .25s ease-in-out, text-shadow .25s ease-in-out;
+}
+#dc-root a:not(.btn):not(.tag):not([data-nav-link]):hover {
+  text-decoration-color: currentColor;
+  text-shadow: 0 0 .012em currentColor, 0 0 .012em currentColor;
+}
 </style>
 <template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#ec3013"></rect><text x="30" y="115" font-family="Arial" font-size="72" font-weight="800" fill="#f3f2f2">รร</text></svg></template>
 </helmet>
@@ -1028,6 +1037,25 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
   </div>
 </section>
 
+<section id="students-teaser" style="background:var(--color-bg); border-top:2px solid var(--color-divider);">
+  <div style="max-width:1200px; margin:0 auto; padding:clamp(40px,5vw,72px) clamp(20px,5vw,72px); display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:clamp(24px,4vw,56px); align-items:end;">
+    <div>
+      <span class="tag tag-accent">นักเรียน</span>
+      <h2 style="font-family:var(--font-heading); font-weight:800; text-transform:uppercase; letter-spacing:-.035em; line-height:1; font-size:clamp(24px,3.2vw,40px); margin:16px 0 14px;">นักเรียนของเรา</h2>
+      <p style="font-size:15px; line-height:1.7; margin:0 0 24px; max-width:46ch; color:color-mix(in srgb, var(--color-text) 66%, transparent);">จำนวนนักเรียนแยกระดับชั้น ผลงานและรางวัลของนักเรียน กิจกรรมพัฒนาผู้เรียน และเอกสารสำหรับผู้ปกครอง</p>
+      <a href="{{ studentsHref }}" class="btn btn-primary">ดูข้อมูลนักเรียนทั้งหมด →</a>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:2px; border:2px solid var(--color-divider);">
+      <sc-for list="{{ studentTeaser }}" as="t" hint-placeholder-count="3">
+        <div style="padding:20px 22px; border-right:2px solid var(--color-divider); min-width:0;">
+          <p style="font-family:var(--font-heading); font-weight:800; font-size:clamp(18px,1.9vw,28px); line-height:1.1; margin:0 0 8px; font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--color-accent);">{{ t.value }}</p>
+          <p style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:color-mix(in srgb, var(--color-text) 58%, transparent);">{{ t.label }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
 <section data-section-id="academics" id="academics" ref="{{ setSectionRef }}" style="background:var(--color-surface); border-top:2px solid var(--color-divider);">
   <div style="max-width:1200px; margin:0 auto; padding:56px clamp(20px,5vw,72px); opacity:{{ reveal.academics.opacity }}; transform:{{ reveal.academics.transform }}; transition:opacity .8s ease, transform .8s ease;">
     <span class="tag tag-accent">ข้อมูลวิชาการ</span>
@@ -1036,7 +1064,12 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
     <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 60%, transparent); margin:0 0 14px;">ระดับชั้นที่เปิดสอน</h3>
     <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:36px;">
       <sc-for list="{{ grades }}" as="g" hint-placeholder-count="8">
-        <span class="tag tag-outline" style="font-size:13px; padding:6px 16px;">{{ g }}</span>
+        <sc-if value="{{ g.noLink }}" hint-placeholder-val="{{ true }}">
+          <span class="tag tag-outline" style="font-size:13px; padding:6px 16px;">{{ g.name }}</span>
+        </sc-if>
+        <sc-if value="{{ g.hasLink }}" hint-placeholder-val="{{ false }}">
+          <a class="tag tag-outline" href="{{ g.href }}" target="{{ g.target }}" rel="{{ g.rel }}" style="font-size:13px; padding:6px 16px; text-decoration:none; cursor:pointer; transition:background .2s ease, border-color .2s ease, color .2s ease;" style-hover="background:color-mix(in srgb, var(--color-accent) 14%, transparent); border-color:var(--color-accent); color:var(--color-accent);">{{ g.name }}</a>
+        </sc-if>
       </sc-for>
     </div>
 
@@ -1334,7 +1367,7 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
   </div>
 </section>
 
-<footer style="background:var(--color-text); color:var(--color-bg);">
+<footer style="background:var(--color-text); color:var(--color-bg); margin:0 clamp(10px,1.6vw,20px) clamp(10px,1.6vw,20px); border-radius:clamp(18px,2.2vw,30px); overflow:hidden;">
   <div style="max-width:1200px; margin:0 auto; padding:clamp(40px,6vw,64px) clamp(20px,5vw,72px); display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:40px;">
     <div>
       <image-slot id="logo-footer" data-cms="site.logo" data-cms-attr="src" shape="rect" fit="contain" src="assets/logo-crest.png" style="width:56px;height:56px;display:block;margin-bottom:16px;"></image-slot>
@@ -1427,12 +1460,18 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
   </div>
 </sc-if>
 
-<button type="button" data-backtotop="" onClick="{{ scrollTop }}" style="position:fixed; right:24px; bottom:24px; width:46px; height:46px; border:none; background:var(--color-accent); color:var(--color-bg); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:18px; z-index:60; opacity:0; pointer-events:none; transform:translateY(8px); transition:opacity .3s ease, transform .3s ease;">↑</button>
+<div data-backtotop-wrap="" style="position:fixed; right:24px; bottom:24px; width:64px; height:64px; z-index:60; opacity:0; pointer-events:none; transform:translateY(8px); transition:opacity .3s ease, transform .3s ease;">
+  <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true" style="position:absolute; inset:0; transform:rotate(-90deg); pointer-events:none;">
+    <circle cx="32" cy="32" r="29" fill="none" stroke="currentColor" stroke-width="2.5" style="color:color-mix(in srgb, var(--color-text) 22%, transparent);"></circle>
+    <circle data-scroll-ring="" cx="32" cy="32" r="29" fill="none" stroke="var(--color-accent)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="182.2" stroke-dashoffset="182.2" style="transition:stroke-dashoffset .12s linear;"></circle>
+  </svg>
+  <button type="button" data-backtotop="" onClick="{{ scrollTop }}" aria-label="กลับขึ้นด้านบน" style="position:absolute; left:9px; top:9px; width:46px; height:46px; border:none; background:var(--color-accent); color:var(--color-bg); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:18px; pointer-events:auto;">↑</button>
+</div>
 
 </div>
 
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;navStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;floating&quot;,&quot;options&quot;:[&quot;floating&quot;,&quot;classic&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;motionStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;fade&quot;,&quot;options&quot;:[&quot;fade&quot;,&quot;slide&quot;,&quot;instant&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;visitsShow&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;สถิติผู้เข้าชม&quot;},&quot;loaderOn&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;หน้าโหลดเว็บ&quot;},&quot;loaderLetter&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;N&quot;,&quot;options&quot;:[&quot;N&quot;,&quot;S&quot;,&quot;rule&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;หน้าโหลดเว็บ&quot;},&quot;loaderSpeed&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0.5,&quot;max&quot;:2,&quot;step&quot;:0.05,&quot;unit&quot;:&quot;×&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;หน้าโหลดเว็บ&quot;},&quot;trailOn&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;เส้นเหลือบรุ้งตามเมาส์&quot;},&quot;trailBlend&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;auto&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;screen&quot;,&quot;multiply&quot;,&quot;hard-light&quot;,&quot;overlay&quot;,&quot;normal&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;เส้นเหลือบรุ้งตามเมาส์&quot;},&quot;trailWidth&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:26,&quot;min&quot;:10,&quot;max&quot;:56,&quot;step&quot;:1,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;เส้นเหลือบรุ้งตามเมาส์&quot;},&quot;trailLife&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.62,&quot;min&quot;:0.3,&quot;max&quot;:1.4,&quot;step&quot;:0.02,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;เส้นเหลือบรุ้งตามเมาส์&quot;},&quot;lightBackdrop&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;glowgrid&quot;,&quot;options&quot;:[&quot;glow&quot;,&quot;panels&quot;,&quot;grid&quot;,&quot;glowgrid&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Light theme&quot;},&quot;photoTreatment&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;grayscale&quot;,&quot;color&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Imagery&quot;},&quot;supabaseUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://ormxmxkptzsflwqinnkp.supabase.co&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;ฐานข้อมูล Supabase&quot;},&quot;supabaseKey&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;sb_publishable_SzYlmkl3w-otgeuz9v3n8Q_C4O5f-Zg&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;ฐานข้อมูล Supabase&quot;},&quot;adminUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;admin.html&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;ฐานข้อมูล Supabase&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;navStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;floating&quot;,&quot;options&quot;:[&quot;floating&quot;,&quot;classic&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Navigation&quot;},&quot;motionStyle&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;fade&quot;,&quot;options&quot;:[&quot;fade&quot;,&quot;slide&quot;,&quot;instant&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Motion&quot;},&quot;visitsShow&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;สถิติผู้เข้าชม&quot;},&quot;loaderOn&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;หน้าโหลดเว็บ&quot;},&quot;loaderLetter&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;NP&quot;,&quot;options&quot;:[&quot;N&quot;,&quot;S&quot;,&quot;rule&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;หน้าโหลดเว็บ&quot;},&quot;loaderSpeed&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0.5,&quot;max&quot;:2,&quot;step&quot;:0.05,&quot;unit&quot;:&quot;×&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;หน้าโหลดเว็บ&quot;},&quot;trailOn&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;เส้นเหลือบรุ้งตามเมาส์&quot;},&quot;trailBlend&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;auto&quot;,&quot;options&quot;:[&quot;auto&quot;,&quot;screen&quot;,&quot;multiply&quot;,&quot;hard-light&quot;,&quot;overlay&quot;,&quot;normal&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;เส้นเหลือบรุ้งตามเมาส์&quot;},&quot;trailWidth&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:26,&quot;min&quot;:10,&quot;max&quot;:56,&quot;step&quot;:1,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;เส้นเหลือบรุ้งตามเมาส์&quot;},&quot;trailLife&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.62,&quot;min&quot;:0.3,&quot;max&quot;:1.4,&quot;step&quot;:0.02,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;เส้นเหลือบรุ้งตามเมาส์&quot;},&quot;lightBackdrop&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;glowgrid&quot;,&quot;options&quot;:[&quot;glow&quot;,&quot;panels&quot;,&quot;grid&quot;,&quot;glowgrid&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Light theme&quot;},&quot;photoTreatment&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;color&quot;,&quot;options&quot;:[&quot;grayscale&quot;,&quot;color&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Imagery&quot;},&quot;supabaseUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://ormxmxkptzsflwqinnkp.supabase.co&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;ฐานข้อมูล Supabase&quot;},&quot;supabaseKey&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;sb_publishable_SzYlmkl3w-otgeuz9v3n8Q_C4O5f-Zg&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;ฐานข้อมูล Supabase&quot;},&quot;adminUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;admin.html&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;ฐานข้อมูล Supabase&quot;}}">
 class Component extends DCLogic {
   static ORG_CHART = [
     { id: 'academic', tag: 'Academic Affairs', label: 'ฝ่ายบริหารงานวิชาการ', icon: 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20 M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15Z', desc: 'วางแผน พัฒนา และกำกับดูแลหลักสูตร การจัดการเรียนรู้ และการวัดประเมินผลของโรงเรียน', tasks: ['จัดทำและพัฒนาหลักสูตรสถานศึกษา', 'นิเทศและติดตามการจัดการเรียนรู้', 'งานวัดและประเมินผลการเรียน', 'งานห้องสมุดและสื่อการเรียนรู้'] },
@@ -1815,6 +1854,10 @@ class Component extends DCLogic {
     this.applyNavChrome();
   });
 
+  static studentsHref() {
+    try { if (/\.dc\.html$/.test(decodeURIComponent(window.location.pathname))) return 'Students Page.dc.html'; } catch (e) {}
+    return 'students.html';
+  }
   static CMS_KEY = 'nspnsa-cms-v3';
 
   readCms() {
@@ -1918,7 +1961,21 @@ class Component extends DCLogic {
       return { ...mapNode(g), members, count: members.length + ' คน' };
     });
   };
-  gradesSrc() { return this.srcOf('grades', Component.GRADES, (g) => g.name || ''); }
+  /* a grade chip is only clickable once an admin fills its link in */
+  gradesSrc() {
+    const list = this.cmsList('grades') || Component.GRADES.map(name => ({ name }));
+    return list.map(g => {
+      const name = typeof g === 'string' ? g : (g.name || '');
+      const href = String((typeof g === 'object' && (g.link || g.url)) || '').trim();
+      const openable = !!href && href !== '#';
+      return {
+        name, hasLink: openable, noLink: !openable,
+        href: openable ? href : '#',
+        target: openable && href.charAt(0) !== '#' ? '_blank' : undefined,
+        rel: openable && href.charAt(0) !== '#' ? 'noopener' : undefined
+      };
+    });
+  }
   static IQA = [
     { tag: 'SAR', title: 'รายงานการประเมินตนเองของสถานศึกษา', desc: 'สรุปผลการดำเนินงานประจำปีการศึกษา และผลงาน IQA Award ของโรงเรียน', href: '#news', linkLabel: 'ดาวน์โหลดรายงาน' },
   ];
@@ -2042,7 +2099,10 @@ class Component extends DCLogic {
   };
   newsSrc() {
     const c = this.cmsList('news');
-    return c ? c.map(n => ({ date: n.date || '', title: n.title || '', excerpt: n.summary || '', photo: this.pickImg(n.photo, n.photoSm), photoTiny: n.photoTiny || '', photoPos: n.photoPos || '50% 50%', photoZoom: n.photoZoom, photoFit: n.photoFit, link: n.link || '' })) : Component.NEWS;
+    return c
+      ? c.filter(n => n.show !== false && n.show !== 'no')
+         .map(n => ({ date: n.date || '', title: n.title || '', excerpt: n.summary || '', photo: this.pickImg(n.photo, n.photoSm), photoTiny: n.photoTiny || '', photoPos: n.photoPos || '50% 50%', photoZoom: n.photoZoom, photoFit: n.photoFit, link: n.link || '' }))
+      : Component.NEWS;
   };
   docsSrc() {
     const c = this.cmsList('docs');
@@ -2166,7 +2226,7 @@ class Component extends DCLogic {
     if (window.__boot) {
       if (this.props.loaderOn === false) window.__boot.abort();
       else window.__boot.configure({
-        LETTER: this.props.loaderLetter || 'N',
+        LETTER: this.props.loaderLetter || 'NP',
         SPEED: this.props.loaderSpeed ?? 1
       });
     }
@@ -2492,7 +2552,7 @@ class Component extends DCLogic {
       this._hlLibs = true;
       const add = (src) => { const s = document.createElement('script'); s.src = src; s.async = true; document.head.appendChild(s); };
       if (!window.THREE) add('https://unpkg.com/three@0.150.1/build/three.min.js');
-      if (!window.HLGallery) add('hl-gallery.js?v=20260815e');
+      if (!window.HLGallery) add('hl-gallery.js?v=20260815x');
     }
     const go = () => {
       if (this.hlGl || !this.hlRoot) return;
@@ -2593,7 +2653,7 @@ class Component extends DCLogic {
     this._globeLibs = true;
     const add = (src) => { const s = document.createElement('script'); s.src = src; s.async = true; document.head.appendChild(s); };
     if (!window.THREE) add('https://unpkg.com/three@0.150.1/build/three.min.js');
-    if (!window.SchoolGlobe) add('globe-engine.js?v=20260815e');
+    if (!window.SchoolGlobe) add('globe-engine.js?v=20260815x');
   }
 
   globeBoot(id) {
@@ -2810,14 +2870,26 @@ class Component extends DCLogic {
         if (en) en.style.display = sc ? 'none' : 'block';
       });
     }
-    const btn = document.querySelector('[data-backtotop]');
+    const btn = document.querySelector('[data-backtotop-wrap]') || document.querySelector('[data-backtotop]');
     if (btn) {
       btn.style.opacity = sc ? '1' : '0';
       btn.style.pointerEvents = sc ? 'auto' : 'none';
       btn.style.transform = sc ? 'translateY(0)' : 'translateY(8px)';
     }
+    this.applyScrollRing();
     if (this.indicatorEl) this.indicatorEl.style.background = overHero ? '#ffffff' : 'var(--color-text)';
     this.syncIndicator();
+  }
+
+  /* circular scroll progress around the back-to-top button — full at page end */
+  applyScrollRing() {
+    const ring = this.scrollRing || (this.scrollRing = document.querySelector('[data-scroll-ring]'));
+    if (!ring) return;
+    const doc = document.documentElement;
+    const max = (doc.scrollHeight || 0) - window.innerHeight;
+    const p = max > 0 ? Math.min(1, Math.max(0, (window.scrollY || doc.scrollTop || 0) / max)) : 0;
+    const C = 2 * Math.PI * 29;
+    ring.setAttribute('stroke-dashoffset', String(C * (1 - p)));
   }
 
   syncIndicator() {
@@ -3115,6 +3187,21 @@ class Component extends DCLogic {
       showEn: true,
       color: 'var(--color-text)',
     }));
+    /* the students page lives on its own URL — inserted after บุคลากร */
+    const studentsNav = { id: 'students-page', href: Component.studentsHref(), label: 'นักเรียน', en: 'Students', showEn: true, color: 'var(--color-text)' };
+    const staffAt = navItems.findIndex(n => n.id === 'staff');
+    navItems.splice(staffAt >= 0 ? staffAt + 1 : navItems.length, 0, studentsNav);
+
+    /* three headline numbers for the students teaser, read off the same CMS rows */
+    const acRows = this.academicsSrc();
+    const totalRow = acRows.find(r => /รวม/.test(r.level)) || acRows[acRows.length - 1] || {};
+    const gradeCount = this.gradesSrc().length;
+    const studentAwardCount = (this.cmsList('awards') || []).filter(a => a.group === 'student').length;
+    const studentTeaser = [
+      { value: totalRow.count || '—', label: 'นักเรียนทั้งหมด' },
+      { value: totalRow.rooms || '—', label: 'ห้องเรียน' },
+      { value: gradeCount ? gradeCount + ' ระดับชั้น' : '—', label: studentAwardCount ? 'รางวัลนักเรียน ' + studentAwardCount + ' รายการ' : 'ที่เปิดสอน' }
+    ];
 
     const statItems = this.statsSrc().map(st => ({
       label: st.label,
@@ -3236,6 +3323,8 @@ class Component extends DCLogic {
 
     return {
       navItems,
+      studentTeaser,
+      studentsHref: Component.studentsHref(),
       navShellStyle,
       navSpacerHeight,
       heroTopPad,

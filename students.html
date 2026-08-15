@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>html{background:#0A0A0C}html[data-theme="light"]{background:#f3f2f2}body{margin:0;background:transparent}</style>
+<script>(function(){try{var t=localStorage.getItem('school-site-theme-v2');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<script src="./support.js?v=20260816g"></script>
+<template id="__bundler_thumbnail" data-bg-color="#0A0A0C">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#0A0A0C"/>
+    <circle cx="180" cy="120" r="260" fill="#FF6A2C" opacity=".22"/>
+    <circle cx="1050" cy="180" r="240" fill="#4C82FF" opacity=".18"/>
+    <text x="600" y="430" text-anchor="middle" font-family="system-ui,sans-serif" font-size="150" font-weight="800" fill="#F3F2F2">นักเรียน</text>
+    <text x="600" y="510" text-anchor="middle" font-family="monospace" font-size="42" letter-spacing="10" fill="#FF6A2C">STUDENTS</text>
+  </svg>
+</template>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>นักเรียน · โรงเรียนบ้านหนองสระพังโนนสะอาด</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="stylesheet" href="_ds/modernist-e418e37c-5b91-498b-bea5-a9b107ada9e7/styles.css?v=20260816g">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+<script src="_ds/modernist-e418e37c-5b91-498b-bea5-a9b107ada9e7/_ds_bundle.js?v=20260816g"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="supabase-sync.js?v=20260816g"></script>
+<script src="boot-loader.js?v=20260816g"></script>
+<style>
+html { scroll-behavior: auto; }
+body { margin: 0; text-wrap: pretty; }
+#dc-root a:not(.btn):not(.tag) { color: var(--color-accent-700); }
+#dc-root a:not(.btn):not(.tag):hover { color: var(--color-accent); }
+#dc-root a.btn, #dc-root a.tag { text-decoration: none; }
+#dc-root .btn-primary { color: #ffffff; }
+
+/* ── dark theme: same aurora ground as the home page ─────────────── */
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --color-bg: #0A0A0C;
+  --color-surface: #14141A;
+  --color-text: #F3F2F2;
+  --color-divider: rgba(243,242,242,.16);
+  --radius-md: 20px;
+  background-color: #0A0A0C;
+  background-image:
+    radial-gradient(820px 560px at 8% -8%, rgba(255,106,44,.26), transparent 64%),
+    radial-gradient(820px 600px at 94% 6%, rgba(76,130,255,.20), transparent 64%),
+    radial-gradient(1100px 780px at 52% 106%, rgba(255,106,44,.13), transparent 68%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+html[data-theme="dark"] body { background: transparent; color: var(--color-text); }
+html[data-theme="dark"] #dc-root a:not(.btn):not(.tag) { color: var(--color-accent-300); }
+html[data-theme="dark"] #dc-root a:not(.btn):not(.tag):hover { color: var(--color-accent-200); }
+html[data-theme="dark"] #dc-root .card { background: rgba(255,255,255,.045); border: 1px solid rgba(255,255,255,.10); }
+html[data-theme="dark"] #dc-root .tag-outline { border-color: rgba(255,255,255,.28); color: rgba(243,242,242,.9); }
+
+/* ── light theme: glow fields over the modular grid ──────────────── */
+html[data-theme="light"] {
+  color-scheme: light;
+  --radius-md: 20px;
+  background-color: #F6F4F2;
+  background-image:
+    linear-gradient(rgba(32,30,29,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(32,30,29,.045) 1px, transparent 1px),
+    radial-gradient(820px 560px at 8% -8%, rgba(236,48,19,.15), transparent 64%),
+    radial-gradient(820px 600px at 94% 6%, rgba(84,124,214,.13), transparent 64%),
+    radial-gradient(1100px 780px at 52% 106%, rgba(236,48,19,.08), transparent 68%);
+  background-size: 96px 96px, 96px 96px, 100% 100%, 100% 100%, 100% 100%;
+  background-repeat: repeat, repeat, no-repeat, no-repeat, no-repeat;
+  background-attachment: fixed;
+}
+html[data-theme="light"] body { background: transparent; color: var(--color-text); }
+html[data-theme="light"] #dc-root .card {
+  background: rgba(255,255,255,.8);
+  backdrop-filter: blur(10px) saturate(120%); -webkit-backdrop-filter: blur(10px) saturate(120%);
+  border: 1px solid rgba(32,30,29,.10);
+  box-shadow: 0 18px 40px -28px rgba(32,30,29,.45), inset 0 1px 0 rgba(255,255,255,.75);
+}
+#dc-root .card, #dc-root .tag, #dc-root .btn, #dc-root .table, #dc-root image-slot, #dc-root figure { border-radius: 20px; }
+#dc-root .tag, #dc-root .btn { border-radius: 999px; }
+#dc-root .card { transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, border-color .35s ease; }
+#dc-root .card:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--color-accent) 55%, transparent); }
+
+/* nav pill chrome */
+#dc-root [data-nav-shell] { transition: top .3s ease, padding .3s ease, background .3s ease, box-shadow .3s ease; }
+#dc-root [data-nav-link]:hover { color: var(--color-accent) !important; }
+#dc-root [data-theme-toggle] {
+  flex: none; display: flex; align-items: center; gap: 2px; padding: 3px;
+  border-radius: 999px; border: 1px solid rgba(255,255,255,.22);
+  background: rgba(12,12,16,.42); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+#dc-root [data-theme-opt] {
+  width: 30px; height: 26px; display: grid; place-items: center; padding: 0; cursor: pointer;
+  border: none; border-radius: 999px; background: transparent; color: rgba(255,255,255,.72);
+  transition: background .25s ease, color .25s ease;
+}
+#dc-root [data-theme-opt]:hover { color: #fff; }
+html[data-theme="light"] #dc-root [data-theme-opt="light"],
+html[data-theme="dark"] #dc-root [data-theme-opt="dark"] { background: #fff; color: #201E1D; }
+/* links: crisper underline + a small weight shift on hover */
+#dc-root a:not(.btn):not(.tag) {
+  text-decoration: underline; text-decoration-color: transparent;
+  text-decoration-thickness: 1.5px; text-underline-offset: 4px;
+  transition: color .25s ease-in-out, text-decoration-color .25s ease-in-out, text-shadow .25s ease-in-out;
+}
+#dc-root a:not(.btn):not(.tag):hover {
+  text-decoration-color: currentColor;
+  text-shadow: 0 0 .012em currentColor, 0 0 .012em currentColor;
+}
+#dc-root [data-flip] { transition: transform 1s cubic-bezier(.45,0,.2,1); transform-style: preserve-3d; }
+#dc-root [data-stack-card] { transition: transform .68s cubic-bezier(.4,0,.2,1), opacity .6s ease-in-out; }
+#dc-root [data-wash] { transition: background-color .68s ease-in-out; }
+#dc-root .sc-host > div { position: relative; }
+#dc-root [data-shape] { will-change: transform; }
+@media (max-width: 620px) {
+  #dc-root [data-stack-card] { grid-template-columns: 1fr !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #dc-root [data-flip], #dc-root [data-stack-card], #dc-root [data-wash] { transition: none !important; }
+  #dc-root [data-shape] { display: none !important; }
+}
+#dc-root [data-reveal] { transition: opacity .8s ease, transform .8s ease; }
+@media (prefers-reduced-motion: reduce) {
+  #dc-root [data-reveal], #dc-root .card { transition: none !important; }
+}
+</style>
+</helmet>
+
+<div style="min-height:100vh; color:var(--color-text); font-family:var(--font-body);">
+
+  <div data-nav-shell="" style="position:fixed; top:0; left:0; width:100%; z-index:50; display:flex; align-items:center; gap:20px; padding:14px clamp(16px,4vw,40px);">
+    <a href="{{ homeHref }}" style="flex:none; display:flex; align-items:center; gap:12px; text-decoration:none;">
+      <img src="assets/logo-crest.png" alt="" width="40" height="40" style="display:block; width:40px; height:40px; object-fit:contain;">
+      <span style="display:flex; flex-direction:column; line-height:1.25;">
+        <strong data-brand="" style="font-family:var(--font-heading); font-size:15px; color:#ffffff; text-shadow:0 1px 4px rgba(0,0,0,.5);">โรงเรียนบ้านหนองสระพังโนนสะอาด</strong>
+        <span data-brand-sub="" style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:.14em; color:rgba(255,255,255,.72);">BANNONGSAPUNGNONSA-ARD SCHOOL</span>
+      </span>
+    </a>
+    <div style="flex:1; min-width:0; display:flex; align-items:center; justify-content:flex-start; overflow-x:auto; scrollbar-width:thin;">
+      <div style="display:flex; align-items:center; gap:2px; margin-left:auto; flex:none;">
+      <sc-for list="{{ navItems }}" as="item" hint-placeholder-count="7">
+        <a data-nav-link="" href="{{ item.href }}" style="position:relative; white-space:nowrap; padding:8px 14px; font-size:13px; font-weight:700; text-decoration:none; color:#ffffff; text-shadow:0 1px 3px rgba(0,0,0,.55); border-radius:999px; background:{{ item.bg }}; transition:color .2s ease, background .2s ease;">{{ item.label }}</a>
+      </sc-for>
+      </div>
+    </div>
+    <div data-theme-toggle="" role="group" aria-label="สลับธีมสว่างและมืด">
+      <button type="button" data-theme-opt="light" onClick="{{ setLightTheme }}" aria-label="ธีมสว่าง" title="ธีมสว่าง">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path></svg>
+      </button>
+      <button type="button" data-theme-opt="dark" onClick="{{ setDarkTheme }}" aria-label="ธีมมืด" title="ธีมมืด">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1z"></path></svg>
+      </button>
+    </div>
+  </div>
+
+  <header style="position:relative; min-height:min(78vh,720px); display:flex; align-items:flex-end; overflow:hidden;">
+    <div style="position:absolute; inset:0; background-image:{{ heroImage }}; background-size:cover; background-position:{{ heroPos }};"></div>
+    <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(5,4,10,.94) 0%, rgba(5,4,10,.55) 52%, rgba(5,4,10,.35) 100%);"></div>
+    <div data-shape-field="" style="position:absolute; inset:0; pointer-events:none; overflow:hidden; opacity:1; filter:saturate(1);">
+      <div data-shape="" data-sp="0" style="position:absolute; left:8%; top:22%; width:clamp(56px,7vw,104px); aspect-ratio:1; border-radius:50%; background:var(--color-accent); opacity:.62;"></div>
+      <div data-shape="" data-sp="1" style="position:absolute; left:74%; top:16%; width:clamp(48px,6vw,88px); aspect-ratio:1; border-radius:22%; background:#4C82FF; opacity:.42;"></div>
+      <div data-shape="" data-sp="2" style="position:absolute; left:86%; top:58%; width:clamp(70px,9vw,132px); height:clamp(30px,3.6vw,54px); border-radius:999px; background:#F3F2F2; opacity:.30;"></div>
+      <div data-shape="" data-sp="3" style="position:absolute; left:18%; top:70%; width:clamp(52px,6.5vw,96px); aspect-ratio:1; border-radius:100% 0 0 0; background:var(--color-accent); opacity:.36;"></div>
+      <div data-shape="" data-sp="4" style="position:absolute; left:56%; top:78%; width:clamp(34px,4vw,58px); aspect-ratio:1; border-radius:50%; border:3px solid #F3F2F2; opacity:.34;"></div>
+      <div data-shape="" data-sp="5" style="position:absolute; left:40%; top:12%; width:clamp(40px,5vw,72px); height:clamp(18px,2.2vw,32px); border-radius:999px; background:#4C82FF; opacity:.34;"></div>
+    </div>
+    <div style="position:relative; width:100%; max-width:1200px; margin:0 auto; padding:clamp(60px,8vw,110px) clamp(20px,5vw,72px) clamp(40px,5vw,64px);">
+      <p style="font-family:'Space Mono',monospace; font-size:11px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; margin:0 0 14px; color:rgba(255,255,255,.72);">STUDENTS · นักเรียน</p>
+      <h1 style="font-family:var(--font-heading); font-weight:800; text-transform:uppercase; letter-spacing:-.04em; line-height:.92; font-size:clamp(40px,8vw,104px); margin:0 0 20px; color:#ffffff;">นักเรียน<br>ของเรา</h1>
+      <p style="font-size:clamp(15px,1.5vw,19px); line-height:1.7; max-width:52ch; margin:0; color:rgba(255,255,255,.86);">ข้อมูลจำนวนนักเรียน ระดับชั้นที่เปิดสอน ผลงานและรางวัล สภานักเรียน ชมรม และทุนการศึกษา</p>
+      <div style="display:flex; flex-wrap:wrap; gap:12px; margin-top:32px;">
+        <a href="#enrolment" class="btn btn-primary">ดูจำนวนนักเรียน</a>
+        <a href="{{ homeHref }}" class="btn btn-ghost" style="color:#ffffff; border-color:rgba(255,255,255,.6);">← กลับหน้าแรก</a>
+      </div>
+    </div>
+  </header>
+
+  <x-import component-from-global-scope="iridescent-trail" from="./iridescent-trail.js" data-zone-from="#council" data-zone-to="footer" data-blend="auto" data-width="26" data-life="0.62" data-z="45" hint-size="0px,0px"></x-import>
+
+  <section id="council" style="position:relative; overflow:hidden;">
+      <div style="position:absolute; left:0; right:0; top:0; height:2px; pointer-events:none; background:linear-gradient(90deg, transparent 0%, var(--color-divider) 16%, var(--color-divider) 84%, transparent 100%);"></div>
+    <div style="position:absolute; inset:0; pointer-events:none; overflow:hidden; -webkit-mask-image:linear-gradient(180deg, transparent 0%, rgba(0,0,0,.5) 10%, #000 28%, #000 72%, rgba(0,0,0,.5) 90%, transparent 100%); mask-image:linear-gradient(180deg, transparent 0%, rgba(0,0,0,.5) 10%, #000 28%, #000 72%, rgba(0,0,0,.5) 90%, transparent 100%);">
+      <div data-wash="council" style="position:absolute; left:50%; top:50%; width:190vmax; height:190vmax; margin:-95vmax 0 0 -95vmax; background:radial-gradient(circle at 50% 50%, {{ councilWash }} 0%, {{ councilWash }} 34%, transparent 62%); opacity:{{ councilWashOpacity }};"></div>
+    </div>
+    <div data-reveal="e" style="position:relative; max-width:1200px; margin:0 auto; padding:clamp(44px,6vw,84px) clamp(20px,5vw,72px); opacity:{{ reveal.e.opacity }}; transform:{{ reveal.e.transform }};">
+      <span class="tag tag-accent">สภานักเรียน</span>
+      <h2 style="font-family:var(--font-heading); font-weight:800; text-transform:uppercase; letter-spacing:-.03em; font-size:clamp(24px,3vw,38px); margin:16px 0 8px;">คณะกรรมการสภานักเรียน</h2>
+      <p style="font-size:14.5px; line-height:1.7; margin:0 0 28px; max-width:60ch; color:color-mix(in srgb, var(--color-text) 62%, transparent);">{{ councilNote }}</p>
+      <sc-if value="{{ hasCouncil }}" hint-placeholder-val="{{ false }}">
+        <div style="position:relative; margin:0 0 44px;">
+          <div onPointerDown="{{ councilDrag }}" style="position:relative; height:min(46vh,340px); perspective:1400px; cursor:grab; touch-action:pan-y;">
+            <sc-for list="{{ councilStack }}" as="c" hint-placeholder-count="3">
+              <article data-stack-card="" data-top="{{ c.top }}" style="position:absolute; left:50%; top:0; width:min(94%,560px); margin-left:min(-47%,-280px); box-sizing:border-box; height:min(42vh,300px); overflow:hidden; background:var(--color-surface); border:2px solid var(--color-divider); border-radius:22px; box-shadow:0 30px 70px -34px rgba(0,0,0,.62); transform:{{ c.transform }}; opacity:{{ c.opacity }}; z-index:{{ c.z }}; pointer-events:{{ c.pe }}; touch-action:pan-y; user-select:none; -webkit-user-select:none;">
+                <div style="position:absolute; inset:0; background-image:{{ c.photoCss }}; background-size:cover; background-position:{{ c.photoPos }}; background-color:color-mix(in srgb, var(--color-text) 14%, transparent); filter:blur(26px) brightness(.5) saturate(1.15); transform:scale(1.3);"></div>
+                <div style="position:absolute; inset:0; background-image:{{ c.photoCss }}; background-size:contain; background-repeat:no-repeat; background-position:center top;"></div>
+                <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(6,7,10,.66) 0%, rgba(6,7,10,.08) 24%, rgba(6,7,10,.26) 52%, rgba(6,7,10,.9) 100%);"></div>
+                <div style="position:relative; height:100%; box-sizing:border-box; padding:clamp(16px,2.2vw,24px); display:flex; flex-direction:column; justify-content:space-between; gap:12px;">
+                  <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px;">
+                    <span class="card-kicker" style="color:#fff; text-shadow:0 1px 10px rgba(0,0,0,.65);">{{ c.role }}</span>
+                    <svg data-flip="" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path></svg>
+                  </div>
+                  <div style="display:flex; flex-direction:column; gap:6px;">
+                    <p style="font-family:var(--font-heading); font-weight:800; font-size:clamp(16px,1.9vw,22px); line-height:1.35; margin:0; color:#fff; text-shadow:0 2px 18px rgba(0,0,0,.75);">{{ c.name }}</p>
+                    <span style="font-size:13px; color:rgba(255,255,255,.8); text-shadow:0 1px 10px rgba(0,0,0,.65);">{{ c.meta }}</span>
+                  </div>
+                </div>
+              </article>
+            </sc-for>
+          </div>
+          <div style="display:flex; align-items:center; gap:14px; margin-top:22px;">
+            <button type="button" onClick="{{ councilPrev }}" aria-label="คนก่อนหน้า" class="btn btn-ghost" style="flex:none;">←</button>
+            <button type="button" onClick="{{ councilNext }}" class="btn btn-primary" style="flex:none;">ถัดไป →</button>
+            <span style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:.1em; font-variant-numeric:tabular-nums; color:color-mix(in srgb, var(--color-text) 58%, transparent);">{{ councilCount }}</span>
+            <span style="flex:1 1 140px; min-width:0; font-size:12px; line-height:1.5; text-align:right; color:color-mix(in srgb, var(--color-text) 52%, transparent);">ลากการ์ดไปทางซ้าย = เปิดรายชื่อทั้งหมด · ลากไปทางขวา = ยุบ</span>
+          </div>
+        </div>
+
+        <button type="button" onClick="{{ councilToggle }}" aria-expanded="{{ councilBox.expanded }}" style="display:flex; align-items:center; gap:12px; width:100%; padding:14px 0; margin:0; background:none; border:0; border-top:2px solid var(--color-divider); font:inherit; text-align:left; color:inherit; cursor:pointer;">
+          <span style="font-size:15px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 72%, transparent);">รายชื่อทั้งหมด</span>
+          <span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.12em; color:var(--color-accent);">{{ councilBox.label }}</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left:auto; flex:none; transform:{{ councilBox.chev }}; transition:transform .45s cubic-bezier(.4,0,.2,1);"><path d="m6 9 6 6 6-6"></path></svg>
+        </button>
+        <div style="overflow:hidden; max-height:{{ councilBox.max }}; opacity:{{ councilBox.op }}; transition:max-height .6s cubic-bezier(.4,0,.2,1), opacity .45s ease;">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:18px; padding:16px 0 6px;">
+            <sc-for list="{{ council }}" as="c" hint-placeholder-count="4">
+              <article class="card" style="position:relative; padding:0; overflow:hidden; aspect-ratio:1/1; display:flex; flex-direction:column; justify-content:flex-end;">
+                <div style="position:absolute; inset:0; background-image:{{ c.photoCss }}; background-size:cover; background-position:{{ c.photoPos }}; background-color:color-mix(in srgb, var(--color-text) 12%, transparent);"></div>
+                <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(6,7,10,0) 34%, rgba(6,7,10,.55) 62%, rgba(6,7,10,.92) 100%);"></div>
+                <div style="position:relative; padding:14px 16px 16px; display:flex; flex-direction:column; gap:5px;">
+                  <span class="card-kicker" style="color:#fff; text-shadow:0 1px 10px rgba(0,0,0,.7);">{{ c.role }}</span>
+                  <strong style="font-family:var(--font-heading); font-weight:700; font-size:15.5px; line-height:1.4; color:#fff; text-shadow:0 2px 14px rgba(0,0,0,.8);">{{ c.name }}</strong>
+                  <span style="font-size:12.5px; color:rgba(255,255,255,.78); text-shadow:0 1px 10px rgba(0,0,0,.7);">{{ c.meta }}</span>
+                </div>
+              </article>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ noCouncil }}" hint-placeholder-val="{{ true }}">
+        <p style="font-size:14px; line-height:1.7; margin:0; padding:20px 24px; border:2px solid var(--color-divider); color:color-mix(in srgb, var(--color-text) 60%, transparent);">ยังไม่ได้เพิ่มรายชื่อ — เพิ่มได้ในหน้าแอดมิน หัวข้อ “สภานักเรียน”</p>
+      </sc-if>
+    </div>
+  </section>
+
+  <section id="awards" style="position:relative; overflow:hidden;">
+      <div style="position:absolute; left:0; right:0; top:0; height:2px; pointer-events:none; background:linear-gradient(90deg, transparent 0%, var(--color-divider) 16%, var(--color-divider) 84%, transparent 100%);"></div>
+    <div style="position:absolute; inset:0; pointer-events:none; overflow:hidden; -webkit-mask-image:linear-gradient(180deg, transparent 0%, rgba(0,0,0,.5) 10%, #000 28%, #000 72%, rgba(0,0,0,.5) 90%, transparent 100%); mask-image:linear-gradient(180deg, transparent 0%, rgba(0,0,0,.5) 10%, #000 28%, #000 72%, rgba(0,0,0,.5) 90%, transparent 100%);">
+      <div data-wash="awards" style="position:absolute; left:50%; top:50%; width:190vmax; height:190vmax; margin:-95vmax 0 0 -95vmax; background:radial-gradient(circle at 50% 50%, {{ washColor }} 0%, {{ washColor }} 34%, transparent 62%); opacity:{{ washOpacity }};"></div>
+    </div>
+    <div data-reveal="b" style="position:relative; max-width:1200px; margin:0 auto; padding:clamp(44px,6vw,84px) clamp(20px,5vw,72px); opacity:{{ reveal.b.opacity }}; transform:{{ reveal.b.transform }};">
+      <span class="tag tag-accent">{{ awardsKicker }}</span>
+      <h2 style="font-family:var(--font-heading); font-weight:800; text-transform:uppercase; letter-spacing:-.03em; font-size:clamp(24px,3vw,38px); margin:16px 0 8px;">{{ awardsHeading }}</h2>
+      <p style="font-size:14px; line-height:1.7; margin:0 0 28px; max-width:60ch; color:color-mix(in srgb, var(--color-text) 60%, transparent);">{{ awardsNote }}</p>
+      <sc-if value="{{ hasStudentAwards }}" hint-placeholder-val="{{ true }}">
+        <div style="position:relative; margin:0 0 44px;">
+          <div onPointerDown="{{ awardsDrag }}" style="position:relative; height:min(46vh,340px); perspective:1400px; cursor:grab; touch-action:pan-y;">
+            <sc-for list="{{ awardStack }}" as="c" hint-placeholder-count="3">
+              <article data-stack-card="" data-top="{{ c.top }}" style="position:absolute; left:50%; top:0; width:min(94%,560px); margin-left:min(-47%,-280px); box-sizing:border-box; height:min(42vh,300px); overflow:hidden; background:var(--color-surface); border:2px solid var(--color-divider); border-radius:22px; box-shadow:0 30px 70px -34px rgba(0,0,0,.62); transform:{{ c.transform }}; opacity:{{ c.opacity }}; z-index:{{ c.z }}; pointer-events:{{ c.pe }}; touch-action:pan-y; user-select:none; -webkit-user-select:none;">
+                <div style="position:absolute; inset:0; background-image:{{ c.photoCss }}; background-size:cover; background-position:{{ c.photoPos }}; background-color:color-mix(in srgb, var(--color-text) 14%, transparent); filter:blur(26px) brightness(.5) saturate(1.15); transform:scale(1.3);"></div>
+                <div style="position:absolute; inset:0; background-image:{{ c.photoCss }}; background-size:contain; background-repeat:no-repeat; background-position:center top;"></div>
+                <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(6,7,10,.66) 0%, rgba(6,7,10,.08) 24%, rgba(6,7,10,.26) 50%, rgba(6,7,10,.92) 100%);"></div>
+                <div style="position:relative; height:100%; box-sizing:border-box; padding:clamp(16px,2.2vw,24px); display:flex; flex-direction:column; justify-content:space-between; gap:12px;">
+                  <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px;">
+                    <span class="card-kicker" style="color:#fff; text-shadow:0 1px 10px rgba(0,0,0,.65);">{{ c.year }} · {{ c.no }}</span>
+                    <svg data-flip="" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;"><circle cx="12" cy="8" r="6"></circle><path d="M15.5 13.5 17 22l-5-3-5 3 1.5-8.5"></path></svg>
+                  </div>
+                  <div style="display:flex; flex-direction:column; gap:8px;">
+                    <p style="font-family:var(--font-heading); font-weight:800; font-size:clamp(15px,1.7vw,20px); line-height:1.35; margin:0; color:#fff; text-shadow:0 2px 18px rgba(0,0,0,.8);">{{ c.title }}</p>
+                    <sc-if value="{{ c.hasLink }}" hint-placeholder-val="{{ false }}">
+                      <a href="{{ c.link }}" target="_blank" rel="noopener" style="font-size:13.5px; font-weight:700; color:#fff; text-decoration:underline; text-underline-offset:3px; text-shadow:0 1px 10px rgba(0,0,0,.7);">ดูรายละเอียด →</a>
+                    </sc-if>
+                  </div>
+                </div>
+              </article>
+            </sc-for>
+          </div>
+          <div style="display:flex; align-items:center; gap:14px; margin-top:22px;">
+            <button type="button" onClick="{{ stackPrev }}" aria-label="รางวัลก่อนหน้า" class="btn btn-ghost" style="flex:none;">←</button>
+            <button type="button" onClick="{{ stackNext }}" class="btn btn-primary" style="flex:none;">ถัดไป →</button>
+            <span style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:.1em; font-variant-numeric:tabular-nums; color:color-mix(in srgb, var(--color-text) 58%, transparent);">{{ stackCount }}</span>
+            <span style="flex:1 1 140px; min-width:0; font-size:12px; line-height:1.5; text-align:right; color:color-mix(in srgb, var(--color-text) 52%, transparent);">ลากการ์ดไปทางซ้าย = เปิดรายการทั้งหมด · ลากไปทางขวา = ยุบ</span>
+          </div>
+        </div>
+
+        <button type="button" onClick="{{ awardsToggle }}" aria-expanded="{{ awardsBox.expanded }}" style="display:flex; align-items:center; gap:12px; width:100%; padding:14px 0; margin:0; background:none; border:0; border-top:2px solid var(--color-divider); font:inherit; text-align:left; color:inherit; cursor:pointer;">
+          <span style="font-size:15px; font-weight:700; text-transform:uppercase; letter-spacing:.05em; color:color-mix(in srgb, var(--color-text) 72%, transparent);">รายการทั้งหมด</span>
+          <span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.12em; color:var(--color-accent);">{{ awardsBox.label }}</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-left:auto; flex:none; transform:{{ awardsBox.chev }}; transition:transform .45s cubic-bezier(.4,0,.2,1);"><path d="m6 9 6 6 6-6"></path></svg>
+        </button>
+        <div style="overflow:hidden; max-height:{{ awardsBox.max }}; opacity:{{ awardsBox.op }}; transition:max-height .6s cubic-bezier(.4,0,.2,1), opacity .45s ease;">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; padding:16px 0 6px;">
+            <sc-for list="{{ studentAwards }}" as="a" hint-placeholder-count="3">
+              <article class="card" style="position:relative; padding:0; overflow:hidden; aspect-ratio:4/3; display:flex; flex-direction:column; justify-content:flex-end;">
+                <div style="position:absolute; inset:0; background-image:{{ a.photoCss }}; background-size:cover; background-position:{{ a.photoPos }}; background-color:color-mix(in srgb, var(--color-text) 12%, transparent); filter:blur(22px) brightness(.5) saturate(1.15); transform:scale(1.3);"></div>
+                <div style="position:absolute; inset:0 0 46px; background-image:{{ a.photoCss }}; background-size:contain; background-repeat:no-repeat; background-position:center top;"></div>
+                <div style="position:absolute; inset:0; background:linear-gradient(180deg, rgba(6,7,10,.55) 0%, rgba(6,7,10,.06) 22%, rgba(6,7,10,.3) 54%, rgba(6,7,10,.93) 100%);"></div>
+                <div style="position:relative; padding:16px 18px 18px; display:flex; flex-direction:column; gap:8px;">
+                  <span class="card-kicker" style="color:#fff; text-shadow:0 1px 10px rgba(0,0,0,.7);">{{ a.year }} · {{ a.no }}</span>
+                  <p style="font-family:var(--font-heading); font-weight:700; font-size:15.5px; line-height:1.45; margin:0; color:#fff; text-shadow:0 2px 14px rgba(0,0,0,.8);">{{ a.title }}</p>
+                  <sc-if value="{{ a.hasLink }}" hint-placeholder-val="{{ false }}">
+                    <a href="{{ a.link }}" target="_blank" rel="noopener" style="font-size:13px; font-weight:700; color:#fff; text-decoration:underline; text-underline-offset:3px;">ดูรายละเอียด →</a>
+                  </sc-if>
+                </div>
+              </article>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ noStudentAwards }}" hint-placeholder-val="{{ false }}">
+        <p style="font-size:14px; line-height:1.7; margin:0; padding:20px 24px; border:2px solid var(--color-divider); color:color-mix(in srgb, var(--color-text) 60%, transparent);">ยังไม่มีรายการรางวัลของนักเรียน — เพิ่มได้ในหน้าแอดมิน หัวข้อ “รางวัลและผลงาน” โดยเลือกกลุ่มเป็น “ของนักเรียน”</p>
+      </sc-if>
+    </div>
+  </section>
+
+  <section id="clubs" style="border-top:2px solid var(--color-divider);">
+    <div data-reveal="f" style="max-width:1200px; margin:0 auto; padding:clamp(44px,6vw,84px) clamp(20px,5vw,72px); opacity:{{ reveal.f.opacity }}; transform:{{ reveal.f.transform }};">
+      <span class="tag tag-accent">กิจกรรมพัฒนาผู้เรียน</span>
+      <h2 style="font-family:var(--font-heading); font-weight:800; text-transform:uppercase; letter-spacing:-.03em; font-size:clamp(24px,3vw,38px); margin:16px 0 28px;">กิจกรรมพัฒนาผู้เรียน ชุมนุม และลูกเสือ</h2>
+      <sc-if value="{{ hasClubs }}" hint-placeholder-val="{{ false }}">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px;">
+          <sc-for list="{{ clubs }}" as="c" hint-placeholder-count="3">
+            <article class="card" style="padding:22px; display:flex; flex-direction:column; gap:10px;">
+              <strong style="font-family:var(--font-heading); font-weight:700; font-size:16.5px; line-height:1.4;">{{ c.title }}</strong>
+              <p style="font-size:13.5px; line-height:1.65; margin:0; color:color-mix(in srgb, var(--color-text) 66%, transparent);">{{ c.desc }}</p>
+              <span style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; margin-top:auto; color:color-mix(in srgb, var(--color-text) 55%, transparent);">{{ c.meta }}</span>
+              <sc-if value="{{ c.hasLink }}" hint-placeholder-val="{{ false }}">
+                <a href="{{ c.link }}" target="{{ c.target }}" rel="noopener" style="font-size:13px; font-weight:700; text-decoration:none;">รายละเอียด →</a>
+              </sc-if>
+            </article>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ noClubs }}" hint-placeholder-val="{{ true }}">
+        <p style="font-size:14px; line-height:1.7; margin:0; padding:20px 24px; border:2px solid var(--color-divider); color:color-mix(in srgb, var(--color-text) 60%, transparent);">ยังไม่ได้เพิ่มชมรม — เพิ่มได้ในหน้าแอดมิน หัวข้อ “ชมรม / กิจกรรมพัฒนาผู้เรียน”</p>
+      </sc-if>
+    </div>
+  </section>
+
+  <section id="scholarships" style="border-top:2px solid var(--color-divider);">
+    <div data-reveal="g" style="max-width:1200px; margin:0 auto; padding:clamp(44px,6vw,84px) clamp(20px,5vw,72px); opacity:{{ reveal.g.opacity }}; transform:{{ reveal.g.transform }};">
+      <span class="tag tag-accent">ทุนการศึกษา</span>
+      <h2 style="font-family:var(--font-heading); font-weight:800; text-transform:uppercase; letter-spacing:-.03em; font-size:clamp(24px,3vw,38px); margin:16px 0 28px;">ทุนการศึกษาที่นักเรียนได้รับ</h2>
+      <sc-if value="{{ hasScholarships }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; flex-direction:column;">
+          <sc-for list="{{ scholarships }}" as="sp" hint-placeholder-count="3">
+            <div style="display:grid; grid-template-columns:minmax(0,1fr) auto; gap:18px; align-items:baseline; padding:18px 4px; border-bottom:1px solid var(--color-divider);">
+              <span style="display:flex; flex-direction:column; gap:6px; min-width:0;">
+                <strong style="font-family:var(--font-heading); font-weight:700; font-size:16px; line-height:1.4;">{{ sp.title }}</strong>
+                <span style="font-size:13px; color:color-mix(in srgb, var(--color-text) 62%, transparent);">{{ sp.meta }}</span>
+                <sc-if value="{{ sp.hasLink }}" hint-placeholder-val="{{ false }}">
+                  <a href="{{ sp.link }}" target="{{ sp.target }}" rel="noopener" style="font-size:13px; font-weight:700; text-decoration:none;">อ่านข่าว →</a>
+                </sc-if>
+              </span>
+              <strong style="font-family:var(--font-heading); font-weight:800; font-size:clamp(18px,2vw,26px); line-height:1; font-variant-numeric:tabular-nums; color:var(--color-accent);">{{ sp.amount }}</strong>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+      <sc-if value="{{ noScholarships }}" hint-placeholder-val="{{ true }}">
+        <p style="font-size:14px; line-height:1.7; margin:0; padding:20px 24px; border:2px solid var(--color-divider); color:color-mix(in srgb, var(--color-text) 60%, transparent);">ยังไม่ได้เพิ่มทุนการศึกษา — เพิ่มได้ในหน้าแอดมิน หัวข้อ “ทุนการศึกษา”</p>
+      </sc-if>
+    </div>
+  </section>
+
+  <section id="enrolment" style="position:relative; overflow:hidden;">
+      <div style="position:absolute; left:0; right:0; top:0; height:2px; pointer-events:none; background:linear-gradient(90deg, transparent 0%, var(--color-divider) 16%, var(--color-divider) 84%, transparent 100%);"></div>
+    <div data-reveal="a" style="position:relative; z-index:1; max-width:1200px; margin:0 auto; padding:clamp(44px,6vw,84px) clamp(20px,5vw,72px) clamp(70px,9vw,130px); opacity:{{ reveal.a.opacity }}; transform:{{ reveal.a.transform }};">
+      <span class="tag tag-accent">จำนวนนักเรียน</span>
+      <h2 style="font-family:var(--font-heading); font-weight:800; text-transform:uppercase; letter-spacing:-.03em; font-size:clamp(24px,3vw,38px); margin:16px 0 8px;">นักเรียนแยกตามระดับชั้น</h2>
+      <p style="font-size:14.5px; line-height:1.7; margin:0 0 28px; max-width:60ch; color:color-mix(in srgb, var(--color-text) 62%, transparent);">ข้อมูลเดียวกับหน้าข้อมูลวิชาการ อัปเดตจากระบบจัดการเนื้อหาของโรงเรียน</p>
+      <div style="overflow-x:auto;">
+        <div role="table" style="min-width:560px; display:flex; flex-direction:column;">
+          <div role="row" style="display:grid; grid-template-columns:2fr 1fr 1fr 2.2fr; gap:16px; padding:0 4px 12px; border-bottom:2px solid var(--color-divider);">
+            <span role="columnheader" style="font-family:'Space Mono',monospace; font-size:10.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 58%, transparent);">ระดับชั้น</span>
+            <span role="columnheader" style="font-family:'Space Mono',monospace; font-size:10.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 58%, transparent);">ห้องเรียน</span>
+            <span role="columnheader" style="font-family:'Space Mono',monospace; font-size:10.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 58%, transparent);">นักเรียน</span>
+            <span role="columnheader" style="font-family:'Space Mono',monospace; font-size:10.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 58%, transparent);">ครูประจำชั้น</span>
+          </div>
+          <sc-for list="{{ enrolment }}" as="r" hint-placeholder-count="3">
+            <div role="row" style="display:grid; grid-template-columns:2fr 1fr 1fr 2.2fr; gap:16px; padding:14px 4px; border-bottom:1px solid var(--color-divider); font-size:14.5px;">
+              <span style="font-weight:700;">{{ r.level }}</span>
+              <span>{{ r.rooms }}</span>
+              <span style="font-variant-numeric:tabular-nums;">{{ r.count }}</span>
+              <span style="color:color-mix(in srgb, var(--color-text) 72%, transparent);">{{ r.teacher }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; margin:44px 0 14px; color:color-mix(in srgb, var(--color-text) 60%, transparent);">ระดับชั้นที่เปิดสอน</h3>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <sc-for list="{{ grades }}" as="g" hint-placeholder-count="8">
+          <sc-if value="{{ g.noLink }}" hint-placeholder-val="{{ true }}">
+            <span class="tag tag-outline" style="font-size:13px; padding:6px 16px;">{{ g.name }}</span>
+          </sc-if>
+          <sc-if value="{{ g.hasLink }}" hint-placeholder-val="{{ false }}">
+            <a class="tag tag-outline" href="{{ g.href }}" target="{{ g.target }}" rel="{{ g.rel }}" style="font-size:13px; padding:6px 16px; text-decoration:none;" style-hover="background:color-mix(in srgb, var(--color-accent) 14%, transparent); border-color:var(--color-accent); color:var(--color-accent);">{{ g.name }}</a>
+          </sc-if>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <x-import component-from-global-scope="particle-wave" from="./particle-wave.js" clamp-to="#enrolment" hint-size="100%,100%" style="position:absolute; left:0; right:0; bottom:0; height:100dvh; z-index:-1; pointer-events:none;"></x-import>
+
+  <footer style="position:relative; z-index:1; background:var(--color-text); color:var(--color-bg); margin:clamp(10px,1.6vw,20px) clamp(10px,1.6vw,20px) clamp(10px,1.6vw,20px); border-radius:clamp(18px,2.2vw,30px); overflow:hidden;">
+    <div style="max-width:1200px; margin:0 auto; padding:clamp(40px,6vw,64px) clamp(20px,5vw,72px); display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:40px;">
+      <div>
+        <img src="assets/logo-crest.png" alt="" width="56" height="56" style="display:block; width:56px; height:56px; object-fit:contain; margin-bottom:16px;">
+        <p style="font-family:var(--font-heading); font-weight:800; font-size:16px; margin:0 0 12px; color:var(--color-bg);">{{ schoolName }}</p>
+        <p style="font-size:14px; line-height:1.65; margin:0; max-width:34ch; color:color-mix(in srgb, var(--color-bg) 80%, transparent);">สำนักงานเขตพื้นที่การศึกษาประถมศึกษามหาสารคาม เขต 3</p>
+      </div>
+      <div>
+        <p style="font-family:var(--font-heading); font-weight:800; font-size:14px; margin:0 0 18px; color:var(--color-bg);">ในหน้านี้</p>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <a href="#council" style="font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-bg) 76%, transparent);" style-hover="color:var(--color-bg);">สภานักเรียน</a>
+          <a href="#awards" style="font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-bg) 76%, transparent);" style-hover="color:var(--color-bg);">รางวัลและผลงาน</a>
+          <a href="#enrolment" style="font-size:14px; text-decoration:none; color:color-mix(in srgb, var(--color-bg) 76%, transparent);" style-hover="color:var(--color-bg);">จำนวนนักเรียน</a>
+        </div>
+      </div>
+      <div>
+        <p style="font-family:var(--font-heading); font-weight:800; font-size:14px; margin:0 0 18px; color:var(--color-bg);">ติดต่อโรงเรียน</p>
+        <p style="font-size:14px; line-height:1.7; margin:0 0 8px; color:color-mix(in srgb, var(--color-bg) 80%, transparent);">{{ address }}</p>
+        <p style="font-size:14px; line-height:1.7; margin:0 0 8px; color:color-mix(in srgb, var(--color-bg) 80%, transparent);">โทร. {{ phone }}</p>
+        <a href="{{ homeHref }}" style="font-size:14px; font-weight:700; text-decoration:none; color:var(--color-bg);">← กลับหน้าแรก</a>
+      </div>
+    </div>
+  </footer>
+
+  <div data-backtotop-wrap="" style="position:fixed; right:24px; bottom:24px; width:64px; height:64px; z-index:60; opacity:0; pointer-events:none; transform:translateY(8px); transition:opacity .3s ease, transform .3s ease;">
+    <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true" style="position:absolute; inset:0; transform:rotate(-90deg); pointer-events:none;">
+      <circle cx="32" cy="32" r="29" fill="none" stroke="currentColor" stroke-width="2.5" style="color:color-mix(in srgb, var(--color-text) 22%, transparent);"></circle>
+      <circle data-scroll-ring="" cx="32" cy="32" r="29" fill="none" stroke="var(--color-accent)" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="182.2" stroke-dashoffset="182.2" style="transition:stroke-dashoffset .12s linear;"></circle>
+    </svg>
+    <button type="button" onClick="{{ scrollTop }}" aria-label="กลับขึ้นด้านบน" style="position:absolute; left:9px; top:9px; width:46px; height:46px; border:none; border-radius:999px; background:var(--color-accent); color:#ffffff; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:18px; pointer-events:auto;">↑</button>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;supabaseUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://ormxmxkptzsflwqinnkp.supabase.co&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;ฐานข้อมูล&quot;},&quot;supabaseKey&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;sb_publishable_SzYlmkl3w-otgeuz9v3n8Q_C4O5f-Zg&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;ฐานข้อมูล&quot;}}">
+class Component extends DCLogic {
+  static homeHref() {
+    try { if (/\.dc\.html$/.test(decodeURIComponent(window.location.pathname))) return 'School Website sci-fi lusion v2.dc.html'; } catch (e) {}
+    return 'index.html';
+  }
+  static CMS_KEY = 'nspnsa-cms-v3';
+  static THEME_KEY = 'school-site-theme-v2';
+  navSrc() {
+    const home = Component.homeHref();
+    return [
+      { label: 'หน้าแรก', href: home },
+      { label: 'เกี่ยวกับโรงเรียน', href: home + '#about' },
+      { label: 'บุคลากร', href: home + '#staff' },
+      { label: 'นักเรียน', href: '#enrolment', here: true },
+      { label: 'ข้อมูลวิชาการ', href: home + '#academics' },
+      { label: 'ข่าวประชาสัมพันธ์', href: home + '#news' },
+      { label: 'ติดต่อเรา', href: home + '#contact' }
+    ];
+  }
+  static GRADES = ['อนุบาล 2', 'อนุบาล 3', 'ป.1', 'ป.2', 'ป.3', 'ป.4', 'ป.5', 'ป.6'];
+  static ENROLMENT = [
+    { level: 'ระดับปฐมวัย (อนุบาล 2–3)', rooms: '2 ห้องเรียน', count: '~20 คน', teacher: '—' },
+    { level: 'ระดับประถมศึกษา (ป.1–6)', rooms: '6 ห้องเรียน', count: '~90 คน', teacher: '—' },
+    { level: 'รวมทั้งหมด', rooms: '8 ห้องเรียน', count: '~110 คน', teacher: '—' }
+  ];
+
+  /* award-stack + hero-shape tunables */
+  static STACK = { DEPTH: 3, STEP_Y: 16, STEP_S: 0.045, TILT: 1.6 };
+  static WASH = ['22%', '15%', '30%', '18%'];
+
+  state = {
+    stackAt: 0,
+    councilAt: 0,
+    awardsOpen: false,
+    councilOpen: false,
+    cms: null,
+    theme: (() => {
+      try {
+        const saved = localStorage.getItem(Component.THEME_KEY);
+        if (saved === 'light' || saved === 'dark') return saved;
+      } catch (e) {}
+      try { return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; } catch (e) { return 'dark'; }
+    })(),
+    scrolled: false,
+    seen: {}
+  };
+
+  componentDidMount() {
+    this.setState({ cms: this.readCms() }, this.applyTheme);
+    this.applyTheme();
+    this.syncRemote();
+    this.onScroll = () => {
+      const y = window.scrollY || 0;
+      if ((y > 40) !== this.state.scrolled) this.setState({ scrolled: y > 40 });
+      this.applyNavChrome();
+      this.applyScrollRing();
+      if (!this.io) this.applyReveal();
+      this.applyHero();
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    window.addEventListener('resize', this.onScroll);
+    this.onScroll();
+    this.logVisit();
+    this.startShapes();
+    this.observeReveals();
+  }
+
+  /* ── hero: geometric shapes drifting on independent sine phases ──── */
+  startShapes() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const field = document.querySelector('[data-shape-field]');
+    const shapes = field ? [...field.querySelectorAll('[data-shape]')] : [];
+    if (!shapes.length) return;
+    /* free-floating bodies: no gravity, almost no drag — they drift, take a
+       kick from the cursor and ricochet off the hero frame */
+    const S = shapes.map((el, i) => ({
+      el, x: 0, y: 0, r: 0,
+      vx: (i % 2 ? 1 : -1) * (0.24 + i * 0.05),
+      vy: (i % 3 ? 1 : -1) * (0.18 + i * 0.04),
+      vr: (i % 2 ? 1 : -1) * (0.09 + i * 0.02)
+    }));
+    const mouse = { x: -9999, y: -9999 };
+    this.onShapeMove = (e) => {
+      const b = field.getBoundingClientRect();
+      mouse.x = e.clientX - b.left; mouse.y = e.clientY - b.top;
+    };
+    window.addEventListener('pointermove', this.onShapeMove, { passive: true });
+    const tick = () => {
+      if (this.dead) return;
+      const fw = field.clientWidth, fh = field.clientHeight;
+      for (const s of S) {
+        const el = s.el, w = el.offsetWidth, h = el.offsetHeight, ox = el.offsetLeft, oy = el.offsetTop;
+        const cx = ox + s.x + w / 2, cy = oy + s.y + h / 2;
+        const dx = cx - mouse.x, dy = cy - mouse.y, d2 = dx * dx + dy * dy;
+        const R = w * 0.7 + 90;
+        if (d2 < R * R && d2 > 1) {
+          const d = Math.sqrt(d2), f = 1 - d / R;
+          s.vx += (dx / d) * f * 2.1;
+          s.vy += (dy / d) * f * 2.1;
+          s.vr += f * (dx > 0 ? 0.6 : -0.6);
+        }
+        const sp = Math.hypot(s.vx, s.vy), CAP = 9;
+        if (sp > CAP) { s.vx = s.vx / sp * CAP; s.vy = s.vy / sp * CAP; }
+        s.x += s.vx; s.y += s.vy; s.r += s.vr;
+        s.vx *= 0.995; s.vy *= 0.995; s.vr *= 0.985;
+        const minX = -ox, maxX = fw - ox - w, minY = -oy, maxY = fh - oy - h;
+        if (s.x < minX) { s.x = minX; s.vx = Math.abs(s.vx) * 0.92 + 0.12; s.vr = -s.vr; }
+        else if (s.x > maxX) { s.x = maxX; s.vx = -Math.abs(s.vx) * 0.92 - 0.12; s.vr = -s.vr; }
+        if (s.y < minY) { s.y = minY; s.vy = Math.abs(s.vy) * 0.92 + 0.12; s.vr = -s.vr; }
+        else if (s.y > maxY) { s.y = maxY; s.vy = -Math.abs(s.vy) * 0.92 - 0.12; s.vr = -s.vr; }
+        el.style.transform = 'translate3d(' + s.x.toFixed(1) + 'px,' + s.y.toFixed(1) + 'px,0) rotate(' + s.r.toFixed(2) + 'deg)';
+      }
+      this.raf = requestAnimationFrame(tick);
+    };
+    this.raf = requestAnimationFrame(tick);
+  }
+
+  /* fade + desaturate the shape field as the hero scrolls away */
+  applyHero() {
+    const field = this.field || (this.field = document.querySelector('[data-shape-field]'));
+    if (!field) return;
+    const h = window.innerHeight;
+    const k = Math.min(1, Math.max(0, (window.scrollY || 0) / (h * 0.75)));
+    field.style.opacity = String(1 - k);
+    field.style.filter = `saturate(${(1 - k * 0.9).toFixed(2)})`;
+  }
+
+  /* ── reveals + one-shot icon flips, via IntersectionObserver ─────── */
+  observeReveals() {
+    if (!('IntersectionObserver' in window)) { this.applyReveal(); return; }
+    this.io = new IntersectionObserver(entries => {
+      let seen = null;
+      entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        const k = en.target.getAttribute('data-reveal');
+        if (!k) return;
+        (seen || (seen = { ...this.state.seen }))[k] = true;
+        this.io.unobserve(en.target);
+      });
+      if (seen) this.setState({ seen });
+    }, { rootMargin: '0px 0px -14% 0px', threshold: 0.05 });
+    document.querySelectorAll('[data-reveal]').forEach(el => this.io.observe(el));
+
+    this.ioFlip = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        en.target.style.transform = 'rotateY(360deg)';
+        this.ioFlip.unobserve(en.target);
+      });
+    }, { threshold: 0.6 });
+    this.registerNodes();
+  }
+
+  /* CMS rows arrive after mount, so anything observable has to be re-registered
+     whenever the tree changes — otherwise late nodes never animate */
+  registerNodes = () => {
+    if (this.io) document.querySelectorAll('[data-reveal]').forEach(el => {
+      if (!this.state.seen[el.getAttribute('data-reveal')]) this.io.observe(el);
+    });
+    if (this.ioFlip) document.querySelectorAll('[data-flip]').forEach(el => {
+      if (el.style.transform !== 'rotateY(360deg)') this.ioFlip.observe(el);
+    });
+  };
+
+  componentDidUpdate() { this.registerNodes(); }
+
+  /* ── award stack ─────────────────────────────────────────────────── */
+  /* shared stack geometry: current card upright, the next few peeking out
+     behind it, everything already seen flung off to the left in 3D */
+  buildStack(items, at) {
+    const S = Component.STACK;
+    const n = items.length;
+    const cur = n ? at % n : 0;
+    return items.map((it, i) => {
+      const off = n ? (i - cur + n) % n : 0;
+      const behind = off > 0 && off <= S.DEPTH;
+      const gone = off > S.DEPTH;
+      return {
+        ...it,
+        transform: off === 0
+          ? 'translateY(0) scale(1) rotateY(0deg) rotateZ(0deg)'
+          : behind
+            ? `translateY(${off * S.STEP_Y}px) scale(${(1 - off * S.STEP_S).toFixed(3)}) rotateZ(${(off % 2 ? S.TILT : -S.TILT).toFixed(1)}deg)`
+            : 'translateX(-58%) translateY(-14px) scale(.92) rotateY(-34deg) rotateZ(-7deg)',
+        opacity: gone ? '0' : String(1 - off * 0.12),
+        z: 40 - off,
+        pe: off === 0 ? 'auto' : 'none',
+        top: off === 0 ? '1' : '0'
+      };
+    });
+  }
+
+  /* the swell is written straight to the element: shrink with the transition
+     off, force a reflow so that frame is real, then transition back to full.
+     The end state is inline, so an interrupted run can never leave it small. */
+  swell(sel) {
+    const wash = document.querySelector(sel);
+    if (!wash || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    wash.style.willChange = 'transform, opacity';
+    wash.style.transition = 'none';
+    wash.style.transform = 'scale(.28)';
+    wash.style.opacity = '.35';
+    void wash.offsetWidth;
+    wash.style.transition = 'transform .78s cubic-bezier(.4,0,.2,1), opacity .6s ease-in-out';
+    wash.style.transform = 'scale(1)';
+    wash.style.opacity = '1';
+  }
+
+  councilStep = (dir) => {
+    const n = this.councilRows().length;
+    if (!n) return;
+    this.setState(s => ({ councilAt: (s.councilAt + dir + n) % n }));
+    this.swell('[data-wash="council"]');
+  };
+  councilNext = () => this.councilStep(1);
+  councilPrev = () => this.councilStep(-1);
+  councilRows() {
+    return (this.cmsList('council') || []).filter(r => r.show !== false && r.show !== 'no');
+  }
+
+  stackStep = (dir) => {
+    const n = this.awardsForStack().length;
+    if (!n) return;
+    this.setState(s => ({ stackAt: (s.stackAt + dir + n) % n }));
+    this.swell('[data-wash="awards"]');
+  };
+  stackNext = () => this.stackStep(1);
+  stackPrev = () => this.stackStep(-1);
+
+  /* ── swipe ───────────────────────────────────────────────────────── */
+  /* the top card is draggable: a throw to the left steps forward AND unfolds
+     the full list below it, a throw to the right steps back and folds it away */
+  listCount(kind) {
+    return (kind === 'awards' ? this.awardsForStack() : this.councilRows()).length;
+  }
+  listBox(open, n) {
+    return {
+      max: open ? '6000px' : '0px',
+      op: open ? '1' : '0',
+      chev: open ? 'rotate(180deg)' : 'rotate(0deg)',
+      label: (open ? 'ยุบ · ' : 'แสดง · ') + n + ' รายการ',
+      expanded: open ? 'true' : 'false'
+    };
+  }
+  setListOpen(kind, open) {
+    this.setState(kind === 'awards' ? { awardsOpen: open } : { councilOpen: open });
+  }
+  awardsToggle = () => this.setState(s => ({ awardsOpen: !s.awardsOpen }));
+  councilToggle = () => this.setState(s => ({ councilOpen: !s.councilOpen }));
+
+  dragStart = (kind) => (e) => {
+    if (e.button != null && e.button !== 0) return;
+    const wrap = e.currentTarget;
+    const card = wrap.querySelector('[data-stack-card][data-top="1"]');
+    if (!card) return;
+    const x0 = e.clientX, y0 = e.clientY, base = card.style.transform;
+    let dx = 0, moved = false;
+    const move = (ev) => {
+      dx = ev.clientX - x0;
+      if (!moved) {
+        if (Math.abs(dx) < 5 || Math.abs(dx) < Math.abs(ev.clientY - y0)) return;
+        moved = true;
+        card.style.transition = 'none';
+        card.style.cursor = 'grabbing';
+      }
+      card.style.transform = 'translateX(' + dx.toFixed(1) + 'px) translateY(' + (Math.abs(dx) * 0.04).toFixed(1) + 'px) rotateZ(' + (dx * 0.022).toFixed(2) + 'deg)';
+      card.style.opacity = String(Math.max(0.4, 1 - Math.abs(dx) / 620));
+    };
+    const up = () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+      window.removeEventListener('pointercancel', up);
+      card.style.cursor = '';
+      card.style.transition = '';
+      if (!moved) return;
+      const kill = ev => { ev.preventDefault(); ev.stopPropagation(); };
+      wrap.addEventListener('click', kill, true);
+      setTimeout(() => wrap.removeEventListener('click', kill, true), 80);
+      const left = dx < 0;
+      if (Math.abs(dx) < 60) { card.style.transform = base; card.style.opacity = ''; return; }
+      if (this.listCount(kind) > 1) {
+        card.style.transform = 'translateX(' + (left ? -130 : 130) + '%) rotateZ(' + (left ? -12 : 12) + 'deg)';
+        card.style.opacity = '0';
+        if (kind === 'awards') this.stackStep(left ? 1 : -1); else this.councilStep(left ? 1 : -1);
+      } else {
+        card.style.transform = base;
+        card.style.opacity = '';
+      }
+      this.setListOpen(kind, left);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+    window.addEventListener('pointercancel', up);
+  };
+  awardsDrag = this.dragStart('awards');
+  councilDrag = this.dragStart('council');
+
+  /* student-tagged awards when the school has tagged any; otherwise every
+     award, and the section says so rather than passing them off as students' */
+  awardsForStack() {
+    const all = (this.cmsList('awards') || []).filter(a => a.show !== false && a.show !== 'no');
+    const mine = all.filter(a => a.group === 'student');
+    return mine.length ? mine : all;
+  }
+  awardsAreStudents() {
+    return (this.cmsList('awards') || []).some(a => a.group === 'student');
+  }
+
+  componentWillUnmount() {
+    this.dead = true;
+    if (this.raf) cancelAnimationFrame(this.raf);
+    if (this.io) this.io.disconnect();
+    if (this.ioFlip) this.ioFlip.disconnect();
+    clearTimeout(this.washT);
+    window.removeEventListener('scroll', this.onScroll);
+    if (this.onShapeMove) window.removeEventListener('pointermove', this.onShapeMove);
+    window.removeEventListener('resize', this.onScroll);
+  }
+
+  readCms() {
+    try { const raw = localStorage.getItem(Component.CMS_KEY); return raw ? JSON.parse(raw) : null; } catch (e) { return null; }
+  }
+  cmsList(key) {
+    const c = this.state.cms, v = c && c[key];
+    return Array.isArray(v) && v.length ? v : null;
+  }
+  cmsGet(path) {
+    const c = this.state.cms;
+    if (!c) return '';
+    return String(path).split('.').reduce((o, k) => (o == null ? o : o[k]), c) || '';
+  }
+  sbConfig() {
+    return { url: this.props.supabaseUrl || 'https://ormxmxkptzsflwqinnkp.supabase.co', key: this.props.supabaseKey || 'sb_publishable_SzYlmkl3w-otgeuz9v3n8Q_C4O5f-Zg' };
+  }
+  syncRemote = () => {
+    const cfg = this.sbConfig();
+    if (!window.SB || !window.SB.ready() || !window.SB.configured(cfg)) { setTimeout(this.syncRemote, 500); return; }
+    window.SB.load(cfg).then(res => {
+      if (!res.ok || !res.data) return;
+      this.setState({ cms: res.data });
+      try { localStorage.setItem(Component.CMS_KEY, JSON.stringify(res.data)); } catch (e) {}
+    });
+  };
+  logVisit() {
+    const cfg = this.sbConfig();
+    if (!window.SB || !window.SB.logView) return;
+    let logged = false;
+    try { logged = sessionStorage.getItem('nspnsa-view-logged-students') === '1'; } catch (e) {}
+    if (logged) return;
+    window.SB.logView(cfg, '/students');
+    try { sessionStorage.setItem('nspnsa-view-logged-students', '1'); } catch (e) {}
+  }
+
+  applyTheme = () => { document.documentElement.setAttribute('data-theme', this.state.theme); };
+  setTheme = (t) => this.setState({ theme: t }, () => {
+    try { localStorage.setItem(Component.THEME_KEY, t); } catch (e) {}
+    this.applyTheme();
+    this.applyNavChrome();
+  });
+
+  applyNavChrome() {
+    const shell = document.querySelector('[data-nav-shell]');
+    if (!shell) return;
+    const sc = (window.scrollY || 0) > 40;
+    const dark = this.state.theme === 'dark';
+    shell.style.background = sc ? (dark ? 'rgba(10,10,12,.72)' : 'rgba(246,244,242,.82)') : 'transparent';
+    const blur = sc ? 'blur(16px) saturate(140%)' : 'none';
+    shell.style.backdropFilter = blur;
+    shell.style.webkitBackdropFilter = blur;
+    shell.style.boxShadow = sc ? '0 18px 50px -26px rgba(0,0,0,.55)' : 'none';
+    const ink = sc ? 'var(--color-text)' : '#ffffff';
+    const shadow = sc ? 'none' : '0 1px 3px rgba(0,0,0,.55)';
+    shell.querySelectorAll('[data-nav-link]').forEach(a => { a.style.color = ink; a.style.textShadow = shadow; });
+    const brand = shell.querySelector('[data-brand]'), sub = shell.querySelector('[data-brand-sub]');
+    if (brand) { brand.style.color = ink; brand.style.textShadow = shadow; }
+    if (sub) sub.style.color = sc ? 'color-mix(in srgb, var(--color-text) 55%, transparent)' : 'rgba(255,255,255,.72)';
+    const wrap = document.querySelector('[data-backtotop-wrap]');
+    if (wrap) {
+      wrap.style.opacity = sc ? '1' : '0';
+      wrap.style.pointerEvents = sc ? 'auto' : 'none';
+      wrap.style.transform = sc ? 'translateY(0)' : 'translateY(8px)';
+    }
+  }
+
+  applyScrollRing() {
+    const ring = this.ring || (this.ring = document.querySelector('[data-scroll-ring]'));
+    if (!ring) return;
+    const doc = document.documentElement;
+    const max = (doc.scrollHeight || 0) - window.innerHeight;
+    const p = max > 0 ? Math.min(1, Math.max(0, (window.scrollY || 0) / max)) : 0;
+    ring.setAttribute('stroke-dashoffset', String(2 * Math.PI * 29 * (1 - p)));
+  }
+
+  applyReveal() {
+    const seen = { ...this.state.seen };
+    let changed = false;
+    document.querySelectorAll('[data-reveal]').forEach(el => {
+      const k = el.getAttribute('data-reveal');
+      if (!k || seen[k]) return;
+      if (el.getBoundingClientRect().top < window.innerHeight * 0.86) { seen[k] = true; changed = true; }
+    });
+    if (changed) this.setState({ seen });
+  }
+
+  revealFor(k) {
+    const on = !!this.state.seen[k];
+    return { opacity: on ? '1' : '0', transform: on ? 'none' : 'translateY(26px)' };
+  }
+
+  scrollTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  setLightTheme = () => this.setTheme('light');
+  setDarkTheme = () => this.setTheme('dark');
+
+  renderVals() {
+    const heroPhoto = this.cmsGet('hero.photo') || this.cmsGet('hero.photoSm');
+    const banner = this.cmsList('banner') || [];
+    const fallbackPhoto = (banner.find(b => b.photo) || {}).photo || '';
+    const photo = heroPhoto || fallbackPhoto;
+
+    const grades = (this.cmsList('grades') || Component.GRADES.map(name => ({ name }))).map(g => {
+      const name = typeof g === 'string' ? g : (g.name || '');
+      const href = String((typeof g === 'object' && (g.link || g.url)) || '').trim();
+      const openable = !!href && href !== '#';
+      return {
+        name, hasLink: openable, noLink: !openable,
+        href: openable ? href : '#',
+        target: openable && href.charAt(0) !== '#' ? '_blank' : undefined,
+        rel: openable && href.charAt(0) !== '#' ? 'noopener' : undefined
+      };
+    });
+
+    const ac = this.cmsList('academics');
+    const enrolment = ac
+      ? ac.map((a, i) => ({
+          level: a.level || (Component.ENROLMENT[i] || {}).level || '',
+          rooms: a.rooms || '—',
+          count: a.students || '—',
+          teacher: a.teacher || '—'
+        }))
+      : Component.ENROLMENT;
+
+    const awards = this.awardsForStack();
+    const studentAwards = awards.map((a, i) => {
+      const src = a.photoSm || a.photo || '';
+      return {
+        title: a.title || '', year: a.year || '',
+        no: String(i + 1).padStart(2, '0'),
+        photoCss: src ? `url("${src}")` : 'linear-gradient(140deg, color-mix(in srgb, var(--color-accent) 26%, transparent), transparent)',
+        photoPos: a.photoPos || '50% 50%',
+        hasPhoto: !!src,
+        hasLink: !!(a.link && String(a.link).trim()), link: a.link || '#'
+      };
+    });
+
+    const n = studentAwards.length;
+    const at = n ? this.state.stackAt % n : 0;
+    const awardStack = this.buildStack(studentAwards, at);
+
+    const shown = key => (this.cmsList(key) || []).filter(r => r.show !== false && r.show !== 'no');
+    const link = v => {
+      const s = String(v || '').trim();
+      return { hasLink: !!s && s !== '#', link: s || '#', target: s && s.charAt(0) !== '#' ? '_blank' : undefined };
+    };
+
+    const council = shown('council').map(c => ({
+      name: c.name || '', role: c.role || 'กรรมการสภานักเรียน',
+      meta: [c.grade, c.year && ('ปีการศึกษา ' + c.year)].filter(Boolean).join(' · '),
+      photoCss: (c.photoSm || c.photo) ? `url("${c.photoSm || c.photo}")` : 'none',
+      photoPos: c.photoPos || '50% 40%'
+    }));
+    const councilYear = shown('council').map(c => c.year).filter(Boolean)[0];
+
+    const clubs = shown('clubs').map(c => ({
+      title: c.title || '', desc: c.desc || '',
+      meta: [c.teacher && ('ครูผู้ดูแล: ' + c.teacher), c.day].filter(Boolean).join(' · '),
+      ...link(c.link)
+    }));
+
+    const scholarships = shown('scholarships').map(sp => ({
+      title: sp.title || '', amount: sp.amount || '—',
+      meta: [sp.donor, sp.year && ('ปีการศึกษา ' + sp.year)].filter(Boolean).join(' · '),
+      ...link(sp.link)
+    }));
+
+    const docs = (this.cmsList('docs') || []).map(d => {
+      const url = String(d.url || '').trim();
+      return {
+        name: d.title || '', category: d.group || '—', date: d.date || '',
+        href: url || Component.homeHref() + '#academics',
+        target: url && url.charAt(0) !== '#' ? '_blank' : undefined
+      };
+    });
+
+    return {
+      navItems: this.navSrc().map(n => ({ ...n, bg: n.here ? 'color-mix(in srgb, var(--color-accent) 90%, transparent)' : 'transparent' })),
+      heroImage: photo ? `url("${photo}")` : 'linear-gradient(150deg, #1B1B22, #0A0A0C)',
+      heroPos: this.cmsGet('hero.photoPos') || '50% 42%',
+      enrolment, grades,
+      studentAwards, awardStack,
+      stackCount: n ? (at + 1) + ' / ' + n : '0 / 0',
+      awardsHeading: this.awardsAreStudents() ? 'รางวัลและผลงานของนักเรียน' : 'รางวัลและผลงานของโรงเรียน',
+      awardsKicker: this.awardsAreStudents() ? 'ผลงานนักเรียน' : 'ผลงานโรงเรียน',
+      awardsNote: this.awardsAreStudents()
+        ? 'รางวัลที่นักเรียนได้รับ กดถัดไปเพื่อดูทีละรายการ'
+        : 'ขณะนี้แสดงรางวัลของโรงเรียนทั้งหมด — ตั้งกลุ่มรางวัลเป็น “ของนักเรียน” ในหน้าแอดมินเพื่อแยกเฉพาะของนักเรียน',
+      awardsBox: this.listBox(this.state.awardsOpen, studentAwards.length),
+      awardsToggle: this.awardsToggle,
+      awardsDrag: this.awardsDrag,
+      stackNext: this.stackNext,
+      stackPrev: this.stackPrev,
+      washColor: `color-mix(in srgb, var(--color-accent) ${Component.WASH[at % Component.WASH.length]}, transparent)`,
+      washOpacity: n ? '1' : '0',
+      hasStudentAwards: studentAwards.length > 0,
+      noStudentAwards: studentAwards.length === 0,
+      docs,
+      homeHref: Component.homeHref(),
+      council, hasCouncil: council.length > 0, noCouncil: council.length === 0,
+      councilStack: this.buildStack(
+        council.map((c, i) => ({ ...c, no: String(i + 1).padStart(2, '0') })),
+        council.length ? this.state.councilAt % council.length : 0
+      ),
+      councilCount: council.length
+        ? ((this.state.councilAt % council.length) + 1) + ' / ' + council.length
+        : '0 / 0',
+      councilBox: this.listBox(this.state.councilOpen, council.length),
+      councilToggle: this.councilToggle,
+      councilDrag: this.councilDrag,
+      councilNext: this.councilNext,
+      councilPrev: this.councilPrev,
+      councilWash: `color-mix(in srgb, var(--color-accent) ${Component.WASH[(council.length ? this.state.councilAt % council.length : 0) % Component.WASH.length]}, transparent)`,
+      councilWashOpacity: council.length ? '1' : '0',
+      councilNote: councilYear
+        ? 'คณะกรรมการสภานักเรียน ปีการศึกษา ' + councilYear + ' — เลือกตั้งโดยนักเรียนทุกระดับชั้น'
+        : 'คณะกรรมการที่นักเรียนเลือกตั้งกันเอง ทำหน้าที่ดูแลกิจกรรมและเป็นตัวแทนนักเรียน',
+      clubs, hasClubs: clubs.length > 0, noClubs: clubs.length === 0,
+      scholarships, hasScholarships: scholarships.length > 0, noScholarships: scholarships.length === 0,
+      schoolName: this.cmsGet('site.name') || 'โรงเรียนบ้านหนองสระพังโนนสะอาด',
+      address: this.cmsGet('contact.address') || 'หมู่ที่ 15 บ้านหนองสระพัง ตำบลเขวาไร่ อำเภอโกสุมพิสัย จังหวัดมหาสารคาม 44140',
+      phone: this.cmsGet('contact.phone') || '062-601-7885',
+      reveal: {
+        a: this.revealFor('a'), b: this.revealFor('b'), d: this.revealFor('d'),
+        e: this.revealFor('e'), f: this.revealFor('f'), g: this.revealFor('g')
+      },
+      scrollTop: this.scrollTop,
+      setLightTheme: this.setLightTheme,
+      setDarkTheme: this.setDarkTheme
+    };
+  }
+}
+</script>
+</body>
+</html>

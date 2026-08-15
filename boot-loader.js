@@ -9,7 +9,7 @@
   if (window.__boot) return;
 
   const CFG = {
-    LETTER:      'N',    /* 'N' | 'S' | 'rule' — shape the panel folds into */
+    LETTER:      'NP',   /* 'NP' | 'N' | 'S' | 'rule' — shape the panel folds into */
     MIN_MS:      1500,   /* never finish sooner than this (lets the motion read) */
     MAX_MS:      4500,   /* hard cap: reveal even if an asset hangs */
     FAST_MS:     700,    /* repeat visit in the same tab: short version */
@@ -20,7 +20,7 @@
     REVEAL_MS:   700,    /* content fade-up */
     SPEED:       1,      /* global multiplier */
     /* letterform box, in viewport % */
-    BOX: { x0: 34, x1: 66, y0: 26, y1: 74, w: 7.4 }
+    BOX: { x0: 27, x1: 73, y0: 27, y1: 73, w: 5.4, gap: 3.6 }
   };
 
   const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -53,14 +53,48 @@
       const m = (y0 + y1) / 2;
       return [[x0, m - hw / 2], [x1, m - hw / 2], [x1, m + hw / 2], [x0, m + hw / 2]];
     }
-    /* N — left stem, diagonal, right stem */
-    const d = (y1 - y0) * 0.46;
-    return [[x0, y0], [x0 + wv, y0], [x1 - wv, y1 - d], [x1 - wv, y0], [x1, y0],
-            [x1, y1], [x1 - wv, y1], [x0 + wv, y0 + d], [x0 + wv, y1], [x0, y1]];
+    /* N — left stem, diagonal, right stem. Traced clockwise from the top-left,
+       finishing at the bottom-left so another glyph can be bridged on. */
+    const nPts = (a, b) => {
+      const d = (y1 - y0) * 0.46;
+      return [[a, y0], [a + wv, y0], [b - wv, y1 - d], [b - wv, y0], [b, y0],
+              [b, y1], [b - wv, y1], [a + wv, y0 + d], [a + wv, y1], [a, y1]];
+    };
+    if (kind === 'NP') {
+      /* two glyphs as ONE closed polygon: N, a zero-area bridge along the
+         baseline, then P — whose bowl is cut as a counter-wound counter
+         reached by a zero-width seam up the stem's right edge. */
+      const g = b.gap || 3.6;
+      const lw = (x1 - x0 - g) / 2;
+      const nx0 = x0, nx1 = x0 + lw;
+      const px0 = x1 - lw, px1 = x1;
+      const ym = y0 + (y1 - y0) * 0.54;          /* bowl bottom */
+      const sx = px0 + wv;                        /* stem's right edge = seam */
+      return nPts(nx0, nx1).concat([
+        [px0, y1], [px0, y0], [px1, y0], [px1, ym], [sx, ym],
+        [sx, ym - hw], [px1 - wv, ym - hw], [px1 - wv, y0 + hw], [sx, y0 + hw], [sx, ym - hw],
+        [sx, ym], [sx, y1], [px0, y1], [nx0, y1]
+      ]);
+    }
+    return nPts(x0, x1);
   }
   /* screen-sized start polygon with the same point count: each target point
      pushed out to the screen edge it belongs to, so the fold reads as one move */
   const screenPts = pts => pts.map(([x, y]) => [x < 50 ? 0 : 100, y < 50 ? 0 : 100]);
+  /* two-glyph marks need a fold that stays angular: every glyph point is pushed
+     straight out to the nearest side of a rect, so collinear runs stay collinear
+     and the panel reads as folded paper rather than a morphing blob */
+  const projPts = (pts, r) => pts.map(([x, y]) => {
+    const dl = x - r.x0, dr = r.x1 - x, dt = y - r.y0, db = r.y1 - y;
+    const m = Math.min(dl, dr, dt, db);
+    if (m === dl) return [r.x0, y];
+    if (m === dr) return [r.x1, y];
+    if (m === dt) return [x, r.y0];
+    return [x, r.y1];
+  });
+  /* the start rect sits well outside the viewport so its fold notches are
+     off-screen and the panel still covers everything at t = 0 */
+  const OUTER = { x0: -70, x1: 170, y0: -70, y1: 170 };
   const poly = pts => 'polygon(' + pts.map(p => p[0].toFixed(2) + '% ' + p[1].toFixed(2) + '%').join(',') + ')';
   const mix = (a, b, t) => a.map((p, i) => [lerp(p[0], b[i][0], t), lerp(p[1], b[i][1], t)]);
 
@@ -125,7 +159,7 @@
   const t0 = performance.now();
   const fast = CFG.REPEAT_FAST && sessionStorage.getItem('bnsp-booted') === '1';
   const minMs = (fast ? CFG.FAST_MS : CFG.MIN_MS) * CFG.SPEED;
-  let shown = 0, phase = 'load', pStart = 0, from = null, to = null, done = false;
+  let shown = 0, phase = 'load', pStart = 0, from = null, mid = null, to = null, done = false;
   const dones = [];   /* callbacks the page registers to start its own intro motion */
 
   function finish() {
@@ -165,7 +199,11 @@
       bar().style.width = p + '%';
       if (p >= 100) {
         phase = 'form'; pStart = now;
-        to = letterPts(CFG.LETTER); from = screenPts(to);
+        to = letterPts(CFG.LETTER);
+        if (CFG.LETTER === 'NP') {
+          from = projPts(to, OUTER);
+          mid = projPts(to, { x0: CFG.BOX.x0, x1: CFG.BOX.x1, y0: CFG.BOX.y0, y1: CFG.BOX.y1 });
+        } else { from = screenPts(to); mid = null; }
         num().style.transition = 'opacity .3s ease'; num().style.opacity = '0';
         const head = el.querySelector('div');
         head.style.transition = 'opacity .3s ease'; head.style.opacity = '0';
@@ -175,7 +213,12 @@
       }
     } else if (phase === 'form') {
       const k = Math.min(1, (now - pStart) / (CFG.FORM_MS * CFG.SPEED));
-      el.style.clipPath = poly(mix(from, to, easeInOut(k)));
+      const e = easeInOut(k);
+      /* collapse to the glyph box first, then cut the counters — two crisp beats */
+      el.style.clipPath = poly(
+        !mid ? mix(from, to, e)
+             : e <= 0.55 ? mix(from, mid, e / 0.55)
+                         : mix(mid, to, (e - 0.55) / 0.45));
       if (k >= 1) { phase = 'hold'; pStart = now; }
     } else if (phase === 'hold') {
       if (now - pStart > CFG.HOLD_MS * CFG.SPEED) {
