@@ -129,5 +129,24 @@
     } catch (e) { return { ok: false, error: String(e && e.message || e) }; }
   }
 
-  window.SB = { ready: ready, configured: configured, load: load, save: save, signIn: signIn, session: session, signOut: signOut, upload: upload, ping: ping, logView: logView, viewStats: viewStats };
+  async function logEdit(cfg, text, by) {
+    var c = client(cfg && cfg.url, cfg && cfg.key);
+    if (!c) return { ok: false };
+    try {
+      var res = await c.from('edit_log').insert({ text: String(text || '').slice(0, 300), by_name: String(by || '').slice(0, 120) });
+      return res.error ? { ok: false, error: res.error.message } : { ok: true };
+    } catch (e) { return { ok: false, error: String(e && e.message || e) }; }
+  }
+
+  async function editLog(cfg, limit) {
+    var c = client(cfg && cfg.url, cfg && cfg.key);
+    if (!c) return { ok: false, error: 'ยังไม่ได้เชื่อมต่อฐานข้อมูล' };
+    try {
+      var res = await c.from('edit_log').select('created_at,text,by_name').order('created_at', { ascending: false }).limit(limit || 20);
+      if (res.error) return { ok: false, error: res.error.message };
+      return { ok: true, rows: (res.data || []).map(function (r) { return { at: r.created_at, text: r.text, by: r.by_name || 'ผู้ดูแลระบบ' }; }) };
+    } catch (e) { return { ok: false, error: String(e && e.message || e) }; }
+  }
+
+  window.SB = { ready: ready, configured: configured, load: load, save: save, signIn: signIn, session: session, signOut: signOut, upload: upload, ping: ping, logView: logView, viewStats: viewStats, logEdit: logEdit, editLog: editLog };
 })();

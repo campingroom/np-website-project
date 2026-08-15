@@ -10,7 +10,7 @@
   /* ── tunables ─────────────────────────────────────────────────────────── */
   var CFG = {
     DAMP_RECT:    10.0,  // position/size follow (higher = tighter to the DOM)
-    DAMP_VEL:      6.0,  // scroll-velocity decay back to flat
+    DAMP_VEL:      7.6,  // scroll-velocity decay back to flat
     DAMP_HOVER:    7.0,  // hover ramp in/out
     DAMP_ZOOM:     4.0,  // scroll-zoom ease
     DAMP_POINTER:  4.2,  // pointer follow (low = more lag)
@@ -20,9 +20,9 @@
     ZOOM_BASE:    0.06,  // always-on crop headroom so the drag never runs off-texture
 
     VEL_PER_PX:   1 / 46, // px of scroll per frame that maps to velocity 1.0
-    VEL_CLAMP:     1.5,
+    VEL_CLAMP:     1.1,
 
-    CURVE_AMP:      86,  // px of Y displacement at velocity 1.0 (the arc/wheel bend)
+    CURVE_AMP:      40,  // px of Y displacement at velocity 1.0 (the arc/wheel bend)
     ZOOM_MAX:     0.08,  // texture scale at the centre of the viewport (1.0 -> 1.08)
 
     NOISE_FREQ:    5.4,  // hover tremble: noise cells across the card

@@ -144,6 +144,33 @@ a:hover { color:var(--color-accent); text-decoration:underline; }
               </sc-for>
             </div>
 
+            <section>
+              <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:16px; margin:0 0 14px; padding-bottom:10px; border-bottom:2px solid var(--color-divider);">
+                <div>
+                  <h2 style="font-size:16px; font-weight:800; margin:0;">สถิติผู้เข้าชมเว็บไซต์</h2>
+                  <p style="font-family:'Space Mono',monospace; font-size:11px; margin:4px 0 0; color:color-mix(in srgb, var(--color-text) 55%, transparent);">{{ visitsNote }}</p>
+                </div>
+                <button type="button" onClick="{{ onRefreshVisits }}" class="btn btn-secondary" style="flex:none; display:inline-flex; align-items:center; gap:8px;">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"></path><path d="M21 3v6h-6"></path></svg>
+                  รีเฟรช
+                </button>
+              </div>
+              <sc-if value="{{ visitsReady }}" hint-placeholder-val="{{ false }}">
+                <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:0; border:2px solid var(--color-divider);">
+                  <sc-for list="{{ visitStats }}" as="v" hint-placeholder-count="4">
+                    <div style="padding:18px 22px; border-right:2px solid var(--color-divider);">
+                      <p style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 55%, transparent); margin:0 0 10px;">{{ v.label }}</p>
+                      <p style="font-size:30px; font-weight:800; line-height:1; margin:0 0 6px; font-variant-numeric:tabular-nums; color:var(--color-accent);">{{ v.value }}</p>
+                      <p style="font-size:12px; margin:0; color:color-mix(in srgb, var(--color-text) 60%, transparent);">{{ v.note }}</p>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <sc-if value="{{ visitsEmpty }}" hint-placeholder-val="{{ true }}">
+                <div style="border:2px solid var(--color-divider); padding:18px 22px; font-size:13px; color:color-mix(in srgb, var(--color-text) 62%, transparent);">ยังไม่มีข้อมูลสถิติ — เชื่อมต่อฐานข้อมูลในหน้า “เชื่อมต่อฐานข้อมูล” แล้วกดรีเฟรช</div>
+              </sc-if>
+            </section>
+
             <div style="display:grid; grid-template-columns:1.2fr .8fr; gap:28px; align-items:start;">
               <section>
                 <h2 style="font-size:16px; font-weight:800; margin:0 0 14px; padding-bottom:10px; border-bottom:2px solid var(--color-divider);">เริ่มแก้ไขได้เลย</h2>
@@ -158,7 +185,10 @@ a:hover { color:var(--color-accent); text-decoration:underline; }
                 </div>
               </section>
               <section>
-                <h2 style="font-size:16px; font-weight:800; margin:0 0 14px; padding-bottom:10px; border-bottom:2px solid var(--color-divider);">ประวัติการแก้ไขล่าสุด</h2>
+                <div style="display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin:0 0 14px; padding-bottom:10px; border-bottom:2px solid var(--color-divider);">
+                  <h2 style="font-size:16px; font-weight:800; margin:0;">ประวัติการแก้ไขล่าสุด</h2>
+                  <span style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 50%, transparent);">{{ activityScope }}</span>
+                </div>
                 <div style="display:flex; flex-direction:column;">
                   <sc-for list="{{ activity }}" as="a" hint-placeholder-count="4">
                     <div style="display:flex; gap:12px; padding:12px 0; border-bottom:1px solid var(--color-divider);">
@@ -169,6 +199,9 @@ a:hover { color:var(--color-accent); text-decoration:underline; }
                       </div>
                     </div>
                   </sc-for>
+                  <sc-if value="{{ activityEmpty }}" hint-placeholder-val="{{ false }}">
+                    <p style="font-size:12.5px; margin:0; padding:12px 0; color:color-mix(in srgb, var(--color-text) 55%, transparent);">ยังไม่มีประวัติ — รายการจะถูกบันทึกทุกครั้งที่กด “บันทึกการเปลี่ยนแปลง”</p>
+                  </sc-if>
                 </div>
               </section>
             </div>
@@ -875,13 +908,95 @@ class Component extends DCLogic {
     authed: false, user: null, loginUser: '', loginPass: '', loginError: false,
     section: 'dashboard', data: Component.normalise(JSON.parse(JSON.stringify(Component.DEFAULT_DATA))),
     dirty: false, toast: '', connMsg: '', connOk: false, savedAt: '', syncing: false, migrateMsg: '', remoteAt: '', authMode: 'local',
-    activity: [
-      { time:'วันนี้ 09:14', text:'อัปเดตข่าว "ฟุตบอลหนองสระพังโนนสะอาด คัพ"', by:'ผู้ดูแลระบบ' },
-      { time:'เมื่อวาน', text:'เพิ่มรูปกิจกรรมวันแม่ 6 ภาพ', by:'ครูธุรการ' },
-      { time:'3 ส.ค.', text:'แก้ไขเบอร์โทรศัพท์ในหน้าติดต่อ', by:'ผู้ดูแลระบบ' },
-      { time:'1 ส.ค.', text:'เพิ่มรายชื่อครูใหม่ 2 ท่าน', by:'ผู้ดูแลระบบ' },
-    ],
+    visits: null, visitsErr: '', visitsAt: '', visitsLoading: false, logShared: false,
+    activity: [],
   };
+
+  static LOG_KEY = 'nspnsa-admin-log';
+
+  /* snapshot of the data as it stood at the last save/load — the diff base */
+  baseline = null;
+
+  setBaseline(data) {
+    this.baseline = {};
+    Object.keys(data || {}).forEach(k => {
+      if (k === 'connect') return;
+      try { this.baseline[k] = JSON.stringify(data[k]); } catch (e) {}
+    });
+  }
+
+  loadLog() {
+    try {
+      const raw = localStorage.getItem(Component.LOG_KEY);
+      if (raw) this.setState({ activity: JSON.parse(raw) });
+    } catch (e) {}
+  }
+
+  /* the shared log on Supabase wins over the local cache when reachable */
+  pullLog = () => {
+    if (!this.online() || !window.SB.editLog) return;
+    window.SB.editLog(this.cfg(), 20).then(res => {
+      if (!res.ok) { this.setState({ logShared: false }); return; }
+      this.setState({ activity: res.rows, logShared: true });
+      try { localStorage.setItem(Component.LOG_KEY, JSON.stringify(res.rows)); } catch (e) {}
+    });
+  };
+
+  static storeLabel(store) {
+    const sec = Component.SECTIONS.find(s => s.store === store);
+    return sec ? sec.label : store;
+  }
+
+  /* build a human line from what actually changed since the last save */
+  describeChanges(data) {
+    if (!this.baseline) return '';
+    const parts = [];
+    Object.keys(data || {}).forEach(k => {
+      if (k === 'connect') return;
+      let cur = '';
+      try { cur = JSON.stringify(data[k]); } catch (e) { return; }
+      if (cur === this.baseline[k]) return;
+      const label = Component.storeLabel(k);
+      if (Array.isArray(data[k])) {
+        let before = [];
+        try { before = JSON.parse(this.baseline[k] || '[]'); } catch (e) {}
+        const d = data[k].length - (before.length || 0);
+        parts.push(d > 0 ? `เพิ่ม${label} ${d} รายการ` : d < 0 ? `ลบ${label} ${-d} รายการ` : `แก้ไข${label}`);
+      } else parts.push(`แก้ไข${label}`);
+    });
+    if (!parts.length) return '';
+    return parts.length > 3 ? parts.slice(0, 3).join(' · ') + ` และอีก ${parts.length - 3} ส่วน` : parts.join(' · ');
+  }
+
+  pushLog(data) {
+    const text = this.describeChanges(data);
+    if (!text) return;
+    const entry = {
+      at: new Date().toISOString(),
+      text,
+      by: (this.state.user && this.state.user.name) || 'ผู้ดูแลระบบ'
+    };
+    const activity = [entry, ...this.state.activity].slice(0, 20);
+    this.setState({ activity });
+    try { localStorage.setItem(Component.LOG_KEY, JSON.stringify(activity)); } catch (e) {}
+    this.setBaseline(data);
+    if (this.online() && window.SB.logEdit) {
+      window.SB.logEdit(this.cfg(), entry.text, entry.by).then(res => { if (res.ok) this.pullLog(); });
+    }
+  }
+
+  static logTime(iso) {
+    const d = new Date(iso);
+    if (isNaN(d)) return '';
+    const hm = d.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
+    const day = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    const today = new Date(); const t0 = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const diff = Math.round((t0 - day) / 86400000);
+    if (diff === 0) return 'วันนี้ ' + hm;
+    if (diff === 1) return 'เมื่อวาน ' + hm;
+    return d.toLocaleDateString('th-TH', { day: 'numeric', month: 'short' });
+  }
+
 
   setImgPos(ds, x, y) {
     this.mutate(d => {
@@ -895,7 +1010,12 @@ class Component extends DCLogic {
   componentDidMount() {
     try {
       const raw = localStorage.getItem(Component.STORE_KEY);
-      if (raw) this.setState({ data: Component.normalise({ ...JSON.parse(JSON.stringify(Component.DEFAULT_DATA)), ...JSON.parse(raw) }) });
+      if (raw) {
+        const merged = Component.normalise({ ...JSON.parse(JSON.stringify(Component.DEFAULT_DATA)), ...JSON.parse(raw) });
+        this.setState({ data: merged });
+        this.setBaseline(merged);
+      } else this.setBaseline(this.state.data);
+      this.loadLog();
       const sess = localStorage.getItem(Component.SESSION_KEY);
       if (sess) this.setState({ authed: true, user: JSON.parse(sess) });
       setTimeout(() => {
@@ -904,9 +1024,24 @@ class Component extends DCLogic {
           if (s.ok && s.user) this.setState({ authed: true, user: { name: s.user.email, role: 'ผู้ดูแลเว็บไซต์' } });
         });
         this.pullRemote(true);
+        this.pullVisits();
+        this.pullLog();
       }, 400);
     } catch (e) {}
   }
+
+  pullVisits = () => {
+    if (!this.online() || !window.SB.viewStats) return;
+    this.setState({ visitsLoading: true });
+    window.SB.viewStats(this.cfg()).then(res => {
+      this.setState({
+        visitsLoading: false,
+        visits: res.ok && res.data ? res.data : null,
+        visitsErr: res.ok ? '' : (res.error || 'ดึงสถิติไม่สำเร็จ'),
+        visitsAt: res.ok ? new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' }) : ''
+      });
+    });
+  };
 
   section() { return Component.SECTIONS.find(s => s.id === this.state.section) || Component.SECTIONS[0]; }
 
@@ -1051,6 +1186,7 @@ class Component extends DCLogic {
       if (!res.data) { if (!silent) this.flash('ยังไม่มีข้อมูลบนฐานข้อมูล — กดบันทึกเพื่ออัปโหลดครั้งแรก'); return false; }
       const merged = Component.normalise({ ...JSON.parse(JSON.stringify(Component.DEFAULT_DATA)), ...res.data, connect: this.cfg() });
       this.setState({ data: merged, dirty: false, remoteAt: res.updatedAt || '' });
+      this.setBaseline(merged);
       try { localStorage.setItem(Component.STORE_KEY, JSON.stringify(merged)); } catch (e) {}
       if (!silent) this.flash('ดึงข้อมูลล่าสุดจากฐานข้อมูลแล้ว');
       return true;
@@ -1187,13 +1323,31 @@ class Component extends DCLogic {
         { label:'รางวัลและผลงาน', value:String((D.awards || []).length), note:'ที่แสดงบนหน้าข่าว' },
         { label:'วิดีโอ & เอกสาร', value:String((D.video || []).length + (D.docs || []).length), note:'ไฟล์เผยแพร่บนเว็บ' },
       ],
+      visitStats: (() => {
+        const v = st.visits || {};
+        const n = k => Number(v[k] || 0).toLocaleString('th-TH');
+        return [
+          { label:'เข้าชมทั้งหมด', value:n('total'), note:'ครั้งสะสม' },
+          { label:'ผู้เข้าชม', value:n('visitors'), note:'ไม่ซ้ำกัน' },
+          { label:'วันนี้', value:n('today'), note:'ครั้งวันนี้' },
+          { label:'เดือนนี้', value:n('month'), note:'ครั้งเดือนนี้' },
+        ];
+      })(),
+      visitsReady: !!st.visits,
+      visitsEmpty: !st.visits,
+      visitsNote: st.visitsLoading ? 'กำลังดึงข้อมูล…'
+        : st.visits ? ('อัปเดตเมื่อ ' + st.visitsAt)
+        : (st.visitsErr || 'ยังไม่ได้เชื่อมต่อฐานข้อมูล หรือยังไม่ได้ติดตั้งตาราง page_views'),
+      onRefreshVisits: this.pullVisits,
       quickLinks: [
         { id:'news', kicker:'บ่อยที่สุด', label:'เพิ่มข่าวใหม่', desc:'ลงข่าวกิจกรรมพร้อมภาพและลิงก์อ่านต่อ' },
         { id:'banner', kicker:'หน้าแรก', label:'เปลี่ยนแบนเนอร์', desc:'สลับภาพกิจกรรมเด่นที่เลื่อนบนหน้าแรก' },
         { id:'staff', kicker:'บุคลากร', label:'เพิ่ม/แก้ไขรายชื่อครู', desc:'ชื่อ ตำแหน่ง ชั้นที่สอน และรูปถ่าย' },
         { id:'contact', kicker:'ข้อมูลติดต่อ', label:'แก้เบอร์โทร/ที่อยู่', desc:'อัปเดตพร้อมกันทั้งหน้าติดต่อและท้ายเว็บ' },
       ],
-      activity: st.activity,
+      activity: (st.activity || []).map(a => ({ time: a.time || Component.logTime(a.at), text: a.text, by: a.by })),
+      activityEmpty: !(st.activity || []).length,
+      activityScope: st.logShared ? 'ใช้ร่วมกันทุกเครื่อง' : 'เก็บในเครื่องนี้',
 
       objFields, listItems,
       listCountText: sec.type === 'list' ? `ทั้งหมด ${(D[sec.store] || []).length} รายการ · ลากลำดับด้วยปุ่มลูกศร` : '',
@@ -1361,6 +1515,7 @@ class Component extends DCLogic {
       },
       onSave: () => {
         try { localStorage.setItem(Component.STORE_KEY, JSON.stringify(st.data)); } catch (e) {}
+        this.pushLog(st.data);
         const now = new Date().toLocaleTimeString('th-TH', { hour:'2-digit', minute:'2-digit' }) + ' น.';
         this.setState({ dirty: false, savedAt: now });
         if (this.online()) {
