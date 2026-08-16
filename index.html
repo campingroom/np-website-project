@@ -2122,8 +2122,10 @@ class Component extends DCLogic {
     if (!c) return Component.NAV;
     const known = Component.NAV;
     const picked = c.filter(m => m.show !== 'no' && m.show !== false).map(m => {
-      const id = String(m.target || '').replace('#', '');
-      const base = known.find(n => n.id === id);
+      const t = String(m.target || '');
+      /* the students page is a separate URL, not an anchor on this one */
+      if (/students/i.test(t)) return { id: 'students-page', href: Component.studentsHref(), label: m.label || 'นักเรียน', en: m.en || 'Students' };
+      const base = known.find(n => n.id === t.replace('#', ''));
       return base ? { ...base, label: m.label || base.label, en: m.en || base.en } : null;
     }).filter(Boolean);
     return picked.length ? picked : known;
@@ -3181,16 +3183,21 @@ class Component extends DCLogic {
 
     const navItems = this.navSrc().map(item => ({
       id: item.id,
-      href: '#' + item.id,
+      href: item.href || ('#' + item.id),
       label: item.label,
       en: item.en,
       showEn: true,
       color: 'var(--color-text)',
     }));
-    /* the students page lives on its own URL — inserted after บุคลากร */
-    const studentsNav = { id: 'students-page', href: Component.studentsHref(), label: 'นักเรียน', en: 'Students', showEn: true, color: 'var(--color-text)' };
-    const staffAt = navItems.findIndex(n => n.id === 'staff');
-    navItems.splice(staffAt >= 0 ? staffAt + 1 : navItems.length, 0, studentsNav);
+    /* the students page lives on its own URL — the admin menu owns it once it
+       carries a students row; older saved menus get it inserted after บุคลากร */
+    const menuRows = this.cmsList('menu');
+    const menuHasStudents = !!(menuRows && menuRows.some(m => /students/i.test(String(m && m.target || ''))));
+    if (!menuHasStudents && !navItems.some(n => n.id === 'students-page')) {
+      const staffAt = navItems.findIndex(n => n.id === 'staff');
+      navItems.splice(staffAt >= 0 ? staffAt + 1 : navItems.length, 0,
+        { id: 'students-page', href: Component.studentsHref(), label: 'นักเรียน', en: 'Students', showEn: true, color: 'var(--color-text)' });
+    }
 
     /* three headline numbers for the students teaser, read off the same CMS rows */
     const acRows = this.academicsSrc();

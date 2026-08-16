@@ -9,8 +9,8 @@
 
   /* ── tunables ─────────────────────────────────────────────────────────── */
   var CFG = {
-    DAMP_RECT:    10.0,  // position/size follow (higher = tighter to the DOM)
-    DAMP_VEL:      7.6,  // scroll-velocity decay back to flat
+    DAMP_RECT:    12.5,  // position/size follow (higher = tighter to the DOM)
+    DAMP_VEL:     12.5,  // scroll-velocity decay back to flat (higher = snaps flat sooner)
     DAMP_HOVER:    7.0,  // hover ramp in/out
     DAMP_ZOOM:     4.0,  // scroll-zoom ease
     DAMP_POINTER:  4.2,  // pointer follow (low = more lag)
@@ -20,9 +20,10 @@
     ZOOM_BASE:    0.06,  // always-on crop headroom so the drag never runs off-texture
 
     VEL_PER_PX:   1 / 46, // px of scroll per frame that maps to velocity 1.0
-    VEL_CLAMP:     1.1,
+    VEL_CLAMP:    0.92,
 
-    CURVE_AMP:      40,  // px of Y displacement at velocity 1.0 (the arc/wheel bend)
+    CURVE_AMP:      34,  // px of Y displacement at velocity 1.0 (the arc/wheel bend)
+    CURVE_NARROW: 0.55,  // narrow screens bend far less — a big arc there just smears
     ZOOM_MAX:     0.08,  // texture scale at the centre of the viewport (1.0 -> 1.08)
 
     NOISE_FREQ:    5.4,  // hover tremble: noise cells across the card
@@ -184,7 +185,7 @@
           uRatio:      { value: new THREE.Vector2(1, 1) },
           uZoom:       { value: 1 },
           uVel:        { value: 0 },
-          uCurve:      { value: CFG.CURVE_AMP },
+          uCurve:      { value: CFG.CURVE_AMP * (window.innerWidth < 760 ? CFG.CURVE_NARROW : 1) },
           uHover:      { value: 0 },
           uHoverVert:  { value: CFG.HOVER_VERT },
           uTime:       { value: 0 },

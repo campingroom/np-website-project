@@ -53,23 +53,51 @@ a:hover { color:var(--color-accent); text-decoration:underline; }
       <form onSubmit="{{ onLogin }}" style="width:100%; max-width:420px;">
         <h2 style="font-size:28px; font-weight:800; margin:0 0 8px;">เข้าสู่ระบบผู้ดูแล</h2>
         <p style="font-size:13.5px; line-height:1.6; margin:0 0 28px; color:color-mix(in srgb, var(--color-text) 65%, transparent);">สำหรับผู้ดูแลระบบและครูที่ได้รับสิทธิ์จัดการเว็บไซต์</p>
-        <div class="field" style="margin-bottom:16px;">
-          <label for="cms-user">ชื่อผู้ใช้ หรือ อีเมล</label>
-          <input class="input" id="cms-user" type="text" autocomplete="username" placeholder="admin" value="{{ loginUser }}" onChange="{{ onLoginUser }}">
-        </div>
-        <div class="field" style="margin-bottom:20px;">
-          <label for="cms-pass">รหัสผ่าน</label>
-          <input class="input" id="cms-pass" type="password" autocomplete="current-password" placeholder="••••••••" value="{{ loginPass }}" onChange="{{ onLoginPass }}">
-        </div>
-        <sc-if value="{{ loginError }}" hint-placeholder-val="{{ false }}">
-          <p style="font-size:13px; font-weight:700; color:var(--color-accent-700); margin:0 0 16px; padding:10px 12px; background:var(--color-accent-100); border-left:3px solid var(--color-accent);">ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง</p>
+        <sc-if value="{{ showLoginForm }}" hint-placeholder-val="{{ true }}">
+          <div class="field" style="margin-bottom:16px;">
+            <label for="cms-user">ชื่อผู้ใช้ หรือ อีเมล</label>
+            <input class="input" id="cms-user" type="text" autocomplete="username" placeholder="admin" value="{{ loginUser }}" onChange="{{ onLoginUser }}">
+          </div>
+          <div class="field" style="margin-bottom:20px;">
+            <label for="cms-pass">รหัสผ่าน</label>
+            <input class="input" id="cms-pass" type="password" autocomplete="current-password" placeholder="••••••••" value="{{ loginPass }}" onChange="{{ onLoginPass }}">
+          </div>
+          <sc-if value="{{ loginError }}" hint-placeholder-val="{{ false }}">
+            <p style="font-size:13px; font-weight:700; color:var(--color-accent-700); margin:0 0 16px; padding:10px 12px; background:var(--color-accent-100); border-left:3px solid var(--color-accent);">ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง</p>
+          </sc-if>
+          <button type="submit" class="btn btn-primary btn-block">เข้าสู่ระบบ</button>
+          <button type="button" onClick="{{ onForgot }}" style="display:block; margin:14px 0 0; padding:0; background:none; border:0; font:inherit; font-size:13px; font-weight:700; color:var(--color-accent-700); cursor:pointer; text-decoration:underline; text-underline-offset:3px;">ลืมรหัสผ่าน?</button>
+          <div style="margin-top:24px; border-top:2px solid var(--color-divider); padding-top:16px;">
+            <p style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 50%, transparent); margin:0 0 8px;">บัญชีทดลอง</p>
+            <p style="font-size:13px; margin:0; line-height:1.7;">ชื่อผู้ใช้ <strong>admin</strong> · รหัสผ่าน <strong>school2569</strong><br>เปลี่ยนรหัสผ่านได้ที่เมนู “บัญชีผู้ดูแล”</p>
+          </div>
         </sc-if>
-        <button type="submit" class="btn btn-primary btn-block">เข้าสู่ระบบ</button>
-        <div style="margin-top:24px; border-top:2px solid var(--color-divider); padding-top:16px;">
-          <p style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 50%, transparent); margin:0 0 8px;">บัญชีทดลอง</p>
-          <p style="font-size:13px; margin:0; line-height:1.7;">ชื่อผู้ใช้ <strong>admin</strong> · รหัสผ่าน <strong>school2569</strong><br>เปลี่ยนรหัสผ่านได้ที่เมนู “บัญชีผู้ดูแล”</p>
-        </div>
-      </form>
+        <sc-if value="{{ showRecovery }}" hint-placeholder-val="{{ false }}">
+          <div style="border:2px solid var(--color-divider); padding:20px;">
+            <p style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--color-accent); margin:0 0 10px;">Password recovery</p>
+            <p style="font-size:13px; line-height:1.65; margin:0 0 16px; color:color-mix(in srgb, var(--color-text) 68%, transparent);">กรอกอีเมลที่ใช้เข้าระบบ แล้วเลือกวิธีกู้รหัสผ่าน — รับลิงก์สำหรับตั้งรหัสใหม่ หรือรับรหัส OTP 6 หลักทางอีเมล</p>
+            <div class="field" style="margin-bottom:14px;">
+              <label for="cms-rec-email">อีเมลที่ใช้เข้าระบบ</label>
+              <input class="input" id="cms-rec-email" type="email" autocomplete="email" placeholder="admin@school.ac.th" value="{{ recEmail }}" onChange="{{ onRecEmail }}">
+            </div>
+            <div style="display:flex; flex-wrap:wrap; gap:10px;">
+              <button type="button" class="btn btn-primary" onClick="{{ onSendLink }}" disabled="{{ recBusy }}">ส่งลิงก์รีเซ็ตรหัสผ่าน</button>
+              <button type="button" class="btn btn-secondary" onClick="{{ onSendOtp }}" disabled="{{ recBusy }}">ขอรหัส OTP 6 หลัก</button>
+            </div>
+            <sc-if value="{{ otpSent }}" hint-placeholder-val="{{ false }}">
+              <div class="field" style="margin:18px 0 12px;">
+                <label for="cms-otp">รหัส OTP 6 หลักจากอีเมล</label>
+                <input class="input" id="cms-otp" inputmode="numeric" maxlength="6" placeholder="000000" value="{{ recCode }}" onChange="{{ onRecCode }}" style="font-family:'Space Mono',monospace; letter-spacing:.4em;">
+              </div>
+              <button type="button" class="btn btn-primary btn-block" onClick="{{ onVerifyOtp }}" disabled="{{ recBusy }}">ยืนยันรหัสและเข้าสู่ระบบ</button>
+            </sc-if>
+            <sc-if value="{{ recMsgShow }}" hint-placeholder-val="{{ false }}">
+              <p style="font-size:13px; line-height:1.6; margin:16px 0 0; padding:10px 12px; background:var(--color-accent-100); border-left:3px solid var(--color-accent); color:var(--color-accent-700);">{{ recMsg }}</p>
+            </sc-if>
+            <button type="button" onClick="{{ onForgotBack }}" style="display:block; margin:18px 0 0; padding:0; background:none; border:0; font:inherit; font-size:13px; color:color-mix(in srgb, var(--color-text) 70%, transparent); cursor:pointer; text-decoration:underline; text-underline-offset:3px;">← กลับไปหน้าเข้าสู่ระบบ</button>
+          </div>
+        </sc-if>
+            </form>
     </div>
   </div>
 </sc-if>
@@ -175,11 +203,14 @@ a:hover { color:var(--color-accent); text-decoration:underline; }
               <section>
                 <h2 style="font-size:16px; font-weight:800; margin:0 0 14px; padding-bottom:10px; border-bottom:2px solid var(--color-divider);">เริ่มแก้ไขได้เลย</h2>
                 <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:14px;">
-                  <sc-for list="{{ quickLinks }}" as="q" hint-placeholder-count="4">
-                    <button type="button" data-id="{{ q.id }}" onClick="{{ onNav }}" class="card" style="text-align:left; cursor:pointer; border:2px solid var(--color-divider); background:var(--color-surface); padding:18px;" style-hover="border-color:var(--color-accent);">
-                      <span class="card-kicker">{{ q.kicker }}</span>
-                      <span class="card-title" style="display:block; margin:6px 0 6px;">{{ q.label }}</span>
-                      <span class="card-body" style="display:block; font-size:12.5px;">{{ q.desc }}</span>
+                  <sc-for list="{{ quickLinks }}" as="q" hint-placeholder-count="6">
+                    <button type="button" data-id="{{ q.id }}" onClick="{{ onNav }}" style="display:flex; flex-direction:column; gap:8px; text-align:left; cursor:pointer; border:2px solid var(--color-divider); background:var(--color-surface); padding:16px 18px; font:inherit; color:var(--color-text);" style-hover="border-color:var(--color-accent);">
+                      <span style="display:flex; align-items:center; justify-content:space-between; gap:10px; width:100%;">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;"><path d="{{ q.icon }}"></path></svg>
+                        <span style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 58%, transparent);">{{ q.count }}</span>
+                      </span>
+                      <span style="font-family:var(--font-heading); font-weight:800; font-size:15px; line-height:1.3; color:var(--color-text);">{{ q.label }}</span>
+                      <span style="font-size:12.5px; line-height:1.5; color:color-mix(in srgb, var(--color-text) 70%, transparent);">{{ q.desc }}</span>
                     </button>
                   </sc-for>
                 </div>
@@ -511,6 +542,12 @@ class Component extends DCLogic {
   static BANNER_LIMIT = 6;
 
   static normalise(data) {
+    /* หน้านักเรียนเพิ่มเข้ามาทีหลัง — ข้อมูลที่บันทึกไว้ก่อนหน้ายังไม่มีเมนูนี้ */
+    const menu = data.menu;
+    if (Array.isArray(menu) && !menu.some(m => /students/i.test(String(m && m.target || '')))) {
+      const at = menu.findIndex(m => String(m && m.target || '').replace('#', '') === 'staff');
+      menu.splice(at >= 0 ? at + 1 : menu.length, 0, { label:'นักเรียน', en:'Students', target:'students.html', show:'yes' });
+    }
     const okGroups = { school:1, teacher:1, student:1 };
     (data.awards || []).forEach(x => { if (!okGroups[x.group]) x.group = 'school'; });
     let n = 0;
@@ -629,9 +666,9 @@ class Component extends DCLogic {
     account: [
       { key:'name', label:'ชื่อผู้ดูแล', type:'text' },
       { key:'email', label:'อีเมลที่ใช้เข้าระบบ', type:'text', help:'ต้องตรงกับอีเมลที่เพิ่มไว้ใน Supabase → Authentication → Users' },
-      { key:'newPass', label:'ตั้งรหัสผ่านใหม่', type:'text', help:'อย่างน้อย 8 ตัวอักษร ผสมตัวเลข' },
+      { key:'newPass', label:'ตั้งรหัสผ่านใหม่', type:'text', help:'อย่างน้อย 8 ตัวอักษร ผสมตัวเลข — กดบันทึกแล้วรหัสผ่านจริงบน Supabase จะเปลี่ยนทันที และช่องนี้จะถูกล้าง' },
       { key:'confirmPass', label:'ยืนยันรหัสผ่านใหม่', type:'text' },
-      { key:'recoveryEmail', label:'อีเมลสำรองสำหรับกู้รหัสผ่าน', type:'text' },
+      { key:'recoveryEmail', label:'อีเมลสำรองสำหรับกู้รหัสผ่าน', type:'text', help:'ใช้เป็นอีเมลรับลิงก์รีเซ็ต — ต้องเป็นอีเมลที่มีบัญชีใน Supabase → Authentication → Users ด้วย' },
       { key:'lastLogin', label:'เข้าระบบล่าสุด', type:'text' },
     ],
   };
@@ -683,7 +720,7 @@ class Component extends DCLogic {
     menu: [
       { key:'label', label:'ชื่อเมนู (ไทย)', type:'text' },
       { key:'en', label:'ชื่อเมนู (อังกฤษ)', type:'text' },
-      { key:'target', label:'ปลายทาง', type:'text', help:'เช่น #home #about #staff #academics #news #contact' },
+      { key:'target', label:'ปลายทาง', type:'text', help:'เช่น #home #about #staff #academics #news #contact — หรือ students.html สำหรับหน้านักเรียน' },
       { key:'show', label:'แสดงบนเมนู', type:'toggle', span:'span 2', help:'ปิดไว้เพื่อซ่อนเมนูนี้จากแถบนำทางและท้ายเว็บ' },
     ],
     stats: [
@@ -848,6 +885,7 @@ class Component extends DCLogic {
       { label:'หน้าแรก', en:'Home', target:'#home', show:'yes' },
       { label:'เกี่ยวกับโรงเรียน', en:'About Us', target:'#about', show:'yes' },
       { label:'บุคลากร', en:'Staff', target:'#staff', show:'yes' },
+      { label:'นักเรียน', en:'Students', target:'students.html', show:'yes' },
       { label:'ข้อมูลวิชาการ', en:'Academics', target:'#academics', show:'yes' },
       { label:'ข่าวประชาสัมพันธ์', en:'News & Events', target:'#news', show:'yes' },
       { label:'ติดต่อเรา', en:'Contact Us', target:'#contact', show:'yes' },
@@ -938,6 +976,7 @@ class Component extends DCLogic {
 
   state = {
     authed: false, user: null, loginUser: '', loginPass: '', loginError: false,
+    recovery: 'off', recEmail: '', recCode: '', recBusy: false, recMsg: '',
     section: 'dashboard', data: Component.normalise(JSON.parse(JSON.stringify(Component.DEFAULT_DATA))),
     dirty: false, toast: '', connMsg: '', connOk: false, savedAt: '', syncing: false, migrateMsg: '', remoteAt: '', authMode: 'local',
     visits: null, visitsErr: '', visitsAt: '', visitsLoading: false, logShared: false,
@@ -1038,6 +1077,52 @@ class Component extends DCLogic {
     });
   }
 
+  /* ── กู้รหัสผ่าน: ลิงก์รีเซ็ต หรือ OTP 6 หลักทางอีเมล (Supabase Auth) ── */
+  recTarget() { return String(this.state.recEmail || '').trim(); }
+  recReady() {
+    if (!/.+@.+\..+/.test(this.recTarget())) { this.setState({ recMsg: 'กรอกอีเมลให้ถูกต้องก่อน' }); return false; }
+    if (!this.online()) { this.setState({ recMsg: 'ตอนนี้เป็นโหมดเก็บในเครื่อง — การกู้รหัสผ่านทางอีเมลใช้ได้เมื่อเชื่อมต่อฐานข้อมูล Supabase แล้ว' }); return false; }
+    return true;
+  }
+  recoverLink() {
+    if (!this.recReady()) return;
+    const email = this.recTarget();
+    this.setState({ recBusy: true, recMsg: 'กำลังส่งลิงก์…' });
+    window.SB.resetPassword(this.cfg(), email, String(location.href).split('#')[0]).then(res => {
+      this.setState({
+        recBusy: false,
+        recMsg: res.ok
+          ? 'ส่งลิงก์ไปที่ ' + email + ' แล้ว — เปิดลิงก์ในอีเมล ระบบจะพากลับมาที่หน้านี้พร้อมให้ตั้งรหัสผ่านใหม่ที่เมนู “บัญชีผู้ดูแล”'
+          : 'ส่งไม่สำเร็จ: ' + res.error
+      });
+    });
+  }
+  recoverOtp() {
+    if (!this.recReady()) return;
+    const email = this.recTarget();
+    this.setState({ recBusy: true, recMsg: 'กำลังส่งรหัส…' });
+    window.SB.sendOtp(this.cfg(), email).then(res => {
+      this.setState({
+        recBusy: false,
+        recovery: res.ok ? 'otp' : this.state.recovery,
+        recMsg: res.ok ? 'ส่งรหัส 6 หลักไปที่ ' + email + ' แล้ว — รหัสมีอายุ 1 ชั่วโมง' : 'ส่งไม่สำเร็จ: ' + res.error
+      });
+    });
+  }
+  recoverVerify() {
+    const code = String(this.state.recCode || '').trim();
+    if (code.length < 6) { this.setState({ recMsg: 'กรอกรหัส 6 หลักให้ครบก่อน' }); return; }
+    this.setState({ recBusy: true, recMsg: 'กำลังตรวจสอบรหัส…' });
+    window.SB.verifyOtp(this.cfg(), this.recTarget(), code).then(res => {
+      if (!res.ok) { this.setState({ recBusy: false, recMsg: 'รหัสไม่ถูกต้องหรือหมดอายุ: ' + res.error }); return; }
+      const user = { name: res.user.email, role: 'ผู้ดูแลเว็บไซต์' };
+      try { localStorage.setItem(Component.SESSION_KEY, JSON.stringify(user)); } catch (e) {}
+      this.setState({ authed: true, user, recBusy: false, recovery: 'off', recCode: '', recMsg: '', loginPass: '', section: 'account' });
+      this.flash('เข้าสู่ระบบด้วยรหัส OTP แล้ว — ตั้งรหัสผ่านใหม่ในหน้านี้ แล้วกดบันทึก');
+      this.pullRemote(true);
+    });
+  }
+
   componentDidMount() {
     try {
       const raw = localStorage.getItem(Component.STORE_KEY);
@@ -1049,10 +1134,18 @@ class Component extends DCLogic {
       this.loadLog();
       const sess = localStorage.getItem(Component.SESSION_KEY);
       if (sess) this.setState({ authed: true, user: JSON.parse(sess) });
+      /* กลับมาจากลิงก์รีเซ็ตรหัสผ่าน: Supabase ส่ง token มาใน #hash */
+      const fromReset = /type=recovery/.test(String(location.hash || ''));
       setTimeout(() => {
         if (!this.online()) return;
         window.SB.session(this.cfg()).then(s => {
-          if (s.ok && s.user) this.setState({ authed: true, user: { name: s.user.email, role: 'ผู้ดูแลเว็บไซต์' } });
+          if (!s.ok || !s.user) return;
+          this.setState({ authed: true, user: { name: s.user.email, role: 'ผู้ดูแลเว็บไซต์' }, section: fromReset ? 'account' : this.state.section });
+          try { localStorage.setItem(Component.SESSION_KEY, JSON.stringify({ name: s.user.email, role: 'ผู้ดูแลเว็บไซต์' })); } catch (err) {}
+          if (fromReset) {
+            try { history.replaceState(null, '', location.pathname + location.search); } catch (err) {}
+            this.flash('ยืนยันตัวตนจากลิงก์ในอีเมลแล้ว — ตั้งรหัสผ่านใหม่ในหน้านี้ แล้วกดบันทึก');
+          }
         });
         this.pullRemote(true);
         this.pullVisits();
@@ -1075,6 +1168,8 @@ class Component extends DCLogic {
   };
 
   section() { return Component.SECTIONS.find(s => s.id === this.state.section) || Component.SECTIONS[0]; }
+
+  cnt(k) { return (((this.state.data || {})[k]) || []).length; }
 
   cfg() { return (this.state.data && this.state.data.connect) || {}; }
 
@@ -1320,6 +1415,16 @@ class Component extends DCLogic {
           this.setState({ authed: true, user, loginPass: '', loginError: false });
         } else this.setState({ loginError: true });
       },
+      showLoginForm: st.recovery === 'off', showRecovery: st.recovery !== 'off',
+      recEmail: st.recEmail, recCode: st.recCode, recBusy: st.recBusy,
+      otpSent: st.recovery === 'otp', recMsg: st.recMsg, recMsgShow: !!st.recMsg,
+      onForgot: () => this.setState({ recovery: 'menu', recMsg: '', recCode: '', recEmail: st.recEmail || (D.account && D.account.email) || st.loginUser }),
+      onForgotBack: () => this.setState({ recovery: 'off', recMsg: '', recCode: '' }),
+      onRecEmail: e => this.setState({ recEmail: e.target.value }),
+      onRecCode: e => this.setState({ recCode: e.target.value.replace(/\D/g, '').slice(0, 6) }),
+      onSendLink: () => this.recoverLink(),
+      onSendOtp: () => this.recoverOtp(),
+      onVerifyOtp: () => this.recoverVerify(),
       onLogout: () => { if (this.online()) window.SB.signOut(this.cfg()); try { localStorage.removeItem(Component.SESSION_KEY); } catch (e) {} this.setState({ authed: false, loginUser: '', loginPass: '' }); },
 
       navGroups: groups,
@@ -1371,10 +1476,12 @@ class Component extends DCLogic {
         : (st.visitsErr || 'ยังไม่ได้เชื่อมต่อฐานข้อมูล หรือยังไม่ได้ติดตั้งตาราง page_views'),
       onRefreshVisits: this.pullVisits,
       quickLinks: [
-        { id:'news', kicker:'บ่อยที่สุด', label:'เพิ่มข่าวใหม่', desc:'ลงข่าวกิจกรรมพร้อมภาพและลิงก์อ่านต่อ' },
-        { id:'banner', kicker:'หน้าแรก', label:'เปลี่ยนแบนเนอร์', desc:'สลับภาพกิจกรรมเด่นที่เลื่อนบนหน้าแรก' },
-        { id:'staff', kicker:'บุคลากร', label:'เพิ่ม/แก้ไขรายชื่อครู', desc:'ชื่อ ตำแหน่ง ชั้นที่สอน และรูปถ่าย' },
-        { id:'contact', kicker:'ข้อมูลติดต่อ', label:'แก้เบอร์โทร/ที่อยู่', desc:'อัปเดตพร้อมกันทั้งหน้าติดต่อและท้ายเว็บ' },
+        { id:'news', icon:'M4 4h16v16H4zM8 8h8M8 12h8M8 16h5', label:'เพิ่มข่าวใหม่', desc:'ลงข่าวกิจกรรมพร้อมภาพและลิงก์อ่านต่อ', count: this.cnt('news') + ' ข่าว' },
+        { id:'banner', icon:'M3 5h18v14H3zM3 10h18M8 5v14', label:'ไฮไลต์หน้าแรก', desc:'สลับภาพกิจกรรมเด่นที่เลื่อนบนหน้าแรก', count: this.cnt('banner') + '/' + Component.BANNER_LIMIT + ' ภาพ' },
+        { id:'staff', icon:'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8', label:'รายชื่อครูและบุคลากร', desc:'ชื่อ ตำแหน่ง ชั้นที่สอน และรูปถ่าย', count: this.cnt('staff') + ' คน' },
+        { id:'council', icon:'M12 3l2.7 5.6 6.3.9-4.5 4.4 1 6.1L12 17.1 6.5 20l1-6.1L3 9.5l6.3-.9L12 3z', label:'สภานักเรียน', desc:'ประธานและกรรมการที่แสดงบนหน้านักเรียน', count: this.cnt('council') + ' คน' },
+        { id:'awards', icon:'M12 15a5 5 0 1 0 0-10 5 5 0 0 0 0 10zM8.5 14L7 22l5-3 5 3-1.5-8', label:'รางวัลและผลงาน', desc:'ผลงานของโรงเรียนและของนักเรียน', count: this.cnt('awards') + ' รายการ' },
+        { id:'contact', icon:'M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0zM12 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4', label:'เบอร์โทร / ที่อยู่', desc:'อัปเดตพร้อมกันทั้งหน้าติดต่อและท้ายเว็บ', count: 'ทั้งเว็บ' },
       ],
       activity: (st.activity || []).map(a => ({ time: a.time || Component.logTime(a.at), text: a.text, by: a.by })),
       activityEmpty: !(st.activity || []).length,
@@ -1545,13 +1652,27 @@ class Component extends DCLogic {
         });
       },
       onSave: () => {
-        try { localStorage.setItem(Component.STORE_KEY, JSON.stringify(st.data)); } catch (e) {}
-        this.pushLog(st.data);
+        /* ช่องตั้งรหัสผ่านใหม่เปลี่ยนรหัสจริงบน Supabase แล้วล้างทิ้ง ไม่เก็บลงฐานข้อมูล */
+        const acc = (st.data && st.data.account) || {};
+        const np = String(acc.newPass || ''), cp = String(acc.confirmPass || '');
+        if (np || cp) {
+          if (np !== cp) { this.flash('รหัสผ่านใหม่กับช่องยืนยันไม่ตรงกัน'); return; }
+          if (np.length < 8) { this.flash('รหัสผ่านใหม่ต้องยาวอย่างน้อย 8 ตัวอักษร'); return; }
+          if (!this.online()) { this.flash('เปลี่ยนรหัสผ่านจริงได้เมื่อเชื่อมต่อฐานข้อมูล Supabase แล้วเท่านั้น'); return; }
+          window.SB.updatePassword(this.cfg(), np).then(res => {
+            this.flash(res.ok ? 'เปลี่ยนรหัสผ่านเรียบร้อย — ครั้งต่อไปเข้าระบบด้วยรหัสใหม่' : 'เปลี่ยนรหัสผ่านไม่สำเร็จ: ' + res.error);
+            if (res.ok) this.mutate(d => { d.account = { ...(d.account || {}), newPass: '', confirmPass: '' }; });
+          });
+        }
+        const payload = JSON.parse(JSON.stringify(st.data));
+        if (payload.account) { payload.account.newPass = ''; payload.account.confirmPass = ''; }
+        try { localStorage.setItem(Component.STORE_KEY, JSON.stringify(payload)); } catch (e) {}
+        this.pushLog(payload);
         const now = new Date().toLocaleTimeString('th-TH', { hour:'2-digit', minute:'2-digit' }) + ' น.';
         this.setState({ dirty: false, savedAt: now });
         if (this.online()) {
           this.setState({ syncing: true });
-          window.SB.save(this.cfg(), st.data).then(res => {
+          window.SB.save(this.cfg(), payload).then(res => {
             this.setState({ syncing: false });
             this.flash(res.ok ? 'บันทึกขึ้นฐานข้อมูลแล้ว — หน้าเว็บอัปเดตทุกเครื่อง' : 'บันทึกในเครื่องแล้ว แต่ขึ้นฐานข้อมูลไม่สำเร็จ: ' + res.error);
           });

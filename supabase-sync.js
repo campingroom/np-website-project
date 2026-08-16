@@ -61,6 +61,47 @@
     } catch (e) { return { ok: false }; }
   }
 
+  /* ── password recovery ─────────────────────────────────────────── */
+  async function resetPassword(cfg, email, redirectTo) {
+    var c = client(cfg && cfg.url, cfg && cfg.key);
+    if (!c) return { ok: false, error: 'ยังไม่ได้เชื่อมต่อฐานข้อมูล' };
+    try {
+      var res = await c.auth.resetPasswordForEmail(String(email || '').trim(), redirectTo ? { redirectTo: redirectTo } : undefined);
+      if (res.error) return { ok: false, error: res.error.message };
+      return { ok: true };
+    } catch (e) { return { ok: false, error: String(e && e.message || e) }; }
+  }
+
+  async function sendOtp(cfg, email) {
+    var c = client(cfg && cfg.url, cfg && cfg.key);
+    if (!c) return { ok: false, error: 'ยังไม่ได้เชื่อมต่อฐานข้อมูล' };
+    try {
+      var res = await c.auth.signInWithOtp({ email: String(email || '').trim(), options: { shouldCreateUser: false } });
+      if (res.error) return { ok: false, error: res.error.message };
+      return { ok: true };
+    } catch (e) { return { ok: false, error: String(e && e.message || e) }; }
+  }
+
+  async function verifyOtp(cfg, email, token) {
+    var c = client(cfg && cfg.url, cfg && cfg.key);
+    if (!c) return { ok: false, error: 'ยังไม่ได้เชื่อมต่อฐานข้อมูล' };
+    try {
+      var res = await c.auth.verifyOtp({ email: String(email || '').trim(), token: String(token || '').trim(), type: 'email' });
+      if (res.error) return { ok: false, error: res.error.message };
+      return { ok: true, user: res.data.user };
+    } catch (e) { return { ok: false, error: String(e && e.message || e) }; }
+  }
+
+  async function updatePassword(cfg, password) {
+    var c = client(cfg && cfg.url, cfg && cfg.key);
+    if (!c) return { ok: false, error: 'ยังไม่ได้เชื่อมต่อฐานข้อมูล' };
+    try {
+      var res = await c.auth.updateUser({ password: password });
+      if (res.error) return { ok: false, error: res.error.message };
+      return { ok: true };
+    } catch (e) { return { ok: false, error: String(e && e.message || e) }; }
+  }
+
   async function signOut(cfg) {
     var c = client(cfg && cfg.url, cfg && cfg.key);
     if (c) { try { await c.auth.signOut(); } catch (e) {} }
@@ -148,5 +189,5 @@
     } catch (e) { return { ok: false, error: String(e && e.message || e) }; }
   }
 
-  window.SB = { ready: ready, configured: configured, load: load, save: save, signIn: signIn, session: session, signOut: signOut, upload: upload, ping: ping, logView: logView, viewStats: viewStats, logEdit: logEdit, editLog: editLog };
+  window.SB = { ready: ready, configured: configured, load: load, save: save, signIn: signIn, session: session, signOut: signOut, resetPassword: resetPassword, sendOtp: sendOtp, verifyOtp: verifyOtp, updatePassword: updatePassword, upload: upload, ping: ping, logView: logView, viewStats: viewStats, logEdit: logEdit, editLog: editLog };
 })();
