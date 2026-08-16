@@ -5,6 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>html{background:#0A0A0C}html[data-theme="light"]{background:#f3f2f2}body{margin:0;background:transparent}</style>
 <script>(function(){try{var t=localStorage.getItem('school-site-theme-v2');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<title>นักเรียน · โรงเรียนบ้านหนองสระพังโนนสะอาด</title>
+<meta name="description" content="ข้อมูลนักเรียนโรงเรียนบ้านหนองสระพังโนนสะอาด — สภานักเรียน ชมรมและกิจกรรมพัฒนาผู้เรียน ทุนการศึกษา รางวัลของนักเรียน และจำนวนนักเรียนแต่ละระดับชั้น">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="โรงเรียนบ้านหนองสระพังโนนสะอาด">
+<meta property="og:locale" content="th_TH">
+<meta property="og:title" content="นักเรียน · โรงเรียนบ้านหนองสระพังโนนสะอาด">
+<meta property="og:description" content="ข้อมูลนักเรียนโรงเรียนบ้านหนองสระพังโนนสะอาด — สภานักเรียน ชมรมและกิจกรรมพัฒนาผู้เรียน ทุนการศึกษา รางวัลของนักเรียน และจำนวนนักเรียนแต่ละระดับชั้น">
+<link rel="canonical" href="https://nspnsa.vercel.app/students.html">
+<meta property="og:url" content="https://nspnsa.vercel.app/students.html">
+<meta property="og:image" content="https://nspnsa.vercel.app/assets/og-cover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ตราโรงเรียนบ้านหนองสระพังโนนสะอาด">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="นักเรียน · โรงเรียนบ้านหนองสระพังโนนสะอาด">
+<meta name="twitter:description" content="ข้อมูลนักเรียนโรงเรียนบ้านหนองสระพังโนนสะอาด — สภานักเรียน ชมรมและกิจกรรมพัฒนาผู้เรียน ทุนการศึกษา รางวัลของนักเรียน และจำนวนนักเรียนแต่ละระดับชั้น">
+<meta name="twitter:image" content="https://nspnsa.vercel.app/assets/og-cover.png">
+<meta name="theme-color" content="#ec3013">
 <script src="./support.js?v=20260816g"></script>
 <template id="__bundler_thumbnail" data-bg-color="#0A0A0C">
   <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
@@ -19,7 +37,6 @@
 <body>
 <x-dc>
 <helmet>
-<title>นักเรียน · โรงเรียนบ้านหนองสระพังโนนสะอาด</title>
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="stylesheet" href="_ds/modernist-e418e37c-5b91-498b-bea5-a9b107ada9e7/styles.css?v=20260816g">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -223,7 +240,7 @@ html[data-theme="dark"] #dc-root [data-cc-role] { color: var(--color-accent-300)
                       <sc-if value="{{ c.notLead }}" hint-placeholder-val="{{ true }}">
                         <article data-cc-card="" style="position:relative; flex:none; box-sizing:border-box; padding:12px; border-radius:18px; display:flex; flex-direction:column; gap:10px;">
                           <figure style="position:relative; margin:0; border-radius:12px; overflow:hidden; background:color-mix(in srgb, var(--color-text) 8%, transparent);">
-                            <img src="{{ c.photo }}" alt="{{ c.name }}" loading="lazy" draggable="false" style="display:block; height:clamp(150px,18vw,188px); width:auto; min-width:clamp(138px,15vw,168px); max-width:min(68vw,250px); object-fit:cover; user-select:none; -webkit-user-select:none;">
+                            <img src="{{ c.photo }}" alt="{{ c.name }}" loading="lazy" draggable="false" style="display:block; height:clamp(150px,18vw,188px); width:auto; min-width:clamp(138px,15vw,168px); max-width:min(68vw,250px); object-fit:{{ c.photoFit }}; object-position:{{ c.photoPos }}; transform:{{ c.photoScale }}; transform-origin:{{ c.photoPos }}; user-select:none; -webkit-user-select:none;">
                           </figure>
                           <div data-cc-text="" style="display:flex; flex-direction:column; gap:4px; min-width:0; height:74px; overflow:hidden;">
                             <span data-cc-role="" style="font-size:11px; font-weight:700; line-height:1.3;">{{ c.role }}</span>
@@ -235,7 +252,7 @@ html[data-theme="dark"] #dc-root [data-cc-role] { color: var(--color-accent-300)
                       <sc-if value="{{ c.lead }}" hint-placeholder-val="{{ false }}">
                         <article data-cc-card="lead" style="position:relative; flex:none; box-sizing:border-box; padding:12px; border-radius:18px; display:flex; flex-direction:column; gap:10px;">
                           <figure style="position:relative; margin:0; border-radius:12px; overflow:hidden; background:color-mix(in srgb, var(--color-text) 8%, transparent);">
-                            <img src="{{ c.photo }}" alt="{{ c.name }}" loading="lazy" draggable="false" style="display:block; height:clamp(176px,21vw,222px); width:auto; min-width:clamp(152px,17vw,190px); max-width:min(72vw,280px); object-fit:cover; user-select:none; -webkit-user-select:none;">
+                            <img src="{{ c.photo }}" alt="{{ c.name }}" loading="lazy" draggable="false" style="display:block; height:clamp(176px,21vw,222px); width:auto; min-width:clamp(152px,17vw,190px); max-width:min(72vw,280px); object-fit:{{ c.photoFit }}; object-position:{{ c.photoPos }}; transform:{{ c.photoScale }}; transform-origin:{{ c.photoPos }}; user-select:none; -webkit-user-select:none;">
                             <span style="position:absolute; left:10px; top:10px; display:grid; place-items:center; width:26px; height:26px; border-radius:999px; background:var(--color-accent); box-shadow:0 0 18px color-mix(in srgb, var(--color-accent) 70%, transparent);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.3.9-4.5 4.4 1 6.1L12 17.1 6.5 20l1-6.1L3 9.5l6.3-.9L12 3z"></path></svg></span>
                           </figure>
                           <div data-cc-text="" style="display:flex; flex-direction:column; gap:4px; min-width:0; height:74px; overflow:hidden;">
@@ -337,6 +354,11 @@ html[data-theme="dark"] #dc-root [data-cc-role] { color: var(--color-accent-300)
         <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px;">
           <sc-for list="{{ clubs }}" as="c" hint-placeholder-count="3">
             <article class="card" style="padding:22px; display:flex; flex-direction:column; gap:10px;">
+              <sc-if value="{{ c.hasPhoto }}" hint-placeholder-val="{{ false }}">
+                <span style="position:relative; display:block; margin:-22px -22px 4px; aspect-ratio:16/10; overflow:hidden; background:color-mix(in srgb, var(--color-text) 8%, transparent);">
+                  <span style="position:absolute; inset:0; background-image:{{ c.photoCss }}; background-size:cover; background-position:{{ c.photoPos }}; transform:{{ c.photoScale }}; transform-origin:{{ c.photoPos }};"></span>
+                </span>
+              </sc-if>
               <strong style="font-family:var(--font-heading); font-weight:700; font-size:16.5px; line-height:1.4;">{{ c.title }}</strong>
               <p style="font-size:13.5px; line-height:1.65; margin:0; color:color-mix(in srgb, var(--color-text) 66%, transparent);">{{ c.desc }}</p>
               <span style="font-family:'Space Mono',monospace; font-size:10.5px; letter-spacing:.12em; text-transform:uppercase; margin-top:auto; color:color-mix(in srgb, var(--color-text) 55%, transparent);">{{ c.meta }}</span>
@@ -360,15 +382,20 @@ html[data-theme="dark"] #dc-root [data-cc-role] { color: var(--color-accent-300)
       <sc-if value="{{ hasScholarships }}" hint-placeholder-val="{{ false }}">
         <div style="display:flex; flex-direction:column;">
           <sc-for list="{{ scholarships }}" as="sp" hint-placeholder-count="3">
-            <div style="display:grid; grid-template-columns:minmax(0,1fr) auto; gap:18px; align-items:baseline; padding:18px 4px; border-bottom:1px solid var(--color-divider);">
-              <span style="display:flex; flex-direction:column; gap:6px; min-width:0;">
+            <div style="display:flex; gap:18px; align-items:center; padding:18px 4px; border-bottom:1px solid var(--color-divider);">
+              <sc-if value="{{ sp.hasPhoto }}" hint-placeholder-val="{{ false }}">
+                <span style="position:relative; display:block; flex:none; width:clamp(64px,8vw,88px); aspect-ratio:1/1; overflow:hidden; background:color-mix(in srgb, var(--color-text) 8%, transparent);">
+                  <span style="position:absolute; inset:0; background-image:{{ sp.photoCss }}; background-size:cover; background-position:{{ sp.photoPos }}; transform:{{ sp.photoScale }}; transform-origin:{{ sp.photoPos }};"></span>
+                </span>
+              </sc-if>
+              <span style="display:flex; flex-direction:column; gap:6px; min-width:0; flex:1 1 auto;">
                 <strong style="font-family:var(--font-heading); font-weight:700; font-size:16px; line-height:1.4;">{{ sp.title }}</strong>
                 <span style="font-size:13px; color:color-mix(in srgb, var(--color-text) 62%, transparent);">{{ sp.meta }}</span>
                 <sc-if value="{{ sp.hasLink }}" hint-placeholder-val="{{ false }}">
                   <a href="{{ sp.link }}" target="{{ sp.target }}" rel="noopener" style="font-size:13px; font-weight:700; text-decoration:none;">อ่านข่าว →</a>
                 </sc-if>
               </span>
-              <strong style="font-family:var(--font-heading); font-weight:800; font-size:clamp(18px,2vw,26px); line-height:1; font-variant-numeric:tabular-nums; color:var(--color-accent);">{{ sp.amount }}</strong>
+              <strong style="flex:none; font-family:var(--font-heading); font-weight:800; font-size:clamp(18px,2vw,26px); line-height:1; font-variant-numeric:tabular-nums; color:var(--color-accent);">{{ sp.amount }}</strong>
             </div>
           </sc-for>
         </div>
@@ -1028,7 +1055,10 @@ class Component extends DCLogic {
       return {
         name: c.name || '', role, lead, notLead: !lead,
         meta: [c.grade, c.year && ('ปีการศึกษา ' + c.year)].filter(Boolean).join(' · '),
-        photo: c.photoSm || c.photo || ccBlank
+        photo: c.photoSm || c.photo || ccBlank,
+        photoPos: c.photoPos || '50% 50%',
+        photoFit: c.photoFit === 'contain' ? 'contain' : 'cover',
+        photoScale: (+c.photoZoom > 100) ? 'scale(' + (+c.photoZoom / 100) + ')' : 'none'
       };
     });
     const councilYear = shown('council').map(c => c.year).filter(Boolean)[0];
@@ -1044,15 +1074,28 @@ class Component extends DCLogic {
       return { i, dir: i % 2 ? 'right' : 'left', animated: animated ? '1' : '0', groups };
     });
 
+    /* ภาพประกอบจาก CMS: ตำแหน่งและซูมที่ตั้งไว้ในแอดมินมีผลจริงบนการ์ด */
+    const photoBits = r => {
+      const src = r.photoSm || r.photo || '';
+      return {
+        hasPhoto: !!src,
+        photoCss: src ? `url("${src}")` : 'none',
+        photoPos: r.photoPos || '50% 50%',
+        photoScale: (+r.photoZoom > 100) ? 'scale(' + (+r.photoZoom / 100) + ')' : 'none'
+      };
+    };
+
     const clubs = shown('clubs').map(c => ({
       title: c.title || '', desc: c.desc || '',
       meta: [c.teacher && ('ครูผู้ดูแล: ' + c.teacher), c.day].filter(Boolean).join(' · '),
+      ...photoBits(c),
       ...link(c.link)
     }));
 
     const scholarships = shown('scholarships').map(sp => ({
       title: sp.title || '', amount: sp.amount || '—',
       meta: [sp.donor, sp.year && ('ปีการศึกษา ' + sp.year)].filter(Boolean).join(' · '),
+      ...photoBits(sp),
       ...link(sp.link)
     }));
 

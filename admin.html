@@ -5,12 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>html{background:#0A0A0C}html[data-theme="light"]{background:#f3f2f2}body{margin:0;background:transparent}</style>
 <script>(function(){try{var t=localStorage.getItem('school-site-theme-v2');document.documentElement.setAttribute('data-theme',t==='light'?'light':'dark');}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<title>ผู้ดูแลระบบ · โรงเรียนบ้านหนองสระพังโนนสะอาด</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#ec3013">
 <script src="./support.js?v=20260815t"></script>
 </head>
 <body>
 <x-dc>
 <helmet>
-<title>ระบบจัดการเนื้อหา · โรงเรียนบ้านหนองสระพังโนนสะอาด</title>
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="stylesheet" href="_ds/modernist-e418e37c-5b91-498b-bea5-a9b107ada9e7/styles.css?v=20260815t">
 <script src="_ds/modernist-e418e37c-5b91-498b-bea5-a9b107ada9e7/_ds_bundle.js?v=20260815t"></script>
@@ -755,7 +757,7 @@ class Component extends DCLogic {
       { key:'role', label:'ตำแหน่งในสภานักเรียน', type:'text', span:'span 2' },
       { key:'grade', label:'ระดับชั้น', type:'text' },
       { key:'year', label:'ปีการศึกษา', type:'text' },
-      { key:'photo', label:'รูปนักเรียน', type:'image', span:'span 2', ratio:'3/4', fit:'contain', noCrop:true, help:'แนวตั้งหรือจัตุรัสก็ได้ อย่างน้อย 600×600 px' },
+      { key:'photo', label:'รูปนักเรียน', type:'image', span:'span 2', ratio:'3/4', help:'แนวตั้งหรือจัตุรัสก็ได้ อย่างน้อย 600×600 px · การ์ดบนเว็บสูงเท่ากันทุกใบและกว้างตามสัดส่วนภาพ ถ้าภาพกว้างหรือสูงเกินกรอบ ใช้การลากและซูมด้านล่างจัดตำแหน่งได้' },
       { key:'show', label:'แสดงบนหน้าเว็บ', type:'toggle', span:'span 2' },
     ],
     clubs: [
@@ -763,6 +765,7 @@ class Component extends DCLogic {
       { key:'desc', label:'รายละเอียดสั้น', type:'textarea', span:'span 2' },
       { key:'teacher', label:'ครูผู้ดูแล', type:'text' },
       { key:'day', label:'วัน/เวลาที่จัด', type:'text' },
+      { key:'photo', label:'ภาพประกอบ (ถ้ามี)', type:'image', span:'span 2', ratio:'16/10', help:'ภาพจะขึ้นเต็มความกว้างด้านบนการ์ด · ลากภาพในกรอบและซูมเพื่อจัดตำแหน่ง' },
       { key:'link', label:'ลิงก์เพิ่มเติม (ถ้ามี)', type:'text', span:'span 2', help:'เว้นว่างไว้ถ้าไม่ต้องการให้คลิกได้' },
       { key:'show', label:'แสดงบนหน้าเว็บ', type:'toggle', span:'span 2' },
     ],
@@ -771,6 +774,7 @@ class Component extends DCLogic {
       { key:'amount', label:'จำนวนทุน / มูลค่า', type:'text' },
       { key:'year', label:'ปีการศึกษา', type:'text' },
       { key:'donor', label:'ผู้สนับสนุน / หน่วยงาน', type:'text', span:'span 2' },
+      { key:'photo', label:'ภาพประกอบ (ถ้ามี)', type:'image', span:'span 2', ratio:'1/1', help:'ภาพจัตุรัสเล็กหน้ารายการ · ลากภาพในกรอบและซูมเพื่อจัดตำแหน่ง' },
       { key:'link', label:'ลิงก์ข่าว / รายละเอียด (ถ้ามี)', type:'text', span:'span 2' },
       { key:'show', label:'แสดงบนหน้าเว็บ', type:'toggle', span:'span 2' },
     ],
