@@ -15,16 +15,16 @@
     DAMP_ZOOM:     4.0,  // scroll-zoom ease
     DAMP_POINTER:  4.2,  // pointer follow (low = more lag)
 
-    POINTER_UV:  0.045,  // how far the image drags toward the pointer (crop fraction)
-    POINTER_PX:   11.0,  // how far the plane itself nudges toward the pointer (px)
-    ZOOM_BASE:    0.06,  // always-on crop headroom so the drag never runs off-texture
+    POINTER_UV:  0.022,  // how far the image drags toward the pointer (crop fraction)
+    POINTER_PX:    8.0,  // how far the plane itself nudges toward the pointer (px)
+    ZOOM_BASE:   0.025,  // always-on crop headroom so the drag never runs off-texture
 
     VEL_PER_PX:   1 / 46, // px of scroll per frame that maps to velocity 1.0
     VEL_CLAMP:    0.92,
 
     CURVE_AMP:      34,  // px of Y displacement at velocity 1.0 (the arc/wheel bend)
     CURVE_NARROW: 0.55,  // narrow screens bend far less — a big arc there just smears
-    ZOOM_MAX:     0.08,  // texture scale at the centre of the viewport (1.0 -> 1.08)
+    ZOOM_MAX:     0.05,  // texture scale at the centre of the viewport (1.0 -> 1.08)
 
     NOISE_FREQ:    5.4,  // hover tremble: noise cells across the card
     NOISE_AMP:   0.007,  // hover tremble: UV displacement (fraction of the card)
