@@ -1300,6 +1300,37 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
         </tbody>
       </table>
     </sc-if>
+
+    <button type="button" onClick="{{ toggleLinksOpen }}" aria-expanded="{{ linksOpen }}" style="display:flex; align-items:center; justify-content:space-between; width:100%; gap:16px; padding:16px 0; border:none; border-bottom:2px solid var(--color-divider); background:none; cursor:pointer; text-align:left;">
+      <h3 style="font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:var(--color-text); margin:0; font-weight:800;">ลิงก์ภายนอกที่น่าสนใจ</h3>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="transform:{{ linksChevronTransform }}; transition:transform .25s ease; flex:none;"><path d="M6 9l6 6 6-6"></path></svg>
+    </button>
+    <sc-if value="{{ linksOpen }}" hint-placeholder-val="{{ false }}">
+      <sc-for list="{{ linkGroups }}" as="g" hint-placeholder-count="3">
+      <div style="display:flex; align-items:baseline; gap:12px; margin:24px 0 12px; padding-bottom:7px; border-bottom:2px solid var(--color-text);">
+        <h4 style="margin:0; font-size:13px; font-weight:800; letter-spacing:.05em; text-transform:uppercase;">{{ g.name }}</h4>
+        <span style="font-size:11px; color:color-mix(in srgb, var(--color-text) 72%, transparent);">{{ g.count }}</span>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(198px,1fr)); gap:12px; margin:0 0 4px;">
+        <sc-for list="{{ g.items }}" as="l" hint-placeholder-count="4">
+          <a href="{{ l.url }}" target="_blank" rel="noopener noreferrer" style="position:relative; display:flex; flex-direction:column; overflow:hidden; border:2px solid var(--color-divider); background:{{ l.tint }}; text-decoration:none; color:var(--color-text); transition:border-color .2s ease, transform .2s ease;" style-hover="border-color:var(--color-accent); transform:translateY(-2px);">
+            <sc-if value="{{ l.hasThumb }}" hint-placeholder-val="{{ false }}">
+              <img src="{{ l.thumb }}" alt="" loading="lazy" decoding="async" onError="{{ linkImgError }}" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover;">
+              <span aria-hidden="true" style="position:absolute; inset:0; background:linear-gradient(180deg, color-mix(in srgb, var(--color-bg) 70%, transparent) 0%, color-mix(in srgb, var(--color-bg) 92%, transparent) 100%);"></span>
+            </sc-if>
+            <div style="position:relative; display:flex; flex-direction:column; gap:5px; padding:11px 12px; flex:1;">
+              <span aria-hidden="true" style="width:30px; height:4px; flex:none; margin-bottom:2px; background:{{ l.bar }};"></span>
+              <h4 style="margin:0; font-size:13px; line-height:1.4; font-weight:800; text-wrap:pretty;">{{ l.title }}</h4>
+              <sc-if value="{{ l.hasDesc }}" hint-placeholder-val="{{ false }}">
+                <p style="margin:0; font-size:11px; line-height:1.55; color:color-mix(in srgb, var(--color-text) 72%, transparent); text-wrap:pretty;">{{ l.desc }}</p>
+              </sc-if>
+              <span style="margin-top:auto; padding-top:9px; display:flex; align-items:center; gap:6px; font-size:10px; font-weight:800; letter-spacing:.06em; color:var(--color-accent-700);"><span style="text-transform:uppercase; white-space:nowrap; flex:none;">เปิดลิงก์</span><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"></path></svg><span style="margin-left:auto; font-weight:600; letter-spacing:0; text-transform:none; color:color-mix(in srgb, var(--color-text) 72%, transparent); min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; text-align:right;">{{ l.host }}</span></span>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+      </sc-for>
+    </sc-if>
   </div>
 </section>
 
@@ -1679,6 +1710,7 @@ class Component extends DCLogic {
     scrolled: false,
     narrow: false,
     docsOpen: false,
+    linksOpen: false,
     honorsOpen: false,
     healthOpen: false,
     visible: { home: true, about: true, staff: true, academics: true, news: true, contact: true },
@@ -2120,6 +2152,76 @@ class Component extends DCLogic {
       ? c.filter(n => n.show !== false && n.show !== 'no')
          .map(n => ({ date: n.date || '', title: n.title || '', excerpt: n.summary || '', photo: this.pickImg(n.photo, n.photoSm), photoTiny: n.photoTiny || '', photoPos: n.photoPos || '50% 50%', photoZoom: n.photoZoom, photoFit: n.photoFit, link: n.link || '' }))
       : Component.NEWS;
+  };
+  /* สามโทนตามกลุ่มผู้ใช้: ราชการ · สำหรับครู · สำหรับนักเรียน */
+  static LINK_GROUP_ORDER = ['ส่วนราชการ/ต้นสังกัด', 'สำหรับครูและบุคลากร', 'สำหรับนักเรียนและผู้ปกครอง'];
+  static LINK_BARS = {
+    official: 'var(--color-text)',
+    staff: 'var(--color-accent)',
+    learn: 'color-mix(in srgb, var(--color-text) 64%, transparent)',
+  };
+  static LINK_GROUP_ALIAS = {
+    'ต้นสังกัด': 'ส่วนราชการ/ต้นสังกัด',
+    'ส่วนราชการ': 'ส่วนราชการ/ต้นสังกัด',
+    'วิชาชีพครู': 'สำหรับครูและบุคลากร',
+    'การทดสอบ': 'สำหรับครูและบุคลากร',
+    'สื่อการเรียนรู้': 'สำหรับนักเรียนและผู้ปกครอง',
+    'วิทยาศาสตร์และคณิตศาสตร์': 'สำหรับนักเรียนและผู้ปกครอง',
+    'เรียนออนไลน์': 'สำหรับนักเรียนและผู้ปกครอง',
+    'วิทยาการคำนวณ': 'สำหรับนักเรียนและผู้ปกครอง',
+  };
+  static LINK_TONES = {
+    'ส่วนราชการ/ต้นสังกัด': 'official',
+    'สำหรับครูและบุคลากร': 'staff',
+    'สำหรับนักเรียนและผู้ปกครอง': 'learn',
+  };
+  static LINK_TINTS = {
+    official: 'color-mix(in srgb, var(--color-text) 3%, transparent)',
+    staff: 'color-mix(in srgb, var(--color-accent) 7%, transparent)',
+    learn: 'color-mix(in srgb, var(--color-text) 9%, transparent)',
+  };
+  static LINKS = [
+    { title:'สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน (สพฐ.)', group:'ส่วนราชการ/ต้นสังกัด', desc:'ข่าวสาร นโยบาย และหนังสือราชการจากส่วนกลาง', url:'https://www.obec.go.th' },
+    { title:'สพป.มหาสารคาม เขต 3', group:'ส่วนราชการ/ต้นสังกัด', desc:'หนังสือราชการ ข่าวสาร และประกาศจากสำนักงานเขตพื้นที่การศึกษาต้นสังกัด', url:'https://www.mkarea3.go.th' },
+    { title:'กระทรวงศึกษาธิการ', group:'ส่วนราชการ/ต้นสังกัด', desc:'นโยบายการศึกษา ประกาศ และข่าวประชาสัมพันธ์ของกระทรวง', url:'https://www.moe.go.th' },
+    { title:'คุรุสภา', group:'สำหรับครูและบุคลากร', desc:'ใบอนุญาตประกอบวิชาชีพครู การต่ออายุ และมาตรฐานวิชาชีพ', url:'https://www.ksp.or.th' },
+    { title:'DLTV มูลนิธิการศึกษาทางไกลผ่านดาวเทียม', group:'สำหรับนักเรียนและผู้ปกครอง', desc:'ตารางออกอากาศและวิดีโอบทเรียนทุกระดับชั้น เรียนย้อนหลังได้ฟรี', url:'https://www.dltv.ac.th' },
+    { title:'สถาบันทดสอบทางการศึกษาแห่งชาติ (สทศ.)', group:'สำหรับครูและบุคลากร', desc:'กำหนดการสอบ O-NET และการประกาศผลสอบระดับชาติ', url:'https://www.niets.or.th' },
+    { title:'ระบบตรวจสอบเงินเดือน สพป.มหาสารคาม เขต 3', group:'สำหรับครูและบุคลากร', desc:'ดูสลิปเงินเดือนและรายการหักของข้าราชการครูในสังกัดเขต', url:'https://mkarea3.ksom2.net/money/index_desktop.php' },
+    { title:'OBEC Content Center', group:'สำหรับนักเรียนและผู้ปกครอง', desc:'คลังสื่อการเรียนรู้ของ สพฐ. ทั้งวิดีโอ ใบงาน และสื่อประกอบการสอนทุกกลุ่มสาระ', url:'https://contentcenter.obec.go.th/' },
+    { title:'คลังความรู้ SciMath (สสวท.)', group:'สำหรับนักเรียนและผู้ปกครอง', desc:'บทความ ใบกิจกรรม และสื่อวิทยาศาสตร์ คณิตศาสตร์ และเทคโนโลยี', url:'https://www.scimath.org/' },
+    { title:'Project 14 สสวท.', group:'สำหรับนักเรียนและผู้ปกครอง', desc:'วิดีโอการสอนวิทย์ คณิต และเทคโนโลยี ตรงตามหนังสือเรียนของ สสวท. ทุกระดับชั้น', url:'https://proj14.ipst.ac.th/' },
+    { title:'PhET บทเรียนจำลองเชิงโต้ตอบ', group:'สำหรับนักเรียนและผู้ปกครอง', desc:'การทดลองวิทยาศาสตร์และคณิตศาสตร์แบบจำลอง เล่นได้บนเบราว์เซอร์ มีภาษาไทย', url:'https://phet.colorado.edu/th/simulations/filter?type=html' },
+    { title:'พิพิธภัณฑ์เสมือนจริง อพวช.', group:'สำหรับนักเรียนและผู้ปกครอง', desc:'เดินชมพิพิธภัณฑ์วิทยาศาสตร์แห่งชาติแบบ 360 องศา จากในห้องเรียน', url:'http://virtual.nsm.th/' },
+    { title:'NASA Kids Club (นาซา)', group:'สำหรับนักเรียนและผู้ปกครอง', desc:'เกมและกิจกรรมอวกาศสำหรับเด็กประถม จากองค์การนาซา (ภาษาอังกฤษ)', url:'https://www.nasa.gov/learning-resources/nasa-kids-club/' },
+    { title:'Khan Academy ภาษาไทย', group:'สำหรับนักเรียนและผู้ปกครอง', desc:'บทเรียนคณิตศาสตร์และวิทยาศาสตร์พร้อมแบบฝึกหัด เรียนฟรีตามระดับชั้น', url:'https://th.khanacademy.org/' },
+    { title:'ทรูปลูกปัญญา', group:'สำหรับนักเรียนและผู้ปกครอง', desc:'คลังข้อสอบ คลิปติว และสื่อการเรียนครบทุกวิชาสำหรับนักเรียนและครู', url:'https://www.trueplookpanya.com/' },
+    { title:'Coding Thailand', group:'สำหรับนักเรียนและผู้ปกครอง', desc:'คอร์สเขียนโปรแกรมและวิทยาการคำนวณสำหรับเด็ก เรียนฟรีเป็นภาษาไทย', url:'https://codingthailand.org/' },
+    { title:'Code.org (ภาษาไทย)', group:'สำหรับนักเรียนและผู้ปกครอง', desc:'บทเรียนเขียนโค้ดแบบลากบล็อก เริ่มต้นได้ตั้งแต่ ป.1 พร้อมกิจกรรม Hour of Code', url:'https://code.org/th' },
+  ];
+  linksSrc() {
+    const list = this.cmsList('links') || Component.LINKS;
+    return list.filter(l => l.show !== false && l.show !== 'no').map(l => {
+      const url = String(l.url || '').trim();
+      const yt = url.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);
+      const thumb = l.photo || (yt ? 'https://img.youtube.com/vi/' + yt[1] + '/hqdefault.jpg' : '');
+      let host = '';
+      try { host = new URL(url).hostname.replace(/^www\./, ''); } catch (e) { host = ''; }
+      const desc = l.desc || l.summary || '';
+      /* หมวดที่แอดมินบันทึกไว้ก่อนยุบเหลือ 3 หมวด ยังต้องเข้าโทนให้ถูก */
+      const rawGroup = l.group || '';
+      const group = Component.LINK_GROUP_ALIAS[rawGroup] || rawGroup || 'ส่วนราชการ/ต้นสังกัด';
+      return {
+        title: l.title || host || 'ลิงก์ภายนอก',
+        group,
+        desc, hasDesc: !!desc,
+        url: url || '#news',
+        host: host || 'เปิดลิงก์',
+        thumb, hasThumb: !!thumb,
+        tint: Component.LINK_TINTS[Component.LINK_TONES[group] || 'official'] || Component.LINK_TINTS.official,
+        bar: Component.LINK_BARS[Component.LINK_TONES[group] || 'official'] || Component.LINK_BARS.official,
+      };
+    });
   };
   docsSrc() {
     const c = this.cmsList('docs');
@@ -3165,12 +3267,20 @@ class Component extends DCLogic {
   staffStripNext = () => this.scrollStaffStrip(1);
 
   toggleDocsOpen = () => this.setState(s => ({ docsOpen: !s.docsOpen }));
+  toggleLinksOpen = () => this.setState(s => ({ linksOpen: !s.linksOpen }));
+  /* a dead external thumbnail just reveals the host-name plate behind it */
+  linkImgError = (e) => { const el = e && e.currentTarget; if (!el) return; const scrim = el.nextElementSibling; el.style.display = 'none'; if (scrim && scrim.style) scrim.style.display = 'none'; };
   toggleHonorsOpen = () => this.setState(s => ({ honorsOpen: !s.honorsOpen }));
   toggleHealthOpen = () => this.setState(s => ({ healthOpen: !s.healthOpen }));
 
   renderVals() {
     const s = this.state;
     const docsChevronTransform = s.docsOpen ? 'rotate(180deg)' : 'rotate(0deg)';
+    const extLinks = this.linksSrc();
+    const linkGroups = Component.LINK_GROUP_ORDER
+      .map(name => ({ name, items: extLinks.filter(l => l.group === name) }))
+      .filter(g => g.items.length > 0)
+      .map(g => ({ ...g, count: g.items.length + ' ลิงก์' }));
     const orgIdx = typeof s.orgOpen === 'number' ? s.orgOpen : -1;
     const orgSrcList = this.orgSrc();
     const orgActive = orgSrcList[orgIdx] || { label: '', tag: '', desc: '', tasks: [] };
@@ -3496,6 +3606,11 @@ class Component extends DCLogic {
       docsOpen: s.docsOpen,
       docsChevronTransform: docsChevronTransform,
       toggleDocsOpen: this.toggleDocsOpen,
+      extLinks, linkGroups,
+      linksOpen: s.linksOpen,
+      linksChevronTransform: s.linksOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+      toggleLinksOpen: this.toggleLinksOpen,
+      linkImgError: this.linkImgError,
       honorsOpen: s.honorsOpen,
       honorsChevronTransform: s.honorsOpen ? 'rotate(180deg)' : 'rotate(0deg)',
       toggleHonorsOpen: this.toggleHonorsOpen,

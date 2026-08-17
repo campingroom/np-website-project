@@ -221,7 +221,7 @@ html[data-theme="dark"] #dc-root [data-cc-role] { color: var(--color-accent-300)
     </div>
     <div data-reveal="e" style="position:relative; max-width:1200px; margin:0 auto; padding:clamp(44px,6vw,84px) clamp(20px,5vw,72px); opacity:{{ reveal.e.opacity }}; transform:{{ reveal.e.transform }};">
       <span class="tag tag-accent">สภานักเรียน</span>
-      <h2 style="font-family:var(--font-heading); font-weight:800; text-transform:uppercase; letter-spacing:-.03em; font-size:clamp(24px,3vw,38px); margin:16px 0 8px;">คณะกรรมการสภานักเรียน</h2>
+      <h2 style="font-family:var(--font-heading); font-weight:800; text-transform:uppercase; letter-spacing:-.03em; font-size:clamp(24px,3vw,38px); margin:16px 0 8px;">คณะกรรมการนักเรียน</h2>
       <p style="font-size:14.5px; line-height:1.7; margin:0 0 28px; max-width:60ch; color:color-mix(in srgb, var(--color-text) 62%, transparent);">{{ councilNote }}</p>
       <sc-if value="{{ hasCouncil }}" hint-placeholder-val="{{ false }}">
         <svg aria-hidden="true" focusable="false" width="0" height="0" style="position:absolute; width:0; height:0; overflow:hidden;">
@@ -1062,12 +1062,12 @@ class Component extends DCLogic {
       };
     });
     const councilYear = shown('council').map(c => c.year).filter(Boolean)[0];
-    /* ประธานอยู่ต้นแถวบนสุดเสมอ แล้วตัดเป็นแถวละ 4 ใบ */
+    /* ประธานอยู่ต้นแถวบนสุดเสมอ แล้วตัดเป็นแถวละ 3 ใบ */
     const ccOrder = council.slice().sort((a, b) => (b.lead ? 1 : 0) - (a.lead ? 1 : 0));
     const ccChunks = [];
-    for (let i = 0; i < ccOrder.length; i += 4) ccChunks.push(ccOrder.slice(i, i + 4));
+    for (let i = 0; i < ccOrder.length; i += 3) ccChunks.push(ccOrder.slice(i, i + 3));
     const councilRows = ccChunks.map((cards, i) => {
-      const animated = cards.length >= 4;
+      const animated = cards.length >= 3;
       const reps = animated ? Math.max(2, (this.state.ccFill || {})[i] || 3) : 1;
       const groups = [];
       for (let g = 0; g < reps; g++) groups.push({ aria: g ? 'true' : undefined, cards });
@@ -1136,7 +1136,7 @@ class Component extends DCLogic {
       councilWash: 'transparent',
       councilWashOpacity: '0',
       councilNote: councilYear
-        ? 'คณะกรรมการสภานักเรียน ปีการศึกษา ' + councilYear
+        ? 'คณะกรรมการนักเรียน ปีการศึกษา ' + councilYear
         : 'คณะกรรมการที่นักเรียนเลือกตั้งกันเอง ทำหน้าที่ดูแลกิจกรรมและเป็นตัวแทนนักเรียน',
       clubs, hasClubs: clubs.length > 0, noClubs: clubs.length === 0,
       scholarships, hasScholarships: scholarships.length > 0, noScholarships: scholarships.length === 0,
