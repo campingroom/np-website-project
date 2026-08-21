@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin.html
 
-Sitemap: https://nspnsa.vercel.app/sitemap.xml
+Sitemap: https://npna.ac.th/sitemap.xml
