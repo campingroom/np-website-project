@@ -1456,10 +1456,10 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
     </div>
     <div>
       <p style="font-family:var(--font-heading); font-weight:800; font-size:14px; margin:0 0 18px; color:var(--color-bg);">สำหรับผู้ดูแลระบบ</p>
-      <button type="button" onClick="{{ openAdmin }}" style="display:inline-flex; align-items:center; gap:8px; font-family:var(--font-body); font-size:13px; font-weight:700; cursor:pointer; border:none; border-radius:999px; background:var(--color-accent); color:var(--color-bg); padding:12px 18px;" style-hover="background:var(--color-accent-400);">
+      <a href="{{ adminHref }}" style="display:inline-flex; align-items:center; gap:8px; font-family:var(--font-body); font-size:13px; font-weight:700; cursor:pointer; border:none; border-radius:999px; background:var(--color-accent); color:var(--color-bg); padding:12px 18px; text-decoration:none;" style-hover="background:var(--color-accent-400);">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
         เข้าสู่ระบบผู้ดูแล
-      </button>
+      </a>
       <sc-if value="{{ visitsShow }}" hint-placeholder-val="{{ false }}">
         <div style="margin-top:26px; padding-top:18px; border-top:2px solid rgba(243,242,242,.2);">
           <p style="margin:0 0 10px; font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:rgba(243,242,242,.55);">สถิติผู้เข้าชม</p>
@@ -1485,33 +1485,6 @@ html[data-theme="light"] #dc-root [data-theme-opt="light"] {
   </div>
 </footer>
 
-<sc-if value="{{ adminOpen }}" hint-placeholder-val="{{ false }}">
-  <div onClick="{{ closeAdmin }}" style="position:fixed; inset:0; z-index:80; background:color-mix(in srgb, var(--color-text) 70%, transparent); display:flex; align-items:center; justify-content:center; padding:24px;">
-    <form onSubmit="{{ onAdminSubmit }}" onClick="{{ stopPropagation }}" style="width:100%; max-width:400px; background:var(--color-bg); border:2px solid var(--color-text); padding:32px; box-shadow:var(--shadow-lg);">
-      <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:6px;">
-        <p style="font-family:var(--font-heading); font-weight:800; font-size:20px; margin:0;">เข้าสู่ระบบผู้ดูแล</p>
-        <button type="button" onClick="{{ closeAdmin }}" aria-label="ปิด" style="border:none; background:none; cursor:pointer; font-size:20px; line-height:1; color:var(--color-text); padding:4px;">×</button>
-      </div>
-      <p style="font-size:13.5px; line-height:1.6; margin:0 0 24px; color:color-mix(in srgb, var(--color-text) 70%, transparent);">สำหรับครูและเจ้าหน้าที่ที่ได้รับสิทธิ์จัดการเว็บไซต์เท่านั้น</p>
-      <div class="field" style="margin-bottom:16px;">
-        <label for="admin-user">อีเมลผู้ดูแล</label>
-        <input class="input" id="admin-user" name="user" type="email" autocomplete="username" placeholder="name@example.com">
-      </div>
-      <div class="field" style="margin-bottom:24px;">
-        <label for="admin-pass">รหัสผ่าน</label>
-        <input class="input" id="admin-pass" name="pass" type="password" autocomplete="current-password" placeholder="••••••••">
-      </div>
-      <sc-if value="{{ adminError }}" hint-placeholder-val="{{ false }}">
-        <p style="font-size:13px; font-weight:700; color:var(--color-accent-700); margin:0 0 16px;">{{ adminMsg }}</p>
-      </sc-if>
-      <div style="display:flex; gap:12px; flex-wrap:wrap;">
-        <button type="submit" class="btn btn-primary">เข้าสู่ระบบ</button>
-        <button type="button" onClick="{{ closeAdmin }}" class="btn btn-secondary">ยกเลิก</button>
-      </div>
-      <p style="font-size:12px; margin:20px 0 0; color:color-mix(in srgb, var(--color-text) 55%, transparent);">ลืมรหัสผ่าน? ติดต่อผู้ดูแลระบบของโรงเรียน</p>
-    </form>
-  </div>
-</sc-if>
 
 <div data-backtotop-wrap="" style="position:fixed; right:24px; bottom:24px; width:64px; height:64px; z-index:60; opacity:0; pointer-events:none; transform:translateY(8px); transition:opacity .3s ease, transform .3s ease;">
   <svg width="64" height="64" viewBox="0 0 64 64" aria-hidden="true" style="position:absolute; inset:0; transform:rotate(-90deg); pointer-events:none;">
@@ -1724,9 +1697,6 @@ class Component extends DCLogic {
     visits: null,
     visitsProgress: 0,
     formSent: false,
-    adminOpen: false,
-    adminError: false,
-    adminMsg: '',
     reducedMotion: false,
     bannerIndex: 0,
     staffGroup: 'admin',
@@ -3165,28 +3135,6 @@ class Component extends DCLogic {
 
   resetForm = () => this.setState({ formSent: false });
 
-  openAdmin = () => { this.setState({ adminOpen: true, adminError: false, adminMsg: '' }); };
-  closeAdmin = () => { this.setState({ adminOpen: false, adminError: false }); };
-  stopPropagation = (e) => { e.stopPropagation(); };
-  onAdminSubmit = (e) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const user = form.user && form.user.value.trim();
-    const pass = form.pass && form.pass.value.trim();
-    if (!user || !pass) { this.setState({ adminError: true, adminMsg: 'กรุณากรอกอีเมลและรหัสผ่านให้ครบ' }); return; }
-    const go = () => { window.location.href = encodeURI(this.props.adminUrl || 'admin.html'); };
-    const cfg = this.sbConfig();
-    if (cfg && window.SB && window.SB.ready() && window.SB.configured(cfg)) {
-      this.setState({ adminMsg: 'กำลังตรวจสอบสิทธิ์…', adminError: false });
-      window.SB.signIn(cfg, user, pass).then(res => {
-        if (res.ok) { this.setState({ adminOpen: false, adminError: false, adminMsg: '' }); go(); }
-        else this.setState({ adminError: true, adminMsg: 'อีเมลหรือรหัสผ่านไม่ถูกต้อง' });
-      });
-      return;
-    }
-    this.setState({ adminOpen: false, adminError: false, adminMsg: '' });
-    go();
-  };
 
   prevBanner = () => {
     this.setState(s => ({ bannerIndex: (s.bannerIndex - 1 + this.bannerSrc().length) % this.bannerSrc().length }));
@@ -3627,9 +3575,6 @@ class Component extends DCLogic {
       messengerHref: this._lastMessengerHref || this.messengerHref(''),
       resetForm: this.resetForm,
       formNotSent: !s.formSent,
-      adminOpen: s.adminOpen,
-      adminError: s.adminError,
-      adminMsg: s.adminMsg || 'อีเมลหรือรหัสผ่านไม่ถูกต้อง',
       backToTop: {
         opacity: 0,
         pointerEvents: 'none',
@@ -3637,10 +3582,7 @@ class Component extends DCLogic {
       },
       navClick: this.navClick,
       onSubmitForm: this.onSubmitForm,
-      openAdmin: this.openAdmin,
-      closeAdmin: this.closeAdmin,
-      stopPropagation: this.stopPropagation,
-      onAdminSubmit: this.onAdminSubmit,
+      adminHref: this.props.adminUrl || 'admin.html',
       scrollTop: this.scrollTop,
       setSectionRef: this.setSectionRef,
       setNavRef: this.setNavRef,
