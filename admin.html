@@ -68,6 +68,12 @@ a:hover { color:var(--color-accent); text-decoration:underline; }
             <p style="font-size:13px; font-weight:700; color:var(--color-accent-700); margin:0 0 16px; padding:10px 12px; background:var(--color-accent-100); border-left:3px solid var(--color-accent);">ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง</p>
           </sc-if>
           <button type="submit" class="btn btn-primary btn-block">เข้าสู่ระบบ</button>
+          <sc-if value="{{ passkeyOn }}" hint-placeholder-val="{{ false }}">
+            <button type="button" class="btn btn-secondary btn-block" onClick="{{ onPasskeyLogin }}" disabled="{{ pkBusy }}" style="margin-top:10px; display:flex; align-items:center; gap:9px;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"></path><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle></svg>เข้าสู่ระบบด้วย Passkey
+            </button>
+            <p style="font-size:11.5px; line-height:1.6; margin:8px 0 0; color:color-mix(in srgb, var(--color-text) 55%, transparent);">ใช้ลายนิ้วมือ ใบหน้า หรือ PIN ของอุปกรณ์นี้ — ต้องลงทะเบียน Passkey ไว้ก่อนที่เมนู “บัญชีผู้ดูแล”</p>
+          </sc-if>
           <button type="button" onClick="{{ onForgot }}" style="display:block; margin:14px 0 0; padding:0; background:none; border:0; font:inherit; font-size:13px; font-weight:700; color:var(--color-accent-700); cursor:pointer; text-decoration:underline; text-underline-offset:3px;">ลืมรหัสผ่าน?</button>
           <div style="margin-top:24px; border-top:2px solid var(--color-divider); padding-top:16px;">
             <p style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:color-mix(in srgb, var(--color-text) 50%, transparent); margin:0 0 8px;">บัญชีทดลอง</p>
@@ -307,6 +313,36 @@ a:hover { color:var(--color-accent); text-decoration:underline; }
                 </sc-if>
               </div>
             </sc-for>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ isAccount }}" hint-placeholder-val="{{ false }}">
+          <div style="max-width:960px; margin-top:36px; border:2px solid var(--color-divider);">
+            <div style="padding:22px 24px; border-bottom:2px solid var(--color-divider); display:flex; align-items:flex-start; gap:20px; flex-wrap:wrap;">
+              <div style="flex:1; min-width:260px;">
+                <p style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--color-accent-700); margin:0 0 6px;">Passkey</p>
+                <h2 style="font-size:18px; font-weight:800; margin:0 0 6px;">เข้าระบบด้วยลายนิ้วมือหรือ PIN</h2>
+                <p style="font-size:13px; line-height:1.7; margin:0; color:color-mix(in srgb, var(--color-text) 65%, transparent); max-width:60ch;">ลงทะเบียนอุปกรณ์ที่ใช้ประจำไว้ แล้วครั้งต่อไปกดปุ่ม “เข้าสู่ระบบด้วย Passkey” ที่หน้าเข้าระบบได้เลย ไม่ต้องพิมพ์รหัสผ่าน · ปลอดภัยกว่ารหัสผ่านเพราะปลอมไม่ได้ และรหัสผ่านเดิมยังใช้ได้ตามปกติ</p>
+              </div>
+              <button type="button" class="btn btn-primary" onClick="{{ onPasskeyAdd }}" disabled="{{ pkBusy }}" style="display:flex; align-items:center; gap:9px;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"></path><circle cx="16.5" cy="7.5" r=".5" fill="currentColor"></circle></svg>เพิ่ม Passkey ในอุปกรณ์นี้
+              </button>
+            </div>
+            <sc-for list="{{ passkeys }}" as="pk" hint-placeholder-count="1">
+              <div style="padding:16px 24px; border-bottom:2px solid var(--color-divider); display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+                <div style="flex:1; min-width:200px;">
+                  <p style="font-size:14px; font-weight:700; margin:0;">{{ pk.name }}</p>
+                  <p style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:.06em; margin:3px 0 0; color:color-mix(in srgb, var(--color-text) 55%, transparent);">{{ pk.meta }}</p>
+                </div>
+                <button type="button" class="btn btn-ghost" data-id="{{ pk.id }}" onClick="{{ onPasskeyDel }}" disabled="{{ pkBusy }}" style="padding:6px 12px; font-size:12.5px; color:var(--color-accent-700);">ลบ</button>
+              </div>
+            </sc-for>
+            <sc-if value="{{ pkEmpty }}" hint-placeholder-val="{{ false }}">
+              <p style="padding:20px 24px; margin:0; font-size:13px; line-height:1.7; color:color-mix(in srgb, var(--color-text) 60%, transparent);">ยังไม่มี Passkey ในบัญชีนี้ — กดปุ่มด้านบนเพื่อลงทะเบียนอุปกรณ์เครื่องนี้</p>
+            </sc-if>
+            <sc-if value="{{ pkMsgShow }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:0; padding:14px 24px; font-size:13px; line-height:1.6; background:var(--color-accent-100); border-top:2px solid var(--color-divider); color:var(--color-accent-700); font-weight:700;">{{ pkMsg }}</p>
+            </sc-if>
           </div>
         </sc-if>
 
@@ -1022,7 +1058,49 @@ class Component extends DCLogic {
     dirty: false, toast: '', connMsg: '', connOk: false, savedAt: '', syncing: false, migrateMsg: '', remoteAt: '', authMode: 'local',
     visits: null, visitsErr: '', visitsAt: '', visitsLoading: false, logShared: false,
     activity: [],
+    pkList: null, pkBusy: false, pkMsg: '',
   };
+
+  /* ── passkey (WebAuthn) ────────────────────────────────────────── */
+  passkeyUsable() {
+    return !!(window.SB && window.SB.passkeyReady && window.SB.passkeyReady() && this.online());
+  }
+
+  loadPasskeys() {
+    if (!this.passkeyUsable()) { this.setState({ pkList: [] }); return; }
+    window.SB.listPasskeys(this.cfg()).then(res => {
+      this.setState({ pkList: res.ok ? res.rows : [], pkMsg: res.ok ? '' : 'อ่านรายการ Passkey ไม่ได้: ' + res.error });
+    });
+  }
+
+  addPasskey() {
+    if (!this.passkeyUsable()) { this.setState({ pkMsg: 'อุปกรณ์หรือเบราว์เซอร์นี้ยังใช้ Passkey ไม่ได้ (ต้องเปิดผ่าน https)' }); return; }
+    this.setState({ pkBusy: true, pkMsg: '' });
+    window.SB.registerPasskey(this.cfg()).then(res => {
+      this.setState({ pkBusy: false, pkMsg: res.ok ? 'เพิ่ม Passkey เรียบร้อย — ครั้งต่อไปเข้าระบบได้โดยไม่ต้องใช้รหัสผ่าน' : 'เพิ่มไม่สำเร็จ: ' + res.error });
+      if (res.ok) this.loadPasskeys();
+    });
+  }
+
+  removePasskey(id) {
+    if (!id || !this.passkeyUsable()) return;
+    this.setState({ pkBusy: true, pkMsg: '' });
+    window.SB.deletePasskey(this.cfg(), id).then(res => {
+      this.setState({ pkBusy: false, pkMsg: res.ok ? 'ลบ Passkey แล้ว' : 'ลบไม่สำเร็จ: ' + res.error });
+      if (res.ok) this.loadPasskeys();
+    });
+  }
+
+  passkeyLogin() {
+    this.setState({ pkBusy: true, loginError: false });
+    window.SB.signInPasskey(this.cfg()).then(res => {
+      if (!res.ok) { this.setState({ pkBusy: false }); this.flash('เข้าสู่ระบบด้วย Passkey ไม่สำเร็จ: ' + res.error); return; }
+      const user = { name: res.user.email, role: 'ผู้ดูแลเว็บไซต์' };
+      try { localStorage.setItem(Component.SESSION_KEY, JSON.stringify(user)); } catch (e) {}
+      this.setState({ authed: true, user, loginPass: '', loginError: false, pkBusy: false });
+      this.pullRemote(true);
+    });
+  }
 
   static LOG_KEY = 'nspnsa-admin-log';
 
@@ -1456,6 +1534,21 @@ class Component extends DCLogic {
           this.setState({ authed: true, user, loginPass: '', loginError: false });
         } else this.setState({ loginError: true });
       },
+      passkeyOn: this.passkeyUsable(), pkBusy: st.pkBusy, pkMsg: st.pkMsg, pkMsgShow: !!st.pkMsg,
+      pkEmpty: Array.isArray(st.pkList) && st.pkList.length === 0,
+      passkeys: (st.pkList || []).map(p => ({
+        id: p.id,
+        name: p.friendly_name || 'Passkey',
+        meta: (() => {
+          const fmt = v => { try { return new Date(v).toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' }); } catch (e) { return ''; } };
+          const made = p.created_at ? 'เพิ่มเมื่อ ' + fmt(p.created_at) : '';
+          const used = p.last_used_at ? ' · ใช้ล่าสุด ' + fmt(p.last_used_at) : ' · ยังไม่เคยใช้';
+          return made + used;
+        })(),
+      })),
+      onPasskeyLogin: () => this.passkeyLogin(),
+      onPasskeyAdd: () => this.addPasskey(),
+      onPasskeyDel: e => this.removePasskey(e.currentTarget.dataset.id),
       showLoginForm: st.recovery === 'off', showRecovery: st.recovery !== 'off',
       recEmail: st.recEmail, recCode: st.recCode, recBusy: st.recBusy,
       otpSent: st.recovery === 'otp', recMsg: st.recMsg, recMsgShow: !!st.recMsg,
@@ -1472,7 +1565,11 @@ class Component extends DCLogic {
       userName: st.user ? st.user.name : 'ผู้ดูแลระบบ',
       userRole: st.user ? st.user.role : '',
       userInitial: (st.user ? st.user.name : 'ผ').slice(0, 1),
-      onNav: e => this.setState({ section: e.currentTarget.dataset.id, connMsg: '' }),
+      onNav: e => {
+        const id = e.currentTarget.dataset.id;
+        this.setState({ section: id, connMsg: '', pkMsg: '' });
+        if (id === 'account' && st.pkList === null) this.loadPasskeys();
+      },
 
       brandLogoStyle: (D.site && D.site.logo)
         ? { width:'30px', height:'30px', flex:'none', backgroundImage:'url("' + D.site.logo + '")', backgroundSize:'contain', backgroundPosition:'center', backgroundRepeat:'no-repeat' }
@@ -1490,6 +1587,7 @@ class Component extends DCLogic {
       sectionTitle: sec.label, sectionKicker: sec.kicker, sectionDesc: sec.desc,
       isDashboard: sec.type === 'dashboard', isObject: sec.type === 'object',
       isList: sec.type === 'list', isConnect: sec.type === 'connect',
+      isAccount: st.section === 'account',
 
       statusText: st.dirty ? 'ยังไม่ได้บันทึก' : (st.savedAt ? 'บันทึกล่าสุด ' + st.savedAt : 'ข้อมูลเป็นปัจจุบัน'),
       statusColor: st.dirty ? 'var(--color-accent)' : 'color-mix(in srgb, var(--color-text) 55%, transparent)',
